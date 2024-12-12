@@ -21,7 +21,7 @@ public class UserController {
     }
 
     @GetMapping("ById")
-    public UserDto getUserById(@RequestParam Long id) {
+    public UserDto getUserById(@RequestParam(name = "id") Long id) {
         return null;
     }
 
