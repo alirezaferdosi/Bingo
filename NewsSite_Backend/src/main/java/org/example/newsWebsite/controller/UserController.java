@@ -12,7 +12,8 @@ import java.util.List;
 public class UserController {
     @PostMapping("add")
     public UserDto addUser(@RequestBody UserDto userDto) {
-        return null;
+        System.out.println(userDto.toString());
+        return userDto;
     }
 
     @GetMapping("all")
