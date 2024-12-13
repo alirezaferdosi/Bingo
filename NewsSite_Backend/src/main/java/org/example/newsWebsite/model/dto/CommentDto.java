@@ -2,11 +2,12 @@ package org.example.newsWebsite.model.dto;
 
 import io.micrometer.common.lang.NonNull;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 
 @ToString
-@Getter
+@Getter @Setter
 public class CommentDto {
     private Long id;
 

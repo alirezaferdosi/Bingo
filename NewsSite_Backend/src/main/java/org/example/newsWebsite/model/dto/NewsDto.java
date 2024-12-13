@@ -2,13 +2,14 @@ package org.example.newsWebsite.model.dto;
 
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.Setter;
 import lombok.ToString;
 import javax.validation.constraints.Pattern;
 
 import java.time.LocalDate;
 
 @ToString
-@Getter
+@Getter @Setter
 public class NewsDto {
     private Long id;
 

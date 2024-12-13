@@ -1,43 +1,142 @@
 package org.example.newsWebsite.controller;
 
+import org.example.newsWebsite.model.User;
+import org.example.newsWebsite.model.convertor.PrimitiveConvertor;
 import org.example.newsWebsite.model.dto.UserDto;
+import org.example.newsWebsite.service.api.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
 @RestController
 @RequestMapping("user")
 public class UserController {
+    @Autowired
+    @Qualifier("userServiceImpl")
+    private UserService userService;
+
+    @Autowired
+    @Qualifier("UserConvertor")
+    private PrimitiveConvertor<User, UserDto> convertor;
+
+
     @PostMapping("add")
-    public UserDto addUser(@RequestBody UserDto userDto) {
-        System.out.println(userDto.toString());
-        return userDto;
+    public ResponseEntity<UserDto> addUser(@RequestBody UserDto userDto) {
+        userDto.setId(null);
+        if(userService.isUserExist(userDto.getUsername())){
+            return ResponseEntity
+                           .status(HttpStatus.CONFLICT)
+                           .body(null);
+        }
+        else {
+            UserDto userCreate = convertor.modedToDto(
+                                    userService.addUser(
+                                            convertor.dtoToModed(userDto)
+                                    )
+                        );
+            return ResponseEntity
+                           .status(HttpStatus.CREATED)
+                           .body(userCreate);
+        }
     }
 
     @GetMapping("all")
-    public List<UserDto> getAllUsers() {
-        return null;
+    public ResponseEntity<List<UserDto>> getAllUsers() {
+        List<UserDto> userDtos = new ArrayList<>();
+        for(User user : userService.getAllUsers()){
+            userDtos.add(convertor.modedToDto(user));
+        }
+        return ResponseEntity
+                       .status(HttpStatus.FOUND)
+                       .body(userDtos);
     }
 
-    @GetMapping("ById")
-    public UserDto getUserById(@RequestParam(name = "id") Long id) {
-        return null;
+    @GetMapping("byId")
+    public ResponseEntity<UserDto> getUserById(@RequestParam(name = "id") Long id) {
+        User user = userService.getUser(id);
+        if(user == null){
+            return ResponseEntity
+                           .status(HttpStatus.NOT_FOUND)
+                           .body(null);
+        }
+        else {
+            UserDto userDto = convertor.modedToDto(user);
+            return ResponseEntity
+                           .status(HttpStatus.FOUND)
+                           .body(userDto);
+        }
     }
 
-    @GetMapping("ByUsername")
-    public UserDto getUserById(@RequestParam String username) {
-        return null;
+    @GetMapping("byUsername")
+    public ResponseEntity<UserDto> getUserByUsername(@RequestParam(name = "username") String username) {
+        User user = userService.getUser(username);
+        if(user == null){
+            return ResponseEntity
+                           .status(HttpStatus.NOT_FOUND)
+                           .body(null);
+        }
+        else {
+            UserDto userDto = convertor.modedToDto(user);
+            return ResponseEntity
+                           .status(HttpStatus.FOUND)
+                           .body(userDto);
+        }
     }
 
-    @PutMapping("editU")
-    public UserDto editUser(@RequestBody UserDto userDto) {
-        return null;
+    @PutMapping("edit")
+    public ResponseEntity<UserDto> editUser(@RequestBody UserDto userDto) {
+        User user = userService.editUser(convertor.dtoToModed(userDto));
+
+        if(userService.isUserExist(userDto.getUsername()) && !userService.getUser(userDto.getId()).getUsername().equals(userDto.getUsername())){
+            return ResponseEntity
+                           .status(HttpStatus.CONFLICT)
+                           .body(null);
+        }
+        if(user == null){
+            return ResponseEntity
+                           .status(HttpStatus.CONFLICT)
+                           .body(null);
+        }
+        else {
+            userDto = convertor.modedToDto(user);
+            return ResponseEntity
+                           .status(HttpStatus.OK)
+                           .body(userDto);
+        }
     }
 
-    @DeleteMapping("delete")
-    public boolean deleteUser(@RequestParam Long id) {
-        return false;
+    @DeleteMapping("deleteById")
+    public ResponseEntity deleteUser(@RequestParam(name = "id") Long id) {
+        if (userService.deleteUser(id)){
+            return ResponseEntity
+                           .status(HttpStatus.NO_CONTENT)
+                           .build();
+        }
+        else {
+            return ResponseEntity
+                           .status(HttpStatus.NOT_FOUND)
+                           .build();
+        }
+    }
+
+    @DeleteMapping("deleteByUsername")
+    public ResponseEntity deleteUser(@RequestParam(name = "username") String username) {
+        if (userService.deleteUser(username)){
+            return ResponseEntity
+                           .status(HttpStatus.NO_CONTENT)
+                           .build();
+        }
+        else {
+            return ResponseEntity
+                           .status(HttpStatus.NOT_FOUND)
+                           .build();
+        }
     }
 }
