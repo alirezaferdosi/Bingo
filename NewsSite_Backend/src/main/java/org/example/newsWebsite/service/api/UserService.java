@@ -9,7 +9,7 @@ import java.util.List;
 public interface UserService {
     User addUser(User user);
 
-    User editUser(Long id, User user);
+    User editUser(User user);
 
     boolean deleteUser(String username);
 
@@ -20,4 +20,8 @@ public interface UserService {
     User getUser(String username);
 
     User getUser(Long id);
+
+    boolean isUserExist(String username);
+
+    boolean isUserExist(Long id);
 }

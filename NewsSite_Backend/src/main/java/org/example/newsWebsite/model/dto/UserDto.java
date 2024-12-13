@@ -2,13 +2,15 @@ package org.example.newsWebsite.model.dto;
 
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.Setter;
 import lombok.ToString;
+
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 
 @ToString
-@Getter
+@Getter @Setter
 public class UserDto {
     private Long id;
 
