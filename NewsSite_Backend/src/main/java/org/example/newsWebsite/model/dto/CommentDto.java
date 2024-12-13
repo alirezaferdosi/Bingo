@@ -1,7 +1,11 @@
 package org.example.newsWebsite.model.dto;
 
+import io.micrometer.common.lang.NonNull;
 import lombok.Getter;
+import lombok.ToString;
 
+
+@ToString
 @Getter
 public class CommentDto {
     private Long id;
@@ -13,9 +17,9 @@ public class CommentDto {
     private String comment;
 
     public CommentDto(Long id,
-                      Long user,
-                      Long news,
-                      String comment) {
+                      @NonNull Long user,
+                      @NonNull Long news,
+                      @NonNull String comment) {
         this.id = id;
         this.user = user;
         this.news = news;

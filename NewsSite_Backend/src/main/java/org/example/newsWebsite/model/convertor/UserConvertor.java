@@ -19,14 +19,14 @@ public class UserConvertor implements PrimitiveConvertor<User, UserDto>{
     }
 
     @Override
-    public User dtoToModed(UserDto model) {
+    public User dtoToModed(UserDto dto) {
         return new User(
-                model.getId(),
-                model.getUsername(),
-                model.getPhone(),
-                model.getEmail(),
-                model.getPassword(),
-                model.getPhotoPath()
+                dto.getId(),
+                dto.getUsername(),
+                dto.getPhone(),
+                dto.getEmail(),
+                dto.getPassword(),
+                dto.getPhotoPath()
         );
     }
 }

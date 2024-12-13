@@ -1,17 +1,23 @@
 package org.example.newsWebsite.model.dto;
 
 import lombok.Getter;
+import lombok.NonNull;
+import lombok.ToString;
+import javax.validation.constraints.Pattern;
 
 import java.time.LocalDate;
 
+@ToString
 @Getter
 public class NewsDto {
     private Long id;
 
+    @Pattern(regexp = "^[a-zA-Z0-9.-_@#()\\/]+", message = "Title must be at least 1 characters long and contain only letters, digits, 'a-z' 'A-Z' '.' '@' '#' '_' '-' '/' ''\\")
     private String title;
 
     private String newsPath;
 
+    @Pattern(regexp = "^[a-zA-Z]+", message = "Category must be contain letter")
     private String category;
 
     private Integer viewNumber;
@@ -25,14 +31,14 @@ public class NewsDto {
     private Long author;
 
     public NewsDto(Long id,
-                   String title,
-                   String newsPath,
-                   String category,
+                   @NonNull String title,
+                   @NonNull String newsPath,
+                   @NonNull String category,
                    Integer viewNumber,
                    LocalDate date,
                    String photoPath,
                    Boolean verification,
-                   Long author) {
+                   @NonNull Long author) {
         this.id = id;
         this.title = title;
         this.newsPath = newsPath;

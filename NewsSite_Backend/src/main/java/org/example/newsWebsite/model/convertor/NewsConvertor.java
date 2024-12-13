@@ -28,17 +28,17 @@ public class NewsConvertor implements PrimitiveConvertor<News, NewsDto> {
     }
 
     @Override
-    public News dtoToModed(NewsDto model) {
+    public News dtoToModed(NewsDto dto) {
         return new News(
-                model.getId(),
-                model.getTitle(),
-                model.getNewsPath(),
-                model.getCategory(),
-                model.getViewNumber(),
-                model.getDate(),
-                model.getPhotoPath(),
-                model.getVerification(),
-                userService.getUser(model.getId())
+                dto.getId(),
+                dto.getTitle(),
+                dto.getNewsPath(),
+                dto.getCategory(),
+                dto.getViewNumber(),
+                dto.getDate(),
+                dto.getPhotoPath(),
+                dto.getVerification(),
+                userService.getUser(dto.getId())
         );
     }
 }
