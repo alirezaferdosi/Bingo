@@ -91,7 +91,7 @@ public class UserController {
     }
 
     @PutMapping("edit")
-    public ResponseEntity<UserDto> editUser(@RequestBody UserDto userDto) {
+    public ResponseEntity<UserDto> editUser(@RequestBody UserDto userDto){
         User user = userService.editUser(convertor.dtoToModed(userDto));
 
         if(userService.isUserExist(userDto.getUsername()) && !userService.getUser(userDto.getId()).getUsername().equals(userDto.getUsername())){

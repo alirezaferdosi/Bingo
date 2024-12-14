@@ -9,17 +9,23 @@ import java.util.List;
 public interface NewsService {
     News addNews(News news);
 
-    News editNews(Long id, News news);
+    News editNews(News news);
 
     List<News> getAllNews();
 
-    List<News> getAllNewsconfirmed();
+    List<News> getAllNewsConfirmed();
 
     List<News> getNewsByCategory(String category);
+
+    List<News> getNewsByName(String name);
 
     Integer incrementNewsViewer(Long id);
 
     boolean deleteNews(Long id);
 
+    News getNewsById(Long id);
+
     News getNews(Long id);
+
+    boolean isExistNews(Long id);
 }

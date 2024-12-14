@@ -6,8 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
-
 @Setter
 @Getter
 @AllArgsConstructor
@@ -34,7 +32,7 @@ public class News {
 
     @Temporal(TemporalType.DATE)
     @Column(name = "date")
-    private LocalDate date;
+    private String date;
 
     @Column(name = "photoPath")
     private String photoPath;
@@ -42,7 +40,7 @@ public class News {
     @Column(name = "verification")
     private Boolean verification;
 
-    @ManyToOne(targetEntity = User.class)
+    @ManyToOne(targetEntity = User.class/*, cascade = CascadeType.ALL */)
     @JoinColumn(name = "author", nullable = false)
     private User author;
 }
