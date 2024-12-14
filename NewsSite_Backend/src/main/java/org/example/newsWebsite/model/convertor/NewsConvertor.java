@@ -3,13 +3,14 @@ package org.example.newsWebsite.model.convertor;
 import org.example.newsWebsite.model.News;
 import org.example.newsWebsite.model.dto.NewsDto;
 import org.example.newsWebsite.service.api.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component("NewsConvertor")
 public class NewsConvertor implements PrimitiveConvertor<News, NewsDto> {
-
-    @Qualifier("userImpl")
+    @Autowired
+    @Qualifier("userServiceImpl")
     private UserService userService;
 
     @Override
@@ -38,7 +39,7 @@ public class NewsConvertor implements PrimitiveConvertor<News, NewsDto> {
                 dto.getDate(),
                 dto.getPhotoPath(),
                 dto.getVerification(),
-                userService.getUser(dto.getId())
+                userService.getUser(dto.getAuthor())
         );
     }
 }

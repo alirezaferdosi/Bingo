@@ -4,9 +4,8 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
-import javax.validation.constraints.Pattern;
 
-import java.time.LocalDate;
+import javax.validation.constraints.Pattern;
 
 @ToString
 @Getter @Setter
@@ -23,7 +22,7 @@ public class NewsDto {
 
     private Integer viewNumber;
 
-    private LocalDate date;
+    private String date;
 
     private String photoPath;
 
@@ -36,7 +35,7 @@ public class NewsDto {
                    @NonNull String newsPath,
                    @NonNull String category,
                    Integer viewNumber,
-                   LocalDate date,
+                   String date,
                    String photoPath,
                    Boolean verification,
                    @NonNull Long author) {

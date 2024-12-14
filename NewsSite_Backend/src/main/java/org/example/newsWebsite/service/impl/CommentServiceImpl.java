@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class CommentImpl implements CommentService {
+public class CommentServiceImpl implements CommentService {
     @Override
     public Comment addComment(Comment comment) {
         return null;

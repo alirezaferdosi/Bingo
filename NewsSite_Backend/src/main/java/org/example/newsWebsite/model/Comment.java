@@ -18,11 +18,11 @@ public class Comment {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @ManyToOne(targetEntity = User.class)
+    @ManyToOne(targetEntity = User.class/*, cascade = CascadeType.ALL*/)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @ManyToOne(targetEntity = News.class)
+    @ManyToOne(targetEntity = News.class/*, cascade = CascadeType.ALL*/)
     @JoinColumn(name = "news_id", nullable = false)
     private News news;
 
