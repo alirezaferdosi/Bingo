@@ -114,6 +114,7 @@ header .nav-links a {
     position: relative;
     background-color: transparent;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+	/*backdrop-filter: blur(10px);*//*bluring the cards*/
     height: 350px;
     width: 250px;
     margin-right: 3rem;
