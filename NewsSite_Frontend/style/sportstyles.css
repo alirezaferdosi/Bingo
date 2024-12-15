@@ -128,26 +128,48 @@ body:has(.news-card:focus-within) {
 /* Adjust positioning of the focused card */
 .news-card:focus-within {
     position: fixed;
-    top: 1rem; /* Margin from the top */
-    left: 1rem; /* Margin from the left */
-    right: 1rem; /* Margin from the right */
+    top: 1rem;
+    left: 1rem;
+    right: 1rem;
     margin: 0 auto;
     z-index: 10;
-    transform: none; /* Remove scaling */
-    width: auto; /* Take full available width */
-    max-width: 90%; /* Add some breathing room on the sides */
-    height: auto; /* Allow natural height for content */
-    max-height: 90vh; /* Ensure the card doesn't overflow the viewport */
-    overflow: auto; /* Allow scrolling within the card if content is too long */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Highlight focused card */
-    background: #fff; /* Ensure background stays visible */
+    transform: none;
+    width: auto;
+    max-width: 90%;
+    height: auto;
+    max-height: 90vh;
+    overflow: auto;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    background: #fff;
 }
 
-.news-image {
-    width: 100%;
-    height: auto;
+/* Hide scrollbar for WebKit browsers (Chrome, Edge, Safari) */
+.news-card:focus-within::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for Firefox */
+.news-card:focus-within {
+    scrollbar-width: none; /* Firefox-specific */
+	-ms-overflow-style: none;/* Internet Explorer and Edge */
+}
+
+/* General rule for all browsers */
+.news-card:focus-within {
+     
+}
+
+
+.news-image {/* manage the image in the card normaly*/
+    width: 100%; /* Ensures the width of the image fills the container */
+    height: 200px; /* Set a fixed height for uniformity */
     display: block;
 }
+.news-card:focus-within .news-image {/* manage the image in the card for when we focus on the card*/
+    height: auto; /* Allow the image to adjust its height */
+    object-fit: contain; /* Ensures the full image fits within the container */
+}
+
 
 .news-title {
     font-size: 1.5rem;
@@ -159,7 +181,29 @@ body:has(.news-card:focus-within) {
     font-size: 1rem;
     color: #555;
     margin: 0 1rem 1rem;
+    max-height: 0; /* Collapse the content */
+    overflow: hidden; /* Hide overflowing content */
+    transition: max-height 0.3s ease, opacity 0.3s ease; /* Smooth reveal effect */
+    opacity: 0; /* Start invisible */
 }
+
+.news-card {
+    display: flex;
+    flex-direction: column; /* Ensure content stacks vertically within the card */
+    align-items: stretch; /* Avoid alignment issues */
+}
+
+.news-card:hover .news-body {
+    max-height: 50px; /* Adjust as needed for the expanded height */
+    opacity: 1; /* Make visible */
+}
+
+.news-card:focus-within .news-body {
+    max-height: none; /* Remove the height constraint */
+    opacity: 1; /* Fully visible */
+    overflow: visible; /* Allow content to expand naturally */
+}
+
 
 .news-footer {
     display: flex;
