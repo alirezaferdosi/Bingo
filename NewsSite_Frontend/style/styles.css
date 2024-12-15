@@ -15,7 +15,8 @@ body {
 
 /* Header */
 header {
-    background: #000000;
+    background: transparent;
+    backdrop-filter: blur(10px);
     color: white;
     padding: 2rem 0;
     position: fixed;
@@ -74,7 +75,7 @@ header .nav-links a {
     align-items: center;
     position: relative;
     transition: height 0.3s ease; /* Smooth transition for shrinking */
-    margin-top: 80px; /* Ensure the hero section isn't hidden behind the fixed header */
+    margin-top: 0px; /* 80 for normal space */
 }
 
 .hero h2 {
@@ -111,18 +112,80 @@ header .nav-links a {
 
 .card {
     position: relative;
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: transparent;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
     height: 350px;
     width: 250px;
     margin-right: 3rem;
     margin-bottom: 2rem;
     overflow: hidden;
+    transition: filter 0.5s ease, transform 0.3s ease; /* Smooth transition */
+    background-color: rgba(0, 0, 0, 0.1); /* Optional base color */
+	border-radius: 15px;
+}
+
+/* Add the pseudo-element for the background image */
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0; /* Initially hidden */
+    transition: opacity 0.5s ease; /* Smooth fade-in effect */
+    z-index: -1; /* Ensure it stays behind other content */
+	border-radius: 15px;
+}
+
+.card:hover {
+    filter: blur(0); /* Remove blur on hover */
+    transform: scale(1.05); /* Slightly enlarge the card */
+}
+
+.card:hover::before {
+    opacity: 1; /* Show the background image on hover */
+}
+
+.card .gradient {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+	border-radius: 10px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.1));
+    transition: opacity 0.5s ease; /* Smooth gradient effect */
+	border-radius: 15px;
 }
 
 .card:hover .gradient {
-    opacity: 1;
+    opacity: 0.3; /* Make the gradient less visible on hover */
 }
+
+/* Unique background images for each card */
+.sports::before {
+    background-image: url('../photo/back/sportback1.jpg'); /* Replace with the actual image URL */
+}
+
+.Health::before {
+    background-image: url('../photo/back/health2.jpg'); /* Replace with the actual image URL */
+}
+
+.Politics::before {
+    background-image: url('../photo/back/political4.jpg'); /* Replace with the actual image URL */
+}
+
+.Economics::before {
+    background-image: url('../photo/back/economy2.jpg'); /* Replace with the actual image URL */
+}
+.Technology::before {
+    background-image: url('../photo/back/technological1.jpg'); /* Replace with the actual image URL */
+}
+
 
 /* Ensure the entire card is clickable */
 .card-link {

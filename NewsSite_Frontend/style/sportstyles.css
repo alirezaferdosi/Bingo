@@ -15,7 +15,8 @@ body {
 
 /* Header */
 header {
-    background: #000000;
+    background: transparent;
+	backdrop-filter: blur(10px);
     color: white;
     padding: 2rem 0;
     position: fixed;
@@ -74,7 +75,7 @@ header .nav-links a {
     align-items: center;
     position: relative;
     transition: height 0.3s ease; /* Smooth transition for shrinking */
-    margin-top: 80px; /* Ensure the hero section isn't hidden behind the fixed header */
+    margin-top: 0px; /* Ensure the hero section isn't hidden behind the fixed header */
 }
 
 .hero h2 {
@@ -105,6 +106,7 @@ header .nav-links a {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 1.5rem;
+    position: relative;
 }
 
 .news-card {
@@ -112,11 +114,33 @@ header .nav-links a {
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-    transition: transform 0.2s;
+    transition: transform 0.3s ease, z-index 0.3s ease, width 0.3s ease, height 0.3s ease;
 }
 
 .news-card:hover {
     transform: scale(1.02);
+}
+
+body:has(.news-card:focus-within) {
+    overflow: hidden;
+}
+
+/* Adjust positioning of the focused card */
+.news-card:focus-within {
+    position: fixed;
+    top: 1rem; /* Margin from the top */
+    left: 1rem; /* Margin from the left */
+    right: 1rem; /* Margin from the right */
+    margin: 0 auto;
+    z-index: 10;
+    transform: none; /* Remove scaling */
+    width: auto; /* Take full available width */
+    max-width: 90%; /* Add some breathing room on the sides */
+    height: auto; /* Allow natural height for content */
+    max-height: 90vh; /* Ensure the card doesn't overflow the viewport */
+    overflow: auto; /* Allow scrolling within the card if content is too long */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Highlight focused card */
+    background: #fff; /* Ensure background stays visible */
 }
 
 .news-image {
@@ -144,6 +168,12 @@ header .nav-links a {
     color: #888;
     margin: 0 1rem 1rem;
 }
+/* Blurring other cards when one is focused */
+.news-grid:has(.news-card:focus-within) .news-card:not(:focus-within) {
+    filter: blur(5px);
+    pointer-events: none; /* Prevent interaction with blurred cards */
+}
+
 
 
 
