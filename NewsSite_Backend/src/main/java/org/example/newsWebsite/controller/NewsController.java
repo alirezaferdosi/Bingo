@@ -12,7 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,11 +33,17 @@ public class NewsController {
     @Qualifier("NewsConvertor")
     private PrimitiveConvertor<News, NewsDto> convertor;
 
+    private LocalDateTime localDateTime;
+    private DateTimeFormatter formatter;
+
 
     @PostMapping("create")
     public ResponseEntity<NewsDto> create(@RequestBody NewsDto newsDto) {
+        localDateTime = LocalDateTime.now();
+        formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
         newsDto.setId(null);
-        newsDto.setDate(LocalDate.now().toString());
+        newsDto.setDate(localDateTime.format(formatter));
         newsDto.setVerification(false);
         newsDto.setViewNumber(0);
 
@@ -59,7 +66,10 @@ public class NewsController {
 
     @PutMapping("edit")
     public ResponseEntity<NewsDto> edit(@RequestBody NewsDto newsDto) {
-        newsDto.setDate(LocalDate.now().toString());
+        localDateTime = LocalDateTime.now();
+        formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        newsDto.setDate(localDateTime.format(formatter));
 
         News n = newsService.editNews(convertor.dtoToModed(newsDto));
 

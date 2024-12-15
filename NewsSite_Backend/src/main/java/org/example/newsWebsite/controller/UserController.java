@@ -139,4 +139,13 @@ public class UserController {
                            .build();
         }
     }
+
+//    @PostMapping("picture")
+//    public ResponseEntity uploadProfilePicture(/*@PathVariable Long id,*/@RequestParam() MultipartFile file) {
+//        System.out.println(file.getOriginalFilename());
+//        boolean transactionStatus = userService.uploadeImage(file, String.valueOf(1));
+//        return ResponseEntity
+//                       .status(transactionStatus ? HttpStatus.OK : HttpStatus.BAD_REQUEST)
+//                       .build();
+//    }
 }

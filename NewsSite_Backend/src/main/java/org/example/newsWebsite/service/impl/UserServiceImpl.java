@@ -3,8 +3,13 @@ package org.example.newsWebsite.service.impl;
 import org.example.newsWebsite.model.User;
 import org.example.newsWebsite.repository.UserRepository;
 import org.example.newsWebsite.service.api.UserService;
+import org.example.newsWebsite.service.api.uploading.StorageService;
+import org.example.newsWebsite.service.api.uploading.properties.UserStorageProperties;
+import org.example.newsWebsite.service.impl.uploading.FileSystemStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Objects;
@@ -14,6 +19,11 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
+    private final StorageService storageService;
+
+    {
+        this.storageService = new FileSystemStorageService(new UserStorageProperties());
+    }
 
     @Override
     public User addUser(User user) {
@@ -84,6 +94,24 @@ public class UserServiceImpl implements UserService {
             return userRepository.findById(id).get();
         }
         return null;
+    }
+
+    @Override
+    public Boolean uploadeImage(MultipartFile file, String fileName) {
+        if(storageService.store(file, fileName)){
+            User user = userRepository.getById(Long.valueOf(fileName));
+            user.setPhotoPath(fileName);
+            userRepository.save(user);
+
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public Resource getProfileImage(String name) {
+        return storageService.loadAsResource(name);
     }
 
     @Override
