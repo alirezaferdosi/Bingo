@@ -1,0 +1,191 @@
+/* Global Styles */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+}
+
+/* Container */
+.container {
+    width: 85%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Header */
+header {
+    background: #000000;
+    color: white;
+    padding: 2rem 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10; /* Ensures the header stays above the hero section */
+    transition: padding 0.3s ease; /* Smooth transition when shrinking */
+}
+
+header .logo {
+    font-size: 1.5rem;
+    margin: 0;
+}
+.logo-text {
+    font-size: 1.5rem; /* Adjust the size as needed */
+    font-weight: bold; /* Make the text bold */
+    color: white; /* Ensure it matches the header style */
+    text-decoration: none; /* Remove underline */
+    display: inline-block; /* Ensures proper positioning */
+}
+
+
+header nav {
+    float: right;
+}
+
+header .nav-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+header .nav-links li {
+    margin: 0 1rem;
+}
+
+header .nav-links a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* Hero Section */
+.hero {
+    background-image: url('../photo/back/pexel.jpg'); /* Add your background image here */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: white;
+    text-align: center;
+    height: 100vh; /* Initial full height */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    transition: height 0.3s ease; /* Smooth transition for shrinking */
+    margin-top: 80px; /* Ensure the hero section isn't hidden behind the fixed header */
+}
+
+.hero h2 {
+    font-size: 3rem;
+    transition: font-size 0.3s ease;
+}
+
+.hero p {
+    font-size: 1.5rem;
+    transition: font-size 0.3s ease;
+}
+
+/* Services Section */
+.services {
+    padding: 2rem 0;
+    text-align: center;
+    background-image: url('../photo/back/mountain.jpg'); /* Replace with your image path */
+    background-size: cover; /* Ensures the image covers the entire section */
+    background-position: center; /* Centers the background image */
+    background-repeat: no-repeat; /* Ensures the image doesn't repeat */
+}
+
+.services h2 {
+    margin-bottom: 2rem;
+    font-size: 2rem;
+    color: #7529fc;
+}
+
+.service-cards {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.card {
+    position: relative;
+    background-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    height: 350px;
+    width: 250px;
+    margin-right: 3rem;
+    margin-bottom: 2rem;
+    overflow: hidden;
+}
+
+.card:hover .gradient {
+    opacity: 1;
+}
+
+/* Ensure the entire card is clickable */
+.card-link {
+    display: block; /* Make the link fill the card */
+    text-decoration: none; /* Remove underline from the link */
+    color: inherit; /* Inherit color from the card */
+}
+
+.card-link .card {
+    cursor: pointer; /* Change the cursor to indicate it's clickable */
+}
+
+
+
+.gradient {
+    position: absolute;
+    background-image: linear-gradient(0deg, #e90606, transparent);
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+.info {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #fff;
+}
+
+.text {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.title {
+    font-size: 24px;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.time {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #fff;
+    font-size: 16px;
+}
+
+.time span {
+    font-size: 14px;
+    color: #ddd;
+}
+
+/* Footer */
+footer {
+    background: #333;
+    color: white;
+    padding: 0.2rem 0; /* Minimized vertical padding */
+    text-align: center;
+    font-size: 0.7rem; /* Smaller font size */
+}
+
