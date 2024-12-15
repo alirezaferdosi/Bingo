@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <link rel="stylesheet" href="../style/styles.css">
+    <script>
+        window.addEventListener('scroll', function () {
+            let heroSection = document.querySelector('.hero');
+            let scrollPosition = window.scrollY;
+
+            // Calculate the new height of the hero section based on scroll
+            let newHeight = Math.max(50, 100 - scrollPosition / 5); // Shrinks from 100vh to 50vh
+            heroSection.style.height = newHeight + "vh"; // Apply the new height
+
+            // Optionally, adjust the font size based on scroll as well
+            let heroText = document.querySelector('.hero h2');
+            let heroDesc = document.querySelector('.hero p');
+
+            if (newHeight < 70) {
+                heroText.style.fontSize = '2rem'; // Shrink title size when hero is small
+                heroDesc.style.fontSize = '1rem'; // Shrink description size when hero is small
+            } else {
+                heroText.style.fontSize = '3rem'; // Default size when hero is large
+                heroDesc.style.fontSize = '1.5rem'; // Default size for description
+            }
+        });
+    </script>
+</head>
+<body>
+    <header>
+		<div class="container">
+			<!-- Replace this with an image of your logo -->
+			<a href="#" class="logo">
+				<span class="logo-text">Bingo</span>
+			</a>
+
+			<nav>
+				<ul class="nav-links">
+					<li><a href="#home">Home</a></li>
+					<li><a href="#about">About</a></li>
+					<li><a href="#services">Services</a></li>
+					<li><a href="#contact">Contact</a></li>
+				</ul>
+			</nav>
+		</div>
+	</header>
+
+
+    <section id="home" class="hero">
+        <div class="container">
+            <h2>Above the Wings of Whales</h2>
+            <p>Where stories take flight, carrying you beyond the surface into the depths of truth</p>
+        </div>
+    </section>
+
+    <section id="services" class="services">
+		<div class="container">
+			<h2>Our Services</h2>
+			<div class="service-cards">
+				<!-- Service 1 -->
+				<a href="sports.html" class="card-link">
+					<div class="card">
+						<div class="gradient"></div>
+						<div class="info">
+							<div class="text">/Service 1/</div>
+							<div class="title">Sports</div>
+						</div>
+						<div class="time">Last update <span>09:28 pm</span></div>
+					</div>
+				</a>
+
+				<!-- Service 2 -->
+				<a href="health.html" class="card-link">
+					<div class="card">
+						<div class="gradient" style="background-image: linear-gradient(0deg, #0703fa, transparent);"></div>
+						<div class="info">
+							<div class="text">/Service 2/</div>
+							<div class="title">Health</div>
+						</div>
+						<div class="time">Last update <span>09:28 pm</span></div>
+					</div>
+				</a>
+
+				<!-- Service 3 -->
+				<a href="politics.html" class="card-link">
+					<div class="card">
+						<div class="gradient" style="background-image: linear-gradient(0deg, #009ece, transparent);"></div>
+						<div class="info">
+							<div class="text">/Service 3/</div>
+							<div class="title">Politics</div>
+						</div>
+						<div class="time">Last update <span>09:28 pm</span></div>
+					</div>
+				</a>
+
+				<!-- Service 4 -->
+				<a href="economics.html" class="card-link">
+					<div class="card">
+						<div class="gradient" style="background-image: linear-gradient(0deg, #2c0079, transparent);"></div>
+						<div class="info">
+							<div class="text">/Service 4/</div>
+							<div class="title">Economics</div>
+						</div>
+						<div class="time">Last update <span>09:28 pm</span></div>
+					</div>
+				</a>
+
+				<!-- Service 5 -->
+				<a href="technology.html" class="card-link">
+					<div class="card">
+						<div class="gradient" style="background-image: linear-gradient(0deg, #fffb00, transparent);"></div>
+						<div class="info">
+							<div class="text">/Service 5/</div>
+							<div class="title">Technology</div>
+						</div>
+						<div class="time">Last update <span>09:28 pm</span></div>
+					</div>
+				</a>
+			</div>
+		</div>
+	</section>
+
+
+    <footer>
+        <div class="container">
+            <p>&copy; 🐳</p>
+        </div>
+    </footer>
+</body>
+</html>
