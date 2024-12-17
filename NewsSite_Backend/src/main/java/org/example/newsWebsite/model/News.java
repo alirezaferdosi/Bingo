@@ -21,9 +21,6 @@ public class News {
     @Column(name = "title", nullable = false)
     private String title;
 
-    @Column(name = "newsPath", nullable = false)
-    private String newsPath;
-
     @Column(name = "category", nullable = false)
     private String category;
 
@@ -33,9 +30,6 @@ public class News {
     @Temporal(TemporalType.DATE)
     @Column(name = "date")
     private String date;
-
-    @Column(name = "photoPath")
-    private String photoPath;
 
     @Column(name = "verification")
     private Boolean verification;

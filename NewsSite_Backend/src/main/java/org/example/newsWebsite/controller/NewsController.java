@@ -113,7 +113,7 @@ public class NewsController {
     }
 
     @GetMapping("byCategory")
-    public ResponseEntity<List<NewsDto>> getNewsByCategory(@RequestParam("c") String category) {
+    public ResponseEntity<List<NewsDto>> getNewsByCategory(@RequestParam(name = "c") String category) {
         List<NewsDto> newsDtos = new ArrayList<>();
 
         for(News news : newsService.getNewsByCategory(category)) {
@@ -126,25 +126,25 @@ public class NewsController {
     }
 
     @PutMapping("incrementViewer")
-    public ResponseEntity<Integer> incrementNewsViewer(@RequestParam("id") Long id) {
-        if (id == null) {
+    public ResponseEntity<Integer> incrementNewsViewer(@RequestParam(name = "n") Long newsId,
+                                                       @RequestParam(name = "u") Long userId) {
+        if(!this.userService.isUserExist(userId) || !this.userService.isUserExist(newsId)) {
+            return ResponseEntity
+                           .status(HttpStatus.NOT_FOUND)
+                           .build();
+        }
+
+        Integer number = newsService.incrementNewsViewer(newsId, userId);
+        if (number == null) {
             return ResponseEntity
                            .status(HttpStatus.BAD_REQUEST)
                            .body(null);
         }
         else {
-            Integer number = newsService.incrementNewsViewer(id);
-            if (number == null) {
-                return ResponseEntity
-                               .status(HttpStatus.NOT_FOUND)
-                               .body(null);
-            }
-            else {
                 return ResponseEntity
                                .status(HttpStatus.OK)
                                .body(number);
             }
-        }
     }
 
     @DeleteMapping("delete")
@@ -158,6 +158,63 @@ public class NewsController {
             return ResponseEntity
                            .status(HttpStatus.NOT_FOUND)
                            .build();
+        }
+    }
+
+    @GetMapping("lastNews")
+    public ResponseEntity<List<NewsDto>> getLastNews(@RequestParam(name = "t",  defaultValue = "256200000") Long time,
+                                                     @RequestParam(name = "c",  defaultValue = "") String category) {
+
+        List<News> news;
+        if(category.isEmpty()){
+            news = this.newsService.getLastNews(time);
+        }
+        else {
+            news = this.newsService.getLastNews(time, category);
+        }
+
+        if(news.isEmpty()) {
+            return ResponseEntity
+                           .status(HttpStatus.NOT_FOUND)
+                           .build();
+        }
+        else {
+            List<NewsDto> newsDtos = new ArrayList<>();
+            for (News n: news) {
+                newsDtos.add(convertor.modedToDto(n));
+            }
+            return ResponseEntity
+                           .status(HttpStatus.OK)
+                           .body(newsDtos);
+        }
+    }
+
+    @GetMapping("mostViews")
+    public ResponseEntity<List<NewsDto>> getMostViews(@RequestParam(name = "t", defaultValue = "256200000") Long time,
+                                                      @RequestParam(name = "n", defaultValue = "10") Integer viewNumber,
+                                                      @RequestParam(name = "c", defaultValue = "") String category) {
+
+        List<News> news;
+        if(category.isEmpty()){
+            news = this.newsService.getMostViews(time, viewNumber);
+        }
+        else {
+            news = this.newsService.getMostViews(time, viewNumber, category);
+        }
+
+        if(news.isEmpty()) {
+            return ResponseEntity
+                           .status(HttpStatus.NOT_FOUND)
+                           .build();
+        }
+        else {
+            List<NewsDto> newsDtos = new ArrayList<>();
+            for (News n: news) {
+                newsDtos.add(convertor.modedToDto(n));
+            }
+            return ResponseEntity
+                           .status(HttpStatus.OK)
+                           .body(newsDtos);
         }
     }
 }

@@ -34,26 +34,20 @@ public class UserServiceImpl implements UserService {
     @Override
     public User editUser(User user) {
         User u = userRepository.findById(user.getId()).get();
-        if (Objects.nonNull(u)) {
-            if(Objects.nonNull(user.getUsername()) && !user.getUsername().isEmpty()) {
-                u.setUsername(user.getUsername());
-            }
-            if(Objects.nonNull(user.getPassword()) && !user.getPassword().isEmpty()) {
-                u.setPassword(user.getPassword());
-            }
-            if(Objects.nonNull(user.getEmail()) && !user.getEmail().isEmpty()) {
-                u.setEmail(user.getEmail());
-            }
-            if(Objects.nonNull(user.getPhone()) && !user.getPhone().isEmpty()) {
-                u.setPhone(user.getPhone());
-            }
-            if (Objects.nonNull(user.getPhotoPath()) && !user.getPhotoPath().isEmpty()) {
-                u.setPhotoPath(user.getPhotoPath());
-            }
-
-            return userRepository.save(u);
+        if (Objects.nonNull(user.getUsername()) && !user.getUsername().isEmpty()) {
+            u.setUsername(user.getUsername());
         }
-        return null;
+        if(Objects.nonNull(user.getPassword()) && !user.getPassword().isEmpty()) {
+            u.setPassword(user.getPassword());
+        }
+        if(Objects.nonNull(user.getEmail()) && !user.getEmail().isEmpty()) {
+            u.setEmail(user.getEmail());
+        }
+        if(Objects.nonNull(user.getPhone()) && !user.getPhone().isEmpty()) {
+            u.setPhone(user.getPhone());
+        }
+
+        return userRepository.save(u);
     }
 
     @Override
@@ -98,15 +92,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean uploadeImage(MultipartFile file, String fileName) {
-        if(storageService.store(file, fileName)){
-            User user = userRepository.getById(Long.valueOf(fileName));
-            user.setPhotoPath(fileName);
-            userRepository.save(user);
-
-            return true;
-        } else {
-            return false;
-        }
+        return storageService.store(file, fileName);
     }
 
     @Override
@@ -127,5 +113,25 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean isUserExist(Long id) {
         return userRepository.existsById(id);
+    }
+
+    @Override
+    public boolean isEmailExist(String email) {
+        for(User user : userRepository.findAll()) {
+            if(user.getEmail().equals(email)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean isPhoneExist(String phone) {
+        for(User user : userRepository.findAll()) {
+            if(user.getPhone().equals(phone)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

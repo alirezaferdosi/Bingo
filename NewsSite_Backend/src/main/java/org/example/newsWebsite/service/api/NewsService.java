@@ -27,7 +27,7 @@ public interface NewsService {
     List<News> getNewsByName(String name);
 
     @Transactional
-    Integer incrementNewsViewer(Long id);
+    Integer incrementNewsViewer(Long newsId, Long userId);
 
     @Transactional
     boolean deleteNews(Long id);
@@ -40,4 +40,14 @@ public interface NewsService {
 
     @Transactional
     boolean isExistNews(Long id);
+
+    @Transactional
+    List<News> getLastNews(Long time);
+
+    @Transactional
+    List<News> getLastNews(Long time, String category);
+
+    List<News> getMostViews(Long time, Integer limit);
+
+    List<News> getMostViews(Long time, Integer limit, String category);
 }

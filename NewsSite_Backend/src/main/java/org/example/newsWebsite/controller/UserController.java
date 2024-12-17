@@ -27,7 +27,7 @@ public class UserController {
     private PrimitiveConvertor<User, UserDto> convertor;
 
 
-    @PostMapping("add")
+    @PostMapping("signup")
     public ResponseEntity<UserDto> addUser(@RequestBody UserDto userDto) {
         userDto.setId(null);
         if(userService.isUserExist(userDto.getUsername())){
@@ -140,12 +140,40 @@ public class UserController {
         }
     }
 
-//    @PostMapping("picture")
-//    public ResponseEntity uploadProfilePicture(/*@PathVariable Long id,*/@RequestParam() MultipartFile file) {
-//        System.out.println(file.getOriginalFilename());
-//        boolean transactionStatus = userService.uploadeImage(file, String.valueOf(1));
-//        return ResponseEntity
-//                       .status(transactionStatus ? HttpStatus.OK : HttpStatus.BAD_REQUEST)
-//                       .build();
-//    }
+    /*@PostMapping("picture")
+    public ResponseEntity uploadProfilePicture(*//*@PathVariable Long id,*//*@RequestParam("file") MultipartFile file) {
+        System.out.println("----------------------------");
+        boolean transactionStatus = userService.uploadeImage(file, String.valueOf(1));
+        return ResponseEntity
+                       .status(transactionStatus ? HttpStatus.OK : HttpStatus.BAD_REQUEST)
+                       .build();
+    }*/
+
+    @GetMapping("userExistence")
+    public ResponseEntity isUserExist(@RequestParam(name = "u") String username) {
+        Boolean exist = userService.isUserExist(username);
+
+        return ResponseEntity
+                       .status(exist ? HttpStatus.FOUND : HttpStatus.NOT_FOUND)
+                       .build();
+    }
+
+    @GetMapping("emailExistence")
+    public ResponseEntity isEmailExist(@RequestParam(name = "e") String email) {
+        Boolean exist = userService.isEmailExist(email);
+
+        return ResponseEntity
+                       .status(exist ? HttpStatus.FOUND : HttpStatus.NOT_FOUND)
+                       .build();
+    }
+
+    /*@GetMapping("phoneExistence")
+    public ResponseEntity isPhoneExist(@RequestParam(name = "p") String phone) {
+        Boolean exist = userService.isPhoneExist(phone);
+
+        return ResponseEntity
+                       .status(exist ? HttpStatus.FOUND : HttpStatus.NOT_FOUND)
+                       .build();
+    }*/
+
 }

@@ -1,14 +1,14 @@
     package org.example.newsWebsite.model.convertor;
 
-    import org.example.newsWebsite.model.Comment;
-    import org.example.newsWebsite.model.dto.CommentDto;
+    import org.example.newsWebsite.model.View;
+    import org.example.newsWebsite.model.dto.ViewDto;
     import org.example.newsWebsite.service.api.NewsService;
     import org.example.newsWebsite.service.api.UserService;
     import org.springframework.beans.factory.annotation.Qualifier;
     import org.springframework.stereotype.Component;
 
-    @Component("CommentCponvertor")
-    public class CommentConvertor implements PrimitiveConvertor<Comment, CommentDto>{
+    @Component("ViewConvertor")
+    public class ViewConvertor implements PrimitiveConvertor<View, ViewDto>{
         @Qualifier("userService")
         private UserService userService;
 
@@ -16,22 +16,20 @@
         private NewsService newsService;
 
         @Override
-        public CommentDto modedToDto(Comment model) {
-            return new CommentDto(
+        public ViewDto modedToDto(View model) {
+            return new ViewDto(
                     model.getId(),
                     model.getUser().getId(),
-                    model.getNews().getId(),
-                    model.getComment()
+                    model.getNews().getId()
             );
         }
 
         @Override
-        public Comment dtoToModed(CommentDto dto) {
-            return new Comment(
+        public View dtoToModed(ViewDto dto) {
+            return new View(
                     dto.getId(),
                     userService.getUser(dto.getUser()),
-                    newsService.getNews(dto.getNews()),
-                    dto.getComment()
+                    newsService.getNews(dto.getNews())
             );
         }
     }

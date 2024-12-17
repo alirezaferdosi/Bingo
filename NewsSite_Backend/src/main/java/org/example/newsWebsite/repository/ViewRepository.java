@@ -1,9 +1,9 @@
 package org.example.newsWebsite.repository;
 
-import org.example.newsWebsite.model.Comment;
+import org.example.newsWebsite.model.View;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CommentRepository extends JpaRepository<Comment, Long> {
+public interface ViewRepository extends JpaRepository<View, Long> {
 }

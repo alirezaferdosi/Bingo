@@ -13,8 +13,7 @@ public class UserConvertor implements PrimitiveConvertor<User, UserDto>{
                 model.getUsername(),
                 model.getPhone(),
                 model.getEmail(),
-                model.getPassword(),
-                model.getPhotoPath()
+                model.getPassword()
         );
     }
 
@@ -25,8 +24,7 @@ public class UserConvertor implements PrimitiveConvertor<User, UserDto>{
                 dto.getUsername(),
                 dto.getPhone(),
                 dto.getEmail(),
-                dto.getPassword(),
-                dto.getPhotoPath()
+                dto.getPassword()
         );
     }
 }

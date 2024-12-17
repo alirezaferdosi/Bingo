@@ -11,8 +11,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "comments")
-public class Comment {
+@Table(name = "view")
+public class View {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -25,7 +25,4 @@ public class Comment {
     @ManyToOne(targetEntity = News.class/*, cascade = CascadeType.ALL*/)
     @JoinColumn(name = "news_id", nullable = false)
     private News news;
-
-    @Column(name = "comment", nullable = false)
-    private String comment;
 }

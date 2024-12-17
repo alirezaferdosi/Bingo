@@ -27,19 +27,15 @@ public class UserDto {
     @Pattern(regexp = "^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}$", message = "Password must contain at least one uppercase letter, one lowercase letter, one number, one special character (!@#$%^&*), and must be at least 8 characters long.")
     private String password;
 
-    private String photoPath;
-
     public UserDto(Long id,
                    @NonNull String username,
                    @NonNull String phone,
                    @NonNull String email,
-                   @NonNull String password,
-                   String photoPath) {
+                   @NonNull String password) {
         this.id = id;
         this.username = username;
         this.phone = phone;
         this.email = email;
         this.password = password;
-        this.photoPath = photoPath;
     }
 }

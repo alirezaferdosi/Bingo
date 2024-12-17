@@ -8,22 +8,19 @@ import lombok.ToString;
 
 @ToString
 @Getter @Setter
-public class CommentDto {
+public class ViewDto {
     private Long id;
 
     private Long user;
 
     private Long news;
 
-    private String comment;
 
-    public CommentDto(Long id,
-                      @NonNull Long user,
-                      @NonNull Long news,
-                      @NonNull String comment) {
+    public ViewDto(Long id,
+                   @NonNull Long user,
+                   @NonNull Long news) {
         this.id = id;
         this.user = user;
         this.news = news;
-        this.comment = comment;
     }
 }

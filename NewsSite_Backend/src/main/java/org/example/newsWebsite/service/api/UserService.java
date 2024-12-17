@@ -42,4 +42,10 @@ public interface UserService {
 
     @Transactional
     boolean isUserExist(Long id);
+
+    @Transactional
+    boolean isEmailExist(String email);
+
+    @Transactional
+    boolean isPhoneExist(String phone);
 }
