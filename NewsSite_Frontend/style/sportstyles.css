@@ -212,6 +212,9 @@ body:has(.news-card:focus-within) {
     color: #888;
     margin: 0 1rem 1rem;
 }
+
+
+
 /* Blurring other cards when one is focused */
 .news-grid:has(.news-card:focus-within) .news-card:not(:focus-within) {
     filter: blur(5px);

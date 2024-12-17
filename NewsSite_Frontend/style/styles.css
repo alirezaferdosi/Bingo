@@ -88,6 +88,27 @@ header .nav-links a {
     transition: font-size 0.3s ease;
 }
 
+/*=========================================================  Favorite news section sttings  ========================================*/
+
+.Favservices {
+    padding: 2rem 0;
+    text-align: center;
+    background-image: url('../photo/back/pexel3.jpg'); /* Replace with your image path */
+    background-size: cover; /* Ensures the image covers the entire section */
+    background-position: center; /* Centers the background image */
+    background-repeat: no-repeat; /* Ensures the image doesn't repeat */
+}
+
+.Favservices h2 {
+    margin-bottom: 2rem;
+    font-size: 2rem;
+    color: #7529fc;
+}
+
+/*=============================================================================    */
+
+
+/*============================================   cards section sttings  ====================================*/
 /* Services Section */
 .services {
     padding: 2rem 0;
@@ -109,21 +130,23 @@ header .nav-links a {
     justify-content: space-around;
     flex-wrap: wrap;
 }
-
+/*=============================================================================    */
 .card {
     position: relative;
-    background-color: transparent;
+    /*background-color: transparent;*/
+	filter: grayscale(100%);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-	/*backdrop-filter: blur(10px);*//*bluring the cards*/
+	/*backdrop-filter: blur(10px);*/                      /*bluring the cards*/
     height: 350px;
     width: 250px;
     margin-right: 3rem;
     margin-bottom: 2rem;
     overflow: hidden;
-    transition: filter 0.5s ease, transform 0.3s ease; /* Smooth transition */
+    transition: filter 0.5s ease, transform 2.0s ease; /* Smooth transition */
     background-color: rgba(0, 0, 0, 0.1); /* Optional base color */
 	border-radius: 15px;
 }
+
 
 /* Add the pseudo-element for the background image */
 .card::before {
@@ -140,11 +163,14 @@ header .nav-links a {
     transition: opacity 0.5s ease; /* Smooth fade-in effect */
     z-index: -1; /* Ensure it stays behind other content */
 	border-radius: 15px;
+	filter: grayscale(0%);
+    
 }
 
 .card:hover {
     filter: blur(0); /* Remove blur on hover */
     transform: scale(1.05); /* Slightly enlarge the card */
+	
 }
 
 .card:hover::before {
@@ -169,22 +195,22 @@ header .nav-links a {
 
 /* Unique background images for each card */
 .sports::before {
-    background-image: url('../photo/back/sportback1.jpg'); /* Replace with the actual image URL */
+    background-image: url('../photo/back/sportback1.jpg'); 
 }
 
 .Health::before {
-    background-image: url('../photo/back/health2.jpg'); /* Replace with the actual image URL */
+    background-image: url('../photo/back/health2.jpg'); 
 }
 
 .Politics::before {
-    background-image: url('../photo/back/political4.jpg'); /* Replace with the actual image URL */
+    background-image: url('../photo/back/political4.jpg'); 
 }
 
 .Economics::before {
-    background-image: url('../photo/back/economy2.jpg'); /* Replace with the actual image URL */
+    background-image: url('../photo/back/economy2.jpg'); 
 }
 .Technology::before {
-    background-image: url('../photo/back/technological1.jpg'); /* Replace with the actual image URL */
+    background-image: url('../photo/back/technological1.jpg'); 
 }
 
 
@@ -198,6 +224,185 @@ header .nav-links a {
 .card-link .card {
     cursor: pointer; /* Change the cursor to indicate it's clickable */
 }
+
+
+
+.gradient {
+    position: absolute;
+    background-image: linear-gradient(0deg, #e90606, transparent);
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+.info {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #fff;
+}
+
+.text {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.title {
+    font-size: 24px;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.time {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #fff;
+    font-size: 16px;
+}
+
+.time span {
+    font-size: 14px;
+    color: #ddd;
+}
+
+/* Footer */
+footer {
+    background: #333;
+    color: white;
+    padding: 0.2rem 0; /* Minimized vertical padding */
+    text-align: center;
+    font-size: 0.7rem; /* Smaller font size */
+}
+
+
+
+
+
+.news-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    position: relative;
+}
+
+.news-card {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, z-index 0.3s ease, width 0.3s ease, height 0.3s ease;
+}
+
+.news-card:hover {
+    transform: scale(1.02);
+}
+
+body:has(.news-card:focus-within) {
+    overflow: hidden;
+}
+
+/* Adjust positioning of the focused card */
+.news-card:focus-within {
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    right: 1rem;
+    margin: 0 auto;
+    z-index: 10;
+    transform: none;
+    width: auto;
+    max-width: 90%;
+    height: auto;
+    max-height: 90vh;
+    overflow: auto;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    background: #fff;
+}
+
+/* Hide scrollbar for WebKit browsers (Chrome, Edge, Safari) */
+.news-card:focus-within::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for Firefox */
+.news-card:focus-within {
+    scrollbar-width: none; /* Firefox-specific */
+	-ms-overflow-style: none;/* Internet Explorer and Edge */
+}
+
+/* General rule for all browsers */
+.news-card:focus-within {
+     
+}
+
+
+.news-image {/* manage the image in the card normaly*/
+    width: 100%; /* Ensures the width of the image fills the container */
+    height: 200px; /* Set a fixed height for uniformity */
+    display: block;
+}
+.news-card:focus-within .news-image {/* manage the image in the card for when we focus on the card*/
+    height: auto; /* Allow the image to adjust its height */
+    object-fit: contain; /* Ensures the full image fits within the container */
+}
+
+
+.news-title {
+    font-size: 1.5rem;
+    margin: 1rem;
+    color: #222;
+}
+
+.news-body {
+    font-size: 1rem;
+    color: #555;
+    margin: 0 1rem 1rem;
+    max-height: 0; /* Collapse the content */
+    overflow: hidden; /* Hide overflowing content */
+    transition: max-height 0.3s ease, opacity 0.3s ease; /* Smooth reveal effect */
+    opacity: 0; /* Start invisible */
+}
+
+.news-card {
+    display: flex;
+    flex-direction: column; /* Ensure content stacks vertically within the card */
+    align-items: stretch; /* Avoid alignment issues */
+}
+
+.news-card:hover .news-body {
+    max-height: 50px; /* Adjust as needed for the expanded height */
+    opacity: 1; /* Make visible */
+}
+
+.news-card:focus-within .news-body {
+    max-height: none; /* Remove the height constraint */
+    opacity: 1; /* Fully visible */
+    overflow: visible; /* Allow content to expand naturally */
+}
+
+
+.news-footer {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    color: #888;
+    margin: 0 1rem 1rem;
+}
+
+
+
+/* Blurring other cards when one is focused */
+.news-grid:has(.news-card:focus-within) .news-card:not(:focus-within) {
+    filter: blur(5px);
+    pointer-events: none; /* Prevent interaction with blurred cards */
+}
+
+
 
 
 

@@ -526,6 +526,10 @@ button:hover {
 
 /*===========================================================*/
 
+
+/*====================   profile editing    ======================*/
+
+
 /* Read-only field: Styled to look like plain text */
 .profileTable .field input[readonly] {
     border: none; /* No visible border */
@@ -623,3 +627,151 @@ button:hover {
     padding: 0;
     font-size: 14px;
 }
+/*===========================================================*/
+
+
+/*====================   news in dashboarrd    ======================*/
+
+
+.recent-activities {
+    padding: 2rem 0;
+    background-color: #f9f9f9;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    color: #333;
+}
+
+.news-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    position: relative;
+}
+
+.news-card {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, z-index 0.3s ease, width 0.3s ease, height 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.news-card:hover {
+    transform: scale(1.02);
+}
+
+body:has(.news-card:focus-within) {
+    overflow: hidden;
+}
+
+.news-card:focus-within {
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    right: 1rem;
+    margin: 0 auto;
+    z-index: 10;
+    transform: none;
+    width: auto;
+    max-width: 90%;
+    height: auto;
+    max-height: 90vh;
+    overflow: auto;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    background: #fff;
+}
+
+.news-card:focus-within::-webkit-scrollbar {
+    display: none;
+}
+
+.news-card:focus-within {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.news-image {
+    width: 100%;
+    height: 200px;
+    display: block;
+}
+
+.news-card:focus-within .news-image {
+    height: auto;
+    object-fit: contain;
+}
+
+.news-title {
+    font-size: 1.5rem;
+    margin: 1rem;
+    color: #222;
+}
+
+.news-body {
+    font-size: 1rem;
+    color: #555;
+    margin: 0 1rem 1rem;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, opacity 0.3s ease;
+    opacity: 0;
+}
+
+.news-card {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.news-card:hover .news-body {
+    max-height: 50px;
+    opacity: 1;
+}
+
+.news-card:focus-within .news-body {
+    max-height: none;
+    opacity: 1;
+    overflow: visible;
+}
+
+.news-footer {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    color: #888;
+    margin: 0 1rem 1rem;
+}
+
+.news-grid:has(.news-card:focus-within) .news-card:not(:focus-within) {
+    filter: blur(5px);
+    pointer-events: none;
+}
+
+
+.accept-btn,
+.deny-btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.accept-btn {
+    background-color: #4CAF50; /* Green */
+    color: white;
+}
+
+.deny-btn {
+    background-color: #f44336; /* Red */
+    color: white;
+}
+
+/*===========================================================*/

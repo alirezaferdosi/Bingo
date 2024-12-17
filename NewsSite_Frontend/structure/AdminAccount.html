@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../style/userAccount.css">
-    <title>User Dashboard</title>
+    <link rel="stylesheet" href="../style/AdminAccount.css">
+    <title>Admin Dashboard</title>
 </head>
 
 <body>
@@ -68,7 +68,7 @@
             <div class="overview">
                 <div class="title">
                     <ion-icon name="speedometer"></ion-icon>
-                    <span class="text">User Dashboard</span>
+                    <span class="text">Admin Dashboard</span>
                 </div>
                 <div class="boxes">
                     <div class="box box1">
@@ -97,15 +97,61 @@
             
 
             <!-- Recent Activities -->
-            <div class="data-table activityTable">
-                <div class="title">
-                    <ion-icon name="time-outline"></ion-icon>
-                    <span class="text">Recent Activities</span>
-                </div>
-                <div>
-                    <li>#Noting Here For You</li>
-                </div>
-            </div>
+            <div style="display:none" class="data-table dashboardTable">
+				<div class="container">
+					<h2 class="section-title"> </h2><!-- just for space -->
+					<div class="news-grid">
+						<div class="news-card" tabindex="0">
+							<img src="../photo/news/sports/ID1.jpeg" class="news-image" alt="News Image">
+							<h3 class="news-title">News Title</h3>
+							<p class="news-body">O’er all the hilltops...</p>
+							<div class="news-footer">
+								<button class="accept-btn">Accept</button>
+								<button class="deny-btn">Deny</button>
+							</div>
+						</div>
+
+						<div class="news-card" tabindex="0">
+							<img src="../photo/news/sports/ID2.jpg" class="news-image" alt="News Image">
+							<h3 class="news-title">Second title</h3>
+							<p class="news-body">Sed do eiusmod tempor...</p>
+							<div class="news-footer">
+								<button class="accept-btn">Accept</button>
+								<button class="deny-btn">Deny</button>
+							</div>
+						</div>
+						<div class="news-card" tabindex="0">
+							<img src="../photo/news/sports/ID3.jpeg" class="news-image" alt="News Image">
+							<h3 class="news-title">Second title</h3>
+							<p class="news-body">Sed do eiusmod tempor...</p>
+							<div class="news-footer">
+								<button class="accept-btn">Accept</button>
+								<button class="deny-btn">Deny</button>
+							</div>
+						</div>
+						<div class="news-card" tabindex="0">
+							<img src="../photo/news/sports/ID4.jpg" class="news-image" alt="News Image">
+							<h3 class="news-title">Second title</h3>
+							<p class="news-body">Sed do eiusmod tempor...</p>
+							<div class="news-footer">
+								<button class="accept-btn">Accept</button>
+								<button class="deny-btn">Deny</button>
+							</div>
+						</div>
+						<div class="news-card" tabindex="0">
+							<img src="../photo/news/sports/ID5.webp" class="news-image" alt="News Image">
+							<h3 class="news-title">Second title</h3>
+							<p class="news-body">Sed do eiusmod tempor...</p>
+							<div class="news-footer">
+								<button class="accept-btn">Accept</button>
+								<button class="deny-btn">Deny</button>
+							</div>
+						</div>
+
+						<!-- Additional news cards here... -->
+					</div>
+				</div>
+			</div>
 
             
             <!-- Content -->
@@ -143,7 +189,7 @@
             
 
             <!--  Likes -->
-			<div style="display:none" class="data-table VehicleDetails">
+			<div style="display:none" class="data-table Details">
 			<div class="title">
 				<ion-icon name="heart-outline"></ion-icon>
 				<span class="text">Favorite tags</span>
@@ -247,7 +293,7 @@
         </div>
     </section>
 
-    <script src="../js/userAccount.js"></script>
+    <script src="../js/AdminAccount.js"></script>
     
     <!-- Sources for icons -->
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
