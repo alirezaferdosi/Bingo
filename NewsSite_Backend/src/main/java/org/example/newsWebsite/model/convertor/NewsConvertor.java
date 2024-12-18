@@ -14,7 +14,7 @@ public class NewsConvertor implements PrimitiveConvertor<News, NewsDto> {
     private UserService userService;
 
     @Override
-    public NewsDto modedToDto(News model) {
+    public NewsDto modelToDto(News model) {
         return new NewsDto(
                 model.getId(),
                 model.getTitle(),
@@ -27,7 +27,7 @@ public class NewsConvertor implements PrimitiveConvertor<News, NewsDto> {
     }
 
     @Override
-    public News dtoToModed(NewsDto dto) {
+    public News dtoToModel(NewsDto dto) {
         return new News(
                 dto.getId(),
                 dto.getTitle(),

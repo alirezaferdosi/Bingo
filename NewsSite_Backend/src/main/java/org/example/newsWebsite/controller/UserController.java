@@ -2,7 +2,9 @@ package org.example.newsWebsite.controller;
 
 import org.example.newsWebsite.model.User;
 import org.example.newsWebsite.model.convertor.PrimitiveConvertor;
+import org.example.newsWebsite.model.dto.FavoritesDto;
 import org.example.newsWebsite.model.dto.UserDto;
+import org.example.newsWebsite.service.api.NewsService;
 import org.example.newsWebsite.service.api.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -23,22 +25,34 @@ public class UserController {
     private UserService userService;
 
     @Autowired
+    @Qualifier("newsServiceImpl")
+    private NewsService newsService;
+
+    @Autowired
     @Qualifier("UserConvertor")
-    private PrimitiveConvertor<User, UserDto> convertor;
+    private PrimitiveConvertor<User, UserDto> userConvertor;
+
+    @Autowired
+    @Qualifier("favoritesConvertor")
+    private PrimitiveConvertor<Byte, FavoritesDto> favoritesConvertor;
 
 
     @PostMapping("signup")
     public ResponseEntity<UserDto> addUser(@RequestBody UserDto userDto) {
         userDto.setId(null);
+        if(userDto.getFavorites() == null){
+            userDto.setFavorites(new FavoritesDto(false,false,false,false,false));
+        }
+
         if(userService.isUserExist(userDto.getUsername())){
             return ResponseEntity
                            .status(HttpStatus.CONFLICT)
                            .body(null);
         }
         else {
-            UserDto userCreate = convertor.modedToDto(
+            UserDto userCreate = userConvertor.modelToDto(
                                     userService.addUser(
-                                            convertor.dtoToModed(userDto)
+                                            userConvertor.dtoToModel(userDto)
                                     )
                         );
             return ResponseEntity
@@ -51,7 +65,7 @@ public class UserController {
     public ResponseEntity<List<UserDto>> getAllUsers() {
         List<UserDto> userDtos = new ArrayList<>();
         for(User user : userService.getAllUsers()){
-            userDtos.add(convertor.modedToDto(user));
+            userDtos.add(userConvertor.modelToDto(user));
         }
         return ResponseEntity
                        .status(HttpStatus.FOUND)
@@ -67,7 +81,7 @@ public class UserController {
                            .body(null);
         }
         else {
-            UserDto userDto = convertor.modedToDto(user);
+            UserDto userDto = userConvertor.modelToDto(user);
             return ResponseEntity
                            .status(HttpStatus.FOUND)
                            .body(userDto);
@@ -83,7 +97,7 @@ public class UserController {
                            .body(null);
         }
         else {
-            UserDto userDto = convertor.modedToDto(user);
+            UserDto userDto = userConvertor.modelToDto(user);
             return ResponseEntity
                            .status(HttpStatus.FOUND)
                            .body(userDto);
@@ -92,7 +106,7 @@ public class UserController {
 
     @PutMapping("edit")
     public ResponseEntity<UserDto> editUser(@RequestBody UserDto userDto){
-        User user = userService.editUser(convertor.dtoToModed(userDto));
+        User user = userService.editUser(userConvertor.dtoToModel(userDto));
 
         if(userService.isUserExist(userDto.getUsername()) && !userService.getUser(userDto.getId()).getUsername().equals(userDto.getUsername())){
             return ResponseEntity
@@ -105,7 +119,7 @@ public class UserController {
                            .body(null);
         }
         else {
-            userDto = convertor.modedToDto(user);
+            userDto = userConvertor.modelToDto(user);
             return ResponseEntity
                            .status(HttpStatus.OK)
                            .body(userDto);
@@ -176,4 +190,55 @@ public class UserController {
                        .build();
     }*/
 
+    @GetMapping("allVisitsI")
+    public ResponseEntity<Integer> getAllVisits(@RequestParam(name = "i") Long userId) {
+        return ResponseEntity
+                       .status(HttpStatus.OK)
+                       .body(newsService.getAllVisits(userId));
+    }
+
+    @GetMapping("allVisitsU")
+    public ResponseEntity<Integer> getAllVisits(@RequestParam(name = "u") String username) {
+        return ResponseEntity
+                       .status(HttpStatus.OK)
+                       .body(newsService.getAllVisits(username));
+    }
+
+    @GetMapping("allNewsI")
+    public ResponseEntity<Integer> getAllNews(@RequestParam(name = "i") Long userId) {
+        return ResponseEntity
+                       .status(HttpStatus.OK)
+                       .body(newsService.getNumberOfAllNews(userId));
+    }
+
+    @GetMapping("allNewsU")
+    public ResponseEntity<Integer> getAllNews(@RequestParam(name = "u") String username) {
+        return ResponseEntity
+                       .status(HttpStatus.OK)
+                       .body(newsService.getNumberOfAllNews(username));
+    }
+
+    @PutMapping("changeFavorites")
+    public ResponseEntity<Boolean> changeFavorites(@RequestParam(name = "id") Long id,@RequestBody FavoritesDto favoritesDto) {
+        boolean status = userService.changeFavorites(id, favoritesConvertor.dtoToModel(favoritesDto));
+        return ResponseEntity
+                       .status(status ? HttpStatus.OK : HttpStatus.NOT_FOUND)
+                       .body(status);
+    }
+
+    @GetMapping("favorites")
+    public ResponseEntity<FavoritesDto> getFavorites(@RequestParam(name = "id") Long id) {
+        Byte f = userService.getFavorites(id);
+        if(f == null){
+            return ResponseEntity
+                           .status(HttpStatus.NOT_FOUND)
+                           .build();
+        }
+        else {
+            FavoritesDto favoritesDto = favoritesConvertor.modelToDto(f);
+            return ResponseEntity
+                           .status(HttpStatus.FOUND)
+                           .body(favoritesDto);
+        }
+    }
 }

@@ -16,7 +16,7 @@
         private NewsService newsService;
 
         @Override
-        public ViewDto modedToDto(View model) {
+        public ViewDto modelToDto(View model) {
             return new ViewDto(
                     model.getId(),
                     model.getUser().getId(),
@@ -25,7 +25,7 @@
         }
 
         @Override
-        public View dtoToModed(ViewDto dto) {
+        public View dtoToModel(ViewDto dto) {
             return new View(
                     dto.getId(),
                     userService.getUser(dto.getUser()),

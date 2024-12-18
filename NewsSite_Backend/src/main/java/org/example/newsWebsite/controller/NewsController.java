@@ -48,9 +48,9 @@ public class NewsController {
         newsDto.setViewNumber(0);
 
         if(userService.isUserExist(newsDto.getAuthor())){
-            NewsDto n = convertor.modedToDto(
+            NewsDto n = convertor.modelToDto(
                     newsService.addNews(
-                            convertor.dtoToModed(newsDto)
+                            convertor.dtoToModel(newsDto)
                     )
             );
             return ResponseEntity
@@ -71,7 +71,7 @@ public class NewsController {
 
         newsDto.setDate(localDateTime.format(formatter));
 
-        News n = newsService.editNews(convertor.dtoToModed(newsDto));
+        News n = newsService.editNews(convertor.dtoToModel(newsDto));
 
         if (n == null) {
             return ResponseEntity
@@ -79,7 +79,7 @@ public class NewsController {
                            .body(null);
         }
         else {
-            NewsDto newsDto1 = convertor.modedToDto(n);
+            NewsDto newsDto1 = convertor.modelToDto(n);
             return ResponseEntity
                            .status(HttpStatus.OK)
                            .body(newsDto1);
@@ -91,7 +91,7 @@ public class NewsController {
         List<NewsDto> newsDtos = new ArrayList<>();
 
         for(News news : newsService.getAllNews()) {
-            newsDtos.add(convertor.modedToDto(news));
+            newsDtos.add(convertor.modelToDto(news));
         }
 
         return ResponseEntity
@@ -104,7 +104,7 @@ public class NewsController {
         List<NewsDto> newsDtos = new ArrayList<>();
 
         for(News news : newsService.getAllNewsConfirmed()) {
-            newsDtos.add(convertor.modedToDto(news));
+            newsDtos.add(convertor.modelToDto(news));
         }
 
         return ResponseEntity
@@ -117,7 +117,7 @@ public class NewsController {
         List<NewsDto> newsDtos = new ArrayList<>();
 
         for(News news : newsService.getNewsByCategory(category)) {
-            newsDtos.add(convertor.modedToDto(news));
+            newsDtos.add(convertor.modelToDto(news));
         }
 
         return ResponseEntity
@@ -181,7 +181,7 @@ public class NewsController {
         else {
             List<NewsDto> newsDtos = new ArrayList<>();
             for (News n: news) {
-                newsDtos.add(convertor.modedToDto(n));
+                newsDtos.add(convertor.modelToDto(n));
             }
             return ResponseEntity
                            .status(HttpStatus.OK)
@@ -210,12 +210,26 @@ public class NewsController {
         else {
             List<NewsDto> newsDtos = new ArrayList<>();
             for (News n: news) {
-                newsDtos.add(convertor.modedToDto(n));
+                newsDtos.add(convertor.modelToDto(n));
             }
             return ResponseEntity
                            .status(HttpStatus.OK)
                            .body(newsDtos);
         }
+    }
+
+    @GetMapping("viewsByCategory")
+    public ResponseEntity<Integer> getViewsByCategory(@RequestParam(name = "c") String category) {
+        return ResponseEntity
+                       .status(HttpStatus.OK)
+                       .body(newsService.getAllVisitsByCategory(category));
+    }
+
+    @GetMapping("newsByCategory")
+    public ResponseEntity<Integer> getNumberOfNewsByCategory(@RequestParam(name = "c") String category) {
+        return ResponseEntity
+                       .status(HttpStatus.OK)
+                       .body(newsService.getNumberOfAllNewsbyCategory(category));
     }
 }
 

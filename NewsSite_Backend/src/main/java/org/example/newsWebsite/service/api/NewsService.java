@@ -47,7 +47,39 @@ public interface NewsService {
     @Transactional
     List<News> getLastNews(Long time, String category);
 
+    @Transactional
     List<News> getMostViews(Long time, Integer limit);
 
+    @Transactional
     List<News> getMostViews(Long time, Integer limit, String category);
+
+    @Transactional
+    Integer getAllVisits();
+
+    @Transactional
+    Integer getAllVisits(Long userId);
+
+    @Transactional
+    Integer getAllVisits(String username);
+
+    @Transactional
+    Integer getAllVisitsByCategory(String category);
+
+    @Transactional
+    Integer getNumberOfAllNews();
+
+    @Transactional
+    Integer getNumberOfAllNewsbyCategory(String category);
+
+    @Transactional
+    Integer getNumberOfAllNews(Long userId);
+
+    @Transactional
+    Integer getNumberOfAllNews(String username);
+
+    @Transactional
+    Boolean confirmNews(Long id);
+
+    @Transactional
+    Boolean rejectNews(Long id);
 }

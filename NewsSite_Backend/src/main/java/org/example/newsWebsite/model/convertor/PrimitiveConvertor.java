@@ -1,7 +1,7 @@
 package org.example.newsWebsite.model.convertor;
 
 public interface PrimitiveConvertor<M, D> {
-    D modedToDto(M model);
+    D modelToDto(M model);
 
-    M dtoToModed(D dto);
+    M dtoToModel(D dto);
 }

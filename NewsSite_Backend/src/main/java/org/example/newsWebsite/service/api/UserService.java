@@ -48,4 +48,13 @@ public interface UserService {
 
     @Transactional
     boolean isPhoneExist(String phone);
+
+    @Transactional
+    Integer getNumberOfUsers();
+
+    @Transactional
+    Boolean changeFavorites(Long id, Byte favorites);
+
+    @Transactional
+    Byte getFavorites(Long id);
 }

@@ -1,10 +1,7 @@
 package org.example.newsWebsite.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Setter
 @Getter
@@ -29,4 +26,8 @@ public class User {
 
     @Column(name = "password", nullable = false)
     private String password;
+
+//    @Value("${app.favorites}")
+    @Column(name = "favorites")
+    private Byte favorites = 0;
 }

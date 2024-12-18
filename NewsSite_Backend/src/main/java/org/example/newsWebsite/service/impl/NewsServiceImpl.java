@@ -75,7 +75,8 @@ import java.util.Objects;
         List<News> news = new ArrayList<>();
 
         for(News n : newsRepository.findAll()) {
-            if(n.getCategory().equals(category))
+            if(n.getCategory().equals(category) &&
+               n.getVerification())
                 news.add(n);
         }
         return news;
@@ -105,11 +106,13 @@ import java.util.Objects;
         if(newsRepository.existsById(id)) {
             return newsRepository.getById(id);
         }
-        return null;    }
+        return null;
+    }
 
     public Integer incrementNewsViewer(Long newsId, Long userId) {
         for(View view : viewRepository.findAll()) {
-            if(view.getNews().getId().equals(newsId) && view.getUser().getId().equals(userId)) {
+            if(view.getNews().getId().equals(newsId) &&
+               view.getUser().getId().equals(userId)) {
                 return null;
             }
         }
@@ -153,7 +156,8 @@ import java.util.Objects;
 
                 Long diff = now.getTime() - date.getTime();
 
-                if(diff < time){
+                if(diff < time &&
+                   n.getVerification()){
                     news.add(n);
                 }
             } catch (Exception e){
@@ -179,7 +183,9 @@ import java.util.Objects;
 
                 Long diff = now.getTime() - date.getTime();
 
-                if(diff < time && n.getCategory().equals(category)){
+                if(diff < time &&
+                   n.getCategory().equals(category) &&
+                   n.getVerification()){
                     news.add(n);
                 }
             } catch (Exception e){
@@ -205,7 +211,9 @@ import java.util.Objects;
 
                 Long diff = now.getTime() - date.getTime();
 
-                if(diff < time && n.getViewNumber() >= limit){
+                if(diff < time &&
+                   n.getViewNumber() >= limit &&
+                   n.getVerification()){
                     news.add(n);
                 }
             } catch (Exception e){
@@ -232,7 +240,8 @@ import java.util.Objects;
 
                 if(diff < time &&
                    n.getViewNumber() >= limit &&
-                   n.getCategory().equals(category)){
+                   n.getCategory().equals(category) &&
+                   n.getVerification()){
                     news.add(n);
                 }
             } catch (Exception e){
@@ -242,4 +251,107 @@ import java.util.Objects;
         return news;
     }
 
+    public Integer getAllVisits() {
+        Integer visits = 0;
+        for(News n : newsRepository.findAll()) {
+            if(n.getVerification())
+                visits += n.getViewNumber();
+        }
+        return visits;
+    }
+
+    @Override
+    public Integer getAllVisits(Long userId) {
+        Integer visits = 0;
+        for(News n : newsRepository.findAll()) {
+            if(n.getAuthor().getId().equals(userId) &&
+               n.getVerification()){
+                visits += n.getViewNumber();
+            }
+        }
+        return visits;
+    }
+
+    @Override
+    public Integer getAllVisits(String username) {
+        Integer visits = 0;
+        for(News n : newsRepository.findAll()) {
+            if(n.getAuthor().getUsername().equals(username) &&
+               n.getVerification()){
+                visits += n.getViewNumber();
+            }
+        }
+        return visits;
+    }
+
+    @Override
+    public Integer getAllVisitsByCategory(String category) {
+        Integer visits = 0;
+
+        for(News n : newsRepository.findAll()) {
+            if(n.getCategory().equals(category) &&
+               n.getVerification()){
+                visits += n.getViewNumber();
+            }
+        }
+        return visits;
+    }
+
+    @Override
+    public Integer getNumberOfAllNews() {
+        return newsRepository.findAll().size();
+    }
+
+    @Override
+    public Integer getNumberOfAllNewsbyCategory(String category) {
+        Integer couter = 0;
+        for(News n : newsRepository.findAll()) {
+            if(n.getCategory().equals(category) &&
+               n.getVerification()){
+                couter++;
+            }
+        }
+        return couter;
+    }
+
+    @Override
+    public Integer getNumberOfAllNews(Long userId) {
+        Integer counter = 0;
+        for(News n : newsRepository.findAll()) {
+            if(n.getAuthor().getId().equals(userId) &&
+               n.getVerification()){
+                counter++;
+            }
+        }
+        return counter;
+    }
+
+    @Override
+    public Integer getNumberOfAllNews(String username) {
+        Integer counter = 0;
+        for(News n : newsRepository.findAll()) {
+            if(n.getAuthor().getUsername().equals(username) &&
+               n.getVerification()){
+                counter++;
+            }
+        }
+        return counter;
+    }
+
+    @Override
+    public Boolean confirmNews(Long id) {
+        if(this.isExistNews(id)){
+            News news = newsRepository.findById(id).get();
+            news.setVerification(true);
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    @Override
+    public Boolean rejectNews(Long id) {
+        return this.deleteNews(id);
+    }
 }

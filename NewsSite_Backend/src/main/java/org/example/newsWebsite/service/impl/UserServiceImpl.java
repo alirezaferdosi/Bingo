@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User editUser(User user) {
         User u = userRepository.findById(user.getId()).get();
-        if (Objects.nonNull(user.getUsername()) && !user.getUsername().isEmpty()) {
+        if(Objects.nonNull(user.getUsername()) && !user.getUsername().isEmpty()) {
             u.setUsername(user.getUsername());
         }
         if(Objects.nonNull(user.getPassword()) && !user.getPassword().isEmpty()) {
@@ -45,6 +45,9 @@ public class UserServiceImpl implements UserService {
         }
         if(Objects.nonNull(user.getPhone()) && !user.getPhone().isEmpty()) {
             u.setPhone(user.getPhone());
+        }
+        if(Objects.nonNull(user.getFavorites())){
+            u.setFavorites(user.getFavorites());
         }
 
         return userRepository.save(u);
@@ -133,5 +136,29 @@ public class UserServiceImpl implements UserService {
             }
         }
         return false;
+    }
+
+    @Override
+    public Integer getNumberOfUsers() {
+        return userRepository.findAll().size();
+    }
+
+    @Override
+    public Boolean changeFavorites(Long id, Byte favorites) {
+        if(this.isUserExist(id)){
+            User user = userRepository.findById(id).get();
+            user.setFavorites(favorites);
+            userRepository.save(user);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public Byte getFavorites(Long id) {
+        if(this.isUserExist(id)){
+            return userRepository.findById(id).get().getFavorites();
+        }
+        return null;
     }
 }
