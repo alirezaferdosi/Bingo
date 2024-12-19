@@ -97,8 +97,12 @@
             </div>
             
 
+			
             <!-- Recent Activities -->
             <div style="display:none" class="data-table dashboardTable">
+				<div class="toggle-container">
+					<button id="toggleButton" class="toggle-btn" data-state="approval">Pending Approval</button>
+				</div>
 				<div class="container">
 					<h2 class="section-title"> </h2><!-- just for space -->
 					<div class="news-grid">
@@ -233,9 +237,16 @@
 			<div style="display:none" class="data-table profileTable">
 				<div class="title">
 					<ion-icon name="person-circle-outline"></ion-icon>
-					<span class="text">Profile Details</span>
+					<span class="text">َProfile Details</span>
 				</div>
 				<div>
+					<!-- Username -->
+					<div class="field">
+						<label for="username">Username:</label>
+						<input type="text" id="username" value="userName123" readonly />
+						<button class="edit-btn" onclick="toggleEdit('username')">Edit</button>
+					</div>
+
 					<!-- Phone -->
 					<div class="field">
 						<label for="phone">Phone:</label>

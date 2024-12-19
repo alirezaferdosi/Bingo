@@ -25,15 +25,24 @@ function togglePasswordEdit() {
     const isReadOnly = passwordInput.hasAttribute("readonly");
 
     if (isReadOnly) {
+        // Enable editing
         passwordInput.removeAttribute("readonly");
         confirmPasswordInput.removeAttribute("readonly");
         confirmPasswordInput.style.display = "inline"; // Show the confirmation field
     } else {
+        // Check if passwords match
+        if (passwordInput.value !== confirmPasswordInput.value) {
+            alert("Passwords aren't the same. Please correct them.");
+            return; // Do not hide the confirmation field or make inputs read-only
+        }
+
+        // Disable editing if passwords match
         passwordInput.setAttribute("readonly", true);
         confirmPasswordInput.setAttribute("readonly", true);
         confirmPasswordInput.style.display = "none"; // Hide the confirmation field
     }
 }
+
 
 function showPassword() {
     const password = document.getElementById("password");

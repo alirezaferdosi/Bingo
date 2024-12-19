@@ -1,3 +1,6 @@
+
+
+/////////////////////////////////////  Edit profile
 function toggleEdit(fieldId) {
 	
     const field = document.getElementById(fieldId);
@@ -16,7 +19,6 @@ function toggleEdit(fieldId) {
 	
 }
 
-//	resizeTextbox(fieldId);
 
 // Handle toggling password edit
 function togglePasswordEdit() {
@@ -25,15 +27,24 @@ function togglePasswordEdit() {
     const isReadOnly = passwordInput.hasAttribute("readonly");
 
     if (isReadOnly) {
+        // Enable editing
         passwordInput.removeAttribute("readonly");
         confirmPasswordInput.removeAttribute("readonly");
         confirmPasswordInput.style.display = "inline"; // Show the confirmation field
     } else {
+        // Check if passwords match
+        if (passwordInput.value !== confirmPasswordInput.value) {
+            alert("Passwords aren't the same. Please correct them.");
+            return; // Do not hide the confirmation field or make inputs read-only
+        }
+
+        // Disable editing if passwords match
         passwordInput.setAttribute("readonly", true);
         confirmPasswordInput.setAttribute("readonly", true);
         confirmPasswordInput.style.display = "none"; // Hide the confirmation field
     }
 }
+
 
 function showPassword() {
     const password = document.getElementById("password");
@@ -64,6 +75,8 @@ function resizeTextbox(input) {
         input.style.width = 23 + "ch"; // Dynamically resize based on content
     }
 }
+
+//////////////////////////////////////////////////////////////////////////////////////
 
 
 // Handle changing the profile picture
@@ -154,3 +167,45 @@ function logout() {
 }
 
 //===================================================================================================
+document.addEventListener("DOMContentLoaded", function () {
+    initializeBinaryToggleButton();
+});
+
+function initializeBinaryToggleButton() {
+    const binaryButton = document.getElementById("toggleButton");
+
+    if (!binaryButton) {
+        console.error('Toggle button with ID "toggleButton" not found.');
+        return;
+    }
+
+    // Set initial color based on the default state
+    updateButtonStyle(binaryButton);
+
+    binaryButton.addEventListener("click", function () {
+        const currentState = this.getAttribute("data-state");
+
+        if (currentState === "approval") {
+            this.setAttribute("data-state", "removing");
+            this.textContent = "Removing News";
+        } else {
+            this.setAttribute("data-state", "approval");
+            this.textContent = "Pending Approval";
+        }
+
+        // Update button color based on the new state
+        updateButtonStyle(this);
+    });
+}
+
+function updateButtonStyle(button) {
+    const currentState = button.getAttribute("data-state");
+
+    if (currentState === "approval") {
+        button.style.backgroundColor = "green";
+        button.style.color = "white";
+    } else if (currentState === "removing") {
+        button.style.backgroundColor = "red";
+        button.style.color = "white";
+    }
+}
