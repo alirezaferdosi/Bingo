@@ -127,3 +127,30 @@ document.querySelectorAll(".card").forEach(card => {
         }
     });
 });
+
+
+//=====================================  logout alert   ===============================
+function confirmLogout() {
+    const userConfirmed = confirm("Are you sure you want to log out?");
+    if (userConfirmed) {
+        // Redirect to the logout page or perform logout actions
+        window.location.href = "index.html"; // Replace with your actual logout URL or function
+    }
+}
+// Show the logout confirmation modal
+function showLogoutModal() {
+    document.getElementById("logoutModal").style.display = "flex";
+}
+
+// Close the modal
+function closeLogoutModal() {
+    document.getElementById("logoutModal").style.display = "none";
+}
+
+// Perform the logout action
+function logout() {
+    // Redirect to the logout page or perform logout logic
+    window.location.href = "index.html"; // Replace with your actual logout URL or function
+}
+
+//===================================================================================================

@@ -62,6 +62,7 @@ header .nav-links a {
 }
 
 /* Hero Section */
+/* Hero Section */
 .hero {
     background-image: url('../photo/back/pexel.jpg'); /* Add your background image here */
     background-size: cover;
@@ -76,6 +77,7 @@ header .nav-links a {
     position: relative;
     transition: height 0.3s ease; /* Smooth transition for shrinking */
     margin-top: 0px; /* 80 for normal space */
+    flex-direction: column; /* Stack items vertically */
 }
 
 .hero h2 {
@@ -83,10 +85,22 @@ header .nav-links a {
     transition: font-size 0.3s ease;
 }
 
+.hero h3 {
+    font-size: 1.5rem;
+    transition: font-size 0.3s ease;
+}
+
+/* Arrange <h3> elements in a single line */
+.hero h3:nth-child(n + 3) {
+    display: inline-block;
+    margin: 0 10px; /* Add spacing between items */
+}
+
 .hero p {
     font-size: 1.5rem;
     transition: font-size 0.3s ease;
 }
+
 
 /*=========================================================  Favorite news section sttings  ========================================*/
 
@@ -159,11 +173,11 @@ header .nav-links a {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    opacity: 0; /* Initially hidden */
     transition: opacity 0.5s ease; /* Smooth fade-in effect */
     z-index: -1; /* Ensure it stays behind other content */
 	border-radius: 15px;
 	filter: grayscale(0%);
+	transition: filter 2s ease; /* 2-second grayscale transition */
     
 }
 
@@ -173,9 +187,7 @@ header .nav-links a {
 	
 }
 
-.card:hover::before {
-    opacity: 1; /* Show the background image on hover */
-}
+
 
 .card .gradient {
     position: absolute;
@@ -371,6 +383,7 @@ body:has(.news-card:focus-within) {
 .news-card {
     display: flex;
     flex-direction: column; /* Ensure content stacks vertically within the card */
+	text-align: left;
     align-items: stretch; /* Avoid alignment issues */
 }
 
@@ -388,7 +401,9 @@ body:has(.news-card:focus-within) {
 
 .news-footer {
     display: flex;
+	flex-direction: column;/* =========================  remove to make to auther date view normall  =========================*/*/
     justify-content: space-between;
+	text-align: left;
     font-size: 0.9rem;
     color: #888;
     margin: 0 1rem 1rem;

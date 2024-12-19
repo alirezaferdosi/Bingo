@@ -337,7 +337,7 @@ padding: 0px 20px 40px 70px;
 }
 
 
-/*  Handleing the yes or no buttons for logout*/
+/* ============================== Handleing the yes or no buttons for logout  ==============================*/
 .data-table.logoutTable button {
     margin: 10px;
     padding: 10px 20px;

@@ -6,27 +6,38 @@
     <title>Home Page</title>
     <link rel="stylesheet" href="../style/styles.css">
     <script>
-        window.addEventListener('scroll', function () {
-            let heroSection = document.querySelector('.hero');
-            let scrollPosition = window.scrollY;
+    window.addEventListener('scroll', function () {
+        let heroSection = document.querySelector('.hero');
+        let scrollPosition = window.scrollY;
 
-            // Calculate the new height of the hero section based on scroll
-            let newHeight = Math.max(50, 100 - scrollPosition / 5); // Shrinks from 100vh to 50vh
-            heroSection.style.height = newHeight + "vh"; // Apply the new height
+        // Calculate the new height of the hero section based on scroll
+        let newHeight = Math.max(50, 100 - scrollPosition / 5); // Shrinks from 100vh to 50vh
+        heroSection.style.height = newHeight + "vh"; // Apply the new height
 
-            // Optionally, adjust the font size based on scroll as well
-            let heroText = document.querySelector('.hero h2');
-            let heroDesc = document.querySelector('.hero p');
+        // Adjust font sizes based on the new height
+        let heroText = document.querySelector('.hero h2');
+        let heroDesc = document.querySelector('.hero p');
+        let heroSubTexts = document.querySelectorAll('.hero h3'); // Select all <h3>
 
-            if (newHeight < 70) {
-                heroText.style.fontSize = '2rem'; // Shrink title size when hero is small
-                heroDesc.style.fontSize = '1rem'; // Shrink description size when hero is small
-            } else {
-                heroText.style.fontSize = '3rem'; // Default size when hero is large
-                heroDesc.style.fontSize = '1.5rem'; // Default size for description
-            }
-        });
-    </script>
+        if (newHeight < 70) {
+            if (heroText) heroText.style.fontSize = '2rem'; // Shrink title size when hero is small
+            if (heroDesc) heroDesc.style.fontSize = '1rem'; // Shrink description size when hero is small
+
+            heroSubTexts.forEach((h3) => {
+                h3.style.fontSize = '1rem'; // Shrink all <h3> sizes when hero is small
+            });
+        } else {
+            if (heroText) heroText.style.fontSize = '3rem'; // Default size when hero is large
+            if (heroDesc) heroDesc.style.fontSize = '1.5rem'; // Default size for description
+
+            heroSubTexts.forEach((h3) => {
+                h3.style.fontSize = '1.5rem'; // Default size for all <h3>
+            });
+        }
+    });
+</script>
+
+
 </head>
 <body>
     <header>
@@ -39,7 +50,7 @@
 			<nav>
 				<ul class="nav-links">
 					<li><a href="#home">Home</a></li>
-					<li><a href="#about">About</a></li>
+					<li><a href="#footer">About</a></li>
 					<li><a href="#services">Services</a></li>
 					<li><a href="authstyles.html">User Account</a></li>
 				</ul>
@@ -52,6 +63,9 @@
         <div class="container">
             <h2>Above the Wings of Whales</h2>
             <p>Where stories take flight, carrying you beyond the surface into the depths of truth</p>
+			<h3> 160 Post📰</h3>
+			<h3> 80 Local reporter🎙</h3>
+			<h3> More than 1500 view👀</h3>
         </div>
     </section>
 	<section class="transition"></section>
@@ -119,7 +133,7 @@
 					<h3 class="news-title">third Title</h3>
 					<p class="news-body">Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
 					<div class="news-footer">
-						<span>Author</span>
+						<span>Author🎙</span>
 						<span>Date</span>
 						<span>👀</span>
 					</div>
@@ -212,10 +226,8 @@
 					<div class="card Health">
 						<div class="gradient"></div>
 						<div class="info">
-							<div class="text">/Service 1/</div>
 							<div class="title">Health</div>
 						</div>
-						<div class="time">Last update <span>09:28 pm</span></div>
 					</div>
 				</a>
 
@@ -224,10 +236,8 @@
 					<div class="card Politics">
 						<div class="gradient"></div>
 						<div class="info">
-							<div class="text">/Service 1/</div>
 							<div class="title">Politics</div>
 						</div>
-						<div class="time">Last update <span>09:28 pm</span></div>
 					</div>
 				</a>
 
@@ -236,10 +246,8 @@
 					<div class="card Economics">
 						<div class="gradient"></div>
 						<div class="info">
-							<div class="text">/Service 1/</div>
 							<div class="title">Economics</div>
 						</div>
-						<div class="time">Last update <span>09:28 pm</span></div>
 					</div>
 				</a>
 
@@ -248,10 +256,8 @@
 					<div class="card Technology">
 						<div class="gradient"></div>
 						<div class="info">
-							<div class="text">/Service 1/</div>
 							<div class="title">Technology</div>
 						</div>
-						<div class="time">Last update <span>09:28 pm</span></div>
 					</div>
 				</a>
 			</div>
@@ -259,9 +265,9 @@
 	</section>
 
 
-    <footer>
+    <footer id="footer">
         <div class="container">
-            <p>&copy; 🐳</p>
+            <p> Made by Kasra and Alireza 🐳</p>
         </div>
     </footer>
 </body>

@@ -190,6 +190,7 @@ body:has(.news-card:focus-within) {
 .news-card {
     display: flex;
     flex-direction: column; /* Ensure content stacks vertically within the card */
+	text-align: left;
     align-items: stretch; /* Avoid alignment issues */
 }
 
@@ -208,6 +209,7 @@ body:has(.news-card:focus-within) {
 .news-footer {
     display: flex;
     justify-content: space-between;
+	flex-direction: column;/* =========================  remove to make to auther date view normall  =========================*/
     font-size: 0.9rem;
     color: #888;
     margin: 0 1rem 1rem;

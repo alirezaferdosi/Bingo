@@ -337,7 +337,7 @@ padding: 0px 20px 40px 70px;
 }
 
 
-/*  Handleing the yes or no buttons for logout*/
+/* ============================== Handleing the yes or no buttons for logout  ==============================*/
 .data-table.logoutTable button {
     margin: 10px;
     padding: 10px 20px;
@@ -728,6 +728,8 @@ body:has(.news-card:focus-within) {
     display: flex;
     flex-direction: column;
     align-items: stretch;
+	
+	text-align: left;
 }
 
 .news-card:hover .news-body {
@@ -743,6 +745,7 @@ body:has(.news-card:focus-within) {
 
 .news-footer {
     display: flex;
+	/*flex-direction: column;*//*  No auther, no column to column(mesl khar harf mizanam, agar soton be soton konim dokmeh ha zesht mishan) =========================  remove to make to auther date view normall  =========================*/
     justify-content: space-between;
     font-size: 0.9rem;
     color: #888;
