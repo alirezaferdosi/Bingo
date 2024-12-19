@@ -21,6 +21,9 @@ public interface NewsService {
     List<News> getAllNewsConfirmed();
 
     @Transactional
+    List<News> getAllNewsNotConfirmed();
+
+    @Transactional
     List<News> getNewsByCategory(String category);
 
     @Transactional

@@ -71,6 +71,16 @@ import java.util.Objects;
     }
 
     @Override
+    public List<News> getAllNewsNotConfirmed() {
+        List<News> news = new ArrayList<>();
+
+        for(News n : newsRepository.findAll()) {
+            if(!n.getVerification())
+                news.add(n);
+        }
+        return news;    }
+
+    @Override
     public List<News> getNewsByCategory(String category) {
         List<News> news = new ArrayList<>();
 

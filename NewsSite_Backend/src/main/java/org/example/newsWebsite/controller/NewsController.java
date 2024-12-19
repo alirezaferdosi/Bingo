@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -104,6 +105,19 @@ public class NewsController {
         List<NewsDto> newsDtos = new ArrayList<>();
 
         for(News news : newsService.getAllNewsConfirmed()) {
+            newsDtos.add(convertor.modelToDto(news));
+        }
+
+        return ResponseEntity
+                       .status(HttpStatus.OK)
+                       .body(newsDtos);
+    }
+
+    @GetMapping("notConfirmed")
+    public ResponseEntity<List<NewsDto>> getNotConfirmedNews() {
+        List<NewsDto> newsDtos = new ArrayList<>();
+
+        for(News news : newsService.getAllNewsNotConfirmed()) {
             newsDtos.add(convertor.modelToDto(news));
         }
 
@@ -230,6 +244,12 @@ public class NewsController {
         return ResponseEntity
                        .status(HttpStatus.OK)
                        .body(newsService.getNumberOfAllNewsbyCategory(category));
+    }
+
+    @PostMapping("photo")
+    public Boolean getNewsPicture(@RequestBody MultipartFile file) {
+        System.out.println(file);
+        return file != null;
     }
 }
 
