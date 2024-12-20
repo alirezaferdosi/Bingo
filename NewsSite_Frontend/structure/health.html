@@ -3,9 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page</title>
-    <link rel="stylesheet" href="../style/styles.css">
+    <title>health Page</title>
+    <link rel="stylesheet" href="../style/health.css">
     <script>
+        // Array of background images
+        const heroImages = [
+            '../photo/back/health4.jpg',
+            '../photo/back/health3.jpg'  // Add more images as needed
+        ];
+
+        // Function to randomly change background image
+        function changeHeroImage() {
+            let randomIndex = Math.floor(Math.random() * heroImages.length);
+            let heroSection = document.querySelector('.hero');
+            heroSection.style.backgroundImage = `url('${heroImages[randomIndex]}')`;
+        }
+
+        // Change background image every 10 seconds
+        setInterval(changeHeroImage, 10000);
+
+        // Initial background image change
+        window.addEventListener('load', changeHeroImage);
+
         window.addEventListener('scroll', function () {
             let heroSection = document.querySelector('.hero');
             let scrollPosition = window.scrollY;
@@ -30,102 +49,252 @@
 </head>
 <body>
     <header>
-		<div class="container">
-			<!-- Replace this with an image of your logo -->
-			<a href="#" class="logo">
-				<span class="logo-text">Bingo</span>
-			</a>
+        <div class="container">
+            <a href="#" class="logo">
+                <span class="logo-text">Bingo</span>
+            </a>
 
-			<nav>
-				<ul class="nav-links">
-					<li><a href="#home">Home</a></li>
-					<li><a href="#about">About</a></li>
-					<li><a href="#services">Services</a></li>
-					<li><a href="#contact">Contact</a></li>
-				</ul>
-			</nav>
-		</div>
-	</header>
-
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#footer">About</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="authstyles.html">User Account</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
     <section id="home" class="hero">
-        <div class="container">
-            <h2>Above the Wings of Whales</h2>
-            <p>Where stories take flight, carrying you beyond the surface into the depths of truth</p>
-        </div>
-    </section>
+		<div class="container">
+			<h2>Above the Wings of Whales</h2>
+			<p>Where stories take flight, carrying you beyond the surface into the depths of truth</p>
+			<h3>
+				<img src="../photo/logo/postBlue.png" alt="Post logo" style="width: 24px; height: 24px; margin-right: 8px;">
+				160
+			</h3>
+			<h3>
+				<img src="../photo/logo/UsernewBlue.png" alt="Reporter logo" style="width: 24px; height: 24px; margin-right: 8px;">
+				80
+			</h3>
+			<h3>
+				<img src="../photo/logo/eyeBlue.png" alt="View logo" style="width: 24px; height: 24px; margin-right: 8px;">
+				1500
+			</h3>
+		</div>
+	</section>
 
     <section id="services" class="services">
 		<div class="container">
-			<h2>Our Services</h2>
-			<div class="service-cards">
-				<!-- Service 1 -->
-				<a href="sports.html" class="card-link">
-					<div class="card">
-						<div class="gradient"></div>
-						<div class="info">
-							<div class="text">/Service 1/</div>
-							<div class="title">Sports</div>
-						</div>
-						<div class="time">Last update <span>09:28 pm</span></div>
+			<h2 class="section-title">Latest Sports News</h2>
+			<div class="news-grid">
+				<div class="news-card" tabindex="0">
+					<img src="../photo/news/sports/ID1.jpeg" class="news-image" alt="News Image">
+					<h3 class="news-title">News Title</h3>
+					<p class="news-body">O’er all the hilltops<br />
+					  Is quiet now, asfafafafadg<br />
+					  In all the treetops<br />
+					  Hearest thou<br />
+					  Hardly a breath;<br />
+					  The birds are asleep in the trees:<br />
+					  Wait, soon like these<br />
+					  Is quiet now, asfafafafadg<br />
+					  In all the treetops<br />
+					  Hearest thou<br />
+					  Hardly a breath;<br />
+					  The birds are asleep in the trees:<br />
+					  Wait, soon like these<br />
+					  Is quiet now, asfafafafadg<br />
+					  In all the treetops<br />
+					  Hearest thou<br />
+					  Hardly a breath;<br />
+					  The birds are asleep in the trees:<br />
+					  Wait, soon like these<br />
+					  Is quiet now, asfafafafadg<br />
+					  In all the treetops<br />
+					  Hearest thou<br />
+					  Hardly a breath;<br />
+					  The birds are asleep in the trees:<br />
+					  Wait, soon like these<br />
+					  Is quiet now, asfafafafadg<br />
+					  In all the treetops<br />
+					  Hearest thou<br />
+					  Hardly a breath;<br />
+					  The birds are asleep in the trees:<br />
+					  Wait, soon like these<br />
+					  Thou too shalt rest.</p>
+					<div class="news-footer">
+						<span>
+							<img src="../photo/logo/UsernewBlue.png" alt="Author Icon" style="width: 20px; height: 20px; margin-right: 8px;">
+							kasra Aghabeiky dehshati
+						</span>
+						<span>
+							<img src="../photo/logo/calender.png" alt="Date Icon" style="width: 20px; height: 20px; margin-right: 8px;">
+							1403/1/12
+						</span>
+						<span>
+							<img src="../photo/logo/eyeBlue.png" alt="Views Icon" style="width: 20px; height: 20px; margin-right: 8px;">
+							1.2k
+						</span>
 					</div>
-				</a>
-
-				<!-- Service 2 -->
-				<a href="health.html" class="card-link">
-					<div class="card">
-						<div class="gradient" style="background-image: linear-gradient(0deg, #0703fa, transparent);"></div>
-						<div class="info">
-							<div class="text">/Service 2/</div>
-							<div class="title">Health</div>
-						</div>
-						<div class="time">Last update <span>09:28 pm</span></div>
+					
+				</div>
+				<div class="news-card" tabindex="0">
+					<img src="../photo/news/sports/ID2.jpg" class="news-image" alt="News Image">
+					<h3 class="news-title">second title</h3>
+					<p class="news-body">Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+					<div class="news-footer">
+						<span>
+							<img src="../photo/logo/UsernewBlue.png" alt="Author Icon" style="width: 20px; height: 20px; margin-right: 8px;">
+							kasra Aghabeiky dehshati
+						</span>
+						<span>
+							<img src="../photo/logo/calender.png" alt="Date Icon" style="width: 20px; height: 20px; margin-right: 8px;">
+							1403/1/12
+						</span>
+						<span>
+							<img src="../photo/logo/eyeBlue.png" alt="Views Icon" style="width: 20px; height: 20px; margin-right: 8px;">
+							1.2k
+						</span>
 					</div>
-				</a>
-
-				<!-- Service 3 -->
-				<a href="politics.html" class="card-link">
-					<div class="card">
-						<div class="gradient" style="background-image: linear-gradient(0deg, #009ece, transparent);"></div>
-						<div class="info">
-							<div class="text">/Service 3/</div>
-							<div class="title">Politics</div>
-						</div>
-						<div class="time">Last update <span>09:28 pm</span></div>
+				</div>
+				
+				
+				<div class="news-card" tabindex="0">
+					<img src="../photo/news/sports/ID3.jpeg" class="news-image" alt="News Image">
+					<h3 class="news-title">third Title</h3>
+					<p class="news-body">Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+					<div class="news-footer">
+						<span>
+							<img src="../photo/logo/UsernewBlue.png" alt="Author Icon" style="width: 20px; height: 20px; margin-right: 8px;">
+							authername
+						</span>
+						<span>
+							<img src="../photo/logo/calender.png" alt="Date Icon" style="width: 20px; height: 20px; margin-right: 8px;">
+							1403/1/12
+						</span>
+						<span>
+							<img src="../photo/logo/eyeBlue.png" alt="Views Icon" style="width: 20px; height: 20px; margin-right: 8px;">
+							1.2k
+						</span>
 					</div>
-				</a>
-
-				<!-- Service 4 -->
-				<a href="economics.html" class="card-link">
-					<div class="card">
-						<div class="gradient" style="background-image: linear-gradient(0deg, #2c0079, transparent);"></div>
-						<div class="info">
-							<div class="text">/Service 4/</div>
-							<div class="title">Economics</div>
-						</div>
-						<div class="time">Last update <span>09:28 pm</span></div>
+				</div>
+				
+				
+				<div class="news-card" tabindex="0">
+					<img src="../photo/news/sports/ID4.jpg" class="news-image" alt="News Image">
+					<h3 class="news-title">forth Title</h3>
+					<p class="news-body">Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+					<div class="news-footer">
+						<span>
+							<img src="../photo/logo/UsernewBlue.png" alt="Author Icon" style="width: 20px; height: 20px; margin-right: 8px;">
+							authername
+						</span>
+						<span>
+							<img src="../photo/logo/calender.png" alt="Date Icon" style="width: 20px; height: 20px; margin-right: 8px;">
+							1403/1/12
+						</span>
+						<span>
+							<img src="../photo/logo/eyeBlue.png" alt="Views Icon" style="width: 20px; height: 20px; margin-right: 8px;">
+							1.2k
+						</span>
 					</div>
-				</a>
-
-				<!-- Service 5 -->
-				<a href="technology.html" class="card-link">
-					<div class="card">
-						<div class="gradient" style="background-image: linear-gradient(0deg, #fffb00, transparent);"></div>
-						<div class="info">
-							<div class="text">/Service 5/</div>
-							<div class="title">Technology</div>
-						</div>
-						<div class="time">Last update <span>09:28 pm</span></div>
+				</div>
+				
+				<div class="news-card" tabindex="0">
+					<img src="../photo/news/sports/ID5.webp" class="news-image" alt="News Image">
+					<h3 class="news-title">fifth Title</h3>
+					<p class="news-body">Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+					<div class="news-footer">
+						<span>
+							<img src="../photo/logo/UsernewBlue.png" alt="Author Icon" style="width: 20px; height: 20px; margin-right: 8px;">
+							authername
+						</span>
+						<span>
+							<img src="../photo/logo/calender.png" alt="Date Icon" style="width: 20px; height: 20px; margin-right: 8px;">
+							1403/1/12
+						</span>
+						<span>
+							<img src="../photo/logo/eyeBlue.png" alt="Views Icon" style="width: 20px; height: 20px; margin-right: 8px;">
+							1.2k
+						</span>
 					</div>
-				</a>
+				</div>
+				
+				<div class="news-card" tabindex="0">
+					<img src="../photo/news/sports/ID6.jpg" class="news-image" alt="News Image">
+					<h3 class="news-title">sixth Title</h3>
+					<p class="news-body">Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+					<div class="news-footer">
+						<span>
+							<img src="../photo/logo/UsernewBlue.png" alt="Author Icon" style="width: 20px; height: 20px; margin-right: 8px;">
+							authername
+						</span>
+						<span>
+							<img src="../photo/logo/calender.png" alt="Date Icon" style="width: 20px; height: 20px; margin-right: 8px;">
+							1403/1/12
+						</span>
+						<span>
+							<img src="../photo/logo/eyeBlue.png" alt="Views Icon" style="width: 20px; height: 20px; margin-right: 8px;">
+							1.2k
+						</span>
+					</div>
+				</div>
+				
+				
+				<div class="news-card" tabindex="0">
+					<img src="../photo/news/sports/ID7.webp" class="news-image" alt="News Image">
+					<h3 class="news-title">seventh Title</h3>
+					<p class="news-body">Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+					<div class="news-footer">
+						<span>
+							<img src="../photo/logo/UsernewBlue.png" alt="Author Icon" style="width: 20px; height: 20px; margin-right: 8px;">
+							authername
+						</span>
+						<span>
+							<img src="../photo/logo/calender.png" alt="Date Icon" style="width: 20px; height: 20px; margin-right: 8px;">
+							1403/1/12
+						</span>
+						<span>
+							<img src="../photo/logo/eyeBlue.png" alt="Views Icon" style="width: 20px; height: 20px; margin-right: 8px;">
+							1.2k
+						</span>
+					</div>
+				</div>
+				
+				
+				<div class="news-card" tabindex="0">
+					<img src="../photo/news/sports/ID8.jpg" class="news-image" alt="News Image">
+					<h3 class="news-title">final Title</h3>
+					<p class="news-body">Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+					<div class="news-footer">
+						<span>
+							<img src="../photo/logo/UsernewBlue.png" alt="Author Icon" style="width: 20px; height: 20px; margin-right: 8px;">
+							authername
+						</span>
+						<span>
+							<img src="../photo/logo/calender.png" alt="Date Icon" style="width: 20px; height: 20px; margin-right: 8px;">
+							1403/1/12
+						</span>
+						<span>
+							<img src="../photo/logo/eyeBlue.png" alt="Views Icon" style="width: 20px; height: 20px; margin-right: 8px;">
+							1.2k
+						</span>
+					</div>
+				</div>
+				
+				
+				
 			</div>
+
 		</div>
 	</section>
 
 
-    <footer>
+
+    <footer id="footer">
         <div class="container">
-            <p>&copy; 🐳</p>
+            <p> Made by Kasra and Alireza 🐳</p>
         </div>
     </footer>
 </body>

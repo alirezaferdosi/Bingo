@@ -627,6 +627,53 @@ button:hover {
     padding: 0;
     font-size: 14px;
 }
+
+
+
+
+/* Save Button Container */
+.profileTable .save-container {
+    text-align: center; /* Center the button horizontally */
+    margin-top: 20px; /* Add spacing above the button */
+}
+
+/* Save Button Styles */
+.profileTable .save-btn {
+    background: linear-gradient(45deg, #4CAF50, #45a049); /* Gradient for a vibrant look */
+    color: #fff; /* White text for contrast */
+    padding: 12px 24px; /* Comfortable padding */
+    font-size: 18px; /* Large, readable font */
+    font-weight: bold; /* Make the text bold */
+    border: none; /* No border */
+    border-radius: 8px; /* Smooth, rounded corners */
+    cursor: pointer; /* Pointer cursor */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+    transition: all 0.3s ease; /* Smooth hover effect */
+}
+
+/* Hover State */
+.profileTable .save-btn:hover {
+    background: linear-gradient(45deg, #45a049, #388E3C); /* Darker gradient on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* More pronounced shadow */
+}
+
+/* Active State */
+.profileTable .save-btn:active {
+    background: linear-gradient(45deg, #388E3C, #2E7D32); /* Slightly darker on press */
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); /* Reduced shadow */
+    transform: translateY(2px); /* Slight "pressed" effect */
+}
+
+/* Disabled State */
+.profileTable .save-btn:disabled {
+    background: #ccc; /* Gray background */
+    color: #888; /* Faded text */
+    cursor: not-allowed; /* Disabled cursor */
+    box-shadow: none; /* No shadow */
+    transform: none; /* No press effect */
+}
+
+
 /*===========================================================*/
 
 

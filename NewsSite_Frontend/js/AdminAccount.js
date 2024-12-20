@@ -76,7 +76,6 @@ function resizeTextbox(input) {
     }
 }
 
-//////////////////////////////////////////////////////////////////////////////////////
 
 
 // Handle changing the profile picture
@@ -94,7 +93,27 @@ function changePhoto() {
     }
 }
 
-// Navigation click logic (same as your existing code)
+
+
+
+function saveChanges() {
+    // Placeholder logic for saving changes
+    alert("Changes have been saved!");
+    // Here, implement the logic for saving user input
+}
+
+// Optionally, enable/disable Save button dynamically based on changes
+function toggleSaveButton(enable) {
+    const saveButton = document.getElementById("saveButton");
+    saveButton.disabled = !enable; // Enable or disable the button
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////
+
+
+
+// Navigation click logic
 document.querySelectorAll(".navList, .bottom-link li").forEach(function (element) {
     element.addEventListener("click", function () {
         document.querySelectorAll(".navList, .bottom-link li").forEach(function (e) {
@@ -167,6 +186,9 @@ function logout() {
 }
 
 //===================================================================================================
+
+//==================================  changing the mode for accepting unaccpted news or removing the accepted ones  ===================================================
+
 document.addEventListener("DOMContentLoaded", function () {
     initializeBinaryToggleButton();
 });
@@ -209,3 +231,23 @@ function updateButtonStyle(button) {
         button.style.color = "white";
     }
 }
+//===================================================================================================
+
+document.addEventListener('DOMContentLoaded', () => {
+    const acceptButtons = document.querySelectorAll('.accept-btn');
+    const denyButtons = document.querySelectorAll('.deny-btn');
+
+    acceptButtons.forEach(button => {
+        button.addEventListener('click', (event) => {
+            event.stopPropagation(); // Prevent focusing the card
+            alert('Accepted');
+        });
+    });
+
+    denyButtons.forEach(button => {
+        button.addEventListener('click', (event) => {
+            event.stopPropagation(); // Prevent focusing the card
+            alert('Denied');
+        });
+    });
+});

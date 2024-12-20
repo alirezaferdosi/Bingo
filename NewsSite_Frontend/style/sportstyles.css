@@ -82,6 +82,18 @@ header .nav-links a {
     font-size: 3rem;
     transition: font-size 0.3s ease;
 }
+.hero h3 {
+    font-size: 1.5rem;
+    transition: font-size 0.3s ease;
+}
+
+/* Arrange <h3> elements in a single line */
+.hero h3:nth-child(n + 3) {
+    display: inline-block;
+    margin: 0 10px; /* Add spacing between items */
+}
+
+
 
 .hero p {
     font-size: 1.5rem;
