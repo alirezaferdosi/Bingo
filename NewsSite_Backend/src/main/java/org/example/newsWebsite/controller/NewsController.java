@@ -1,5 +1,6 @@
 package org.example.newsWebsite.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.example.newsWebsite.model.News;
 import org.example.newsWebsite.model.convertor.PrimitiveConvertor;
 import org.example.newsWebsite.model.dto.NewsDto;
@@ -20,6 +21,7 @@ import java.util.List;
 
 @Component
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("news")
 public class NewsController {
     @Autowired
@@ -246,10 +248,9 @@ public class NewsController {
                        .body(newsService.getNumberOfAllNewsbyCategory(category));
     }
 
-    @PostMapping("photo")
-    public Boolean getNewsPicture(@RequestBody MultipartFile file) {
-        System.out.println(file);
-        return file != null;
+    @PostMapping(value = "photo"/*, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE}*/)
+    public String getNewsPicture(@RequestPart("image") MultipartFile file) {
+        return file.getOriginalFilename();
     }
 }
 

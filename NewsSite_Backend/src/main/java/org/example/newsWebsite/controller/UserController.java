@@ -6,12 +6,14 @@ import org.example.newsWebsite.model.dto.FavoritesDto;
 import org.example.newsWebsite.model.dto.UserDto;
 import org.example.newsWebsite.service.api.NewsService;
 import org.example.newsWebsite.service.api.UserService;
+import org.example.newsWebsite.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -154,14 +156,15 @@ public class UserController {
         }
     }
 
-    /*@PostMapping("picture")
-    public ResponseEntity uploadProfilePicture(*//*@PathVariable Long id,*//*@RequestParam("file") MultipartFile file) {
-        System.out.println("----------------------------");
-        boolean transactionStatus = userService.uploadeImage(file, String.valueOf(1));
+    @PostMapping("picture")
+    public ResponseEntity<Boolean> uploadProfilePicture(@RequestParam("id") Long id,
+                                               @RequestPart("image") MultipartFile file) {
+
+        boolean transactionStatus = userService.uploadeImage(file, id + "." + StringUtils.extractPostfix(file.getOriginalFilename()));
         return ResponseEntity
                        .status(transactionStatus ? HttpStatus.OK : HttpStatus.BAD_REQUEST)
-                       .build();
-    }*/
+                       .body(transactionStatus);
+    }
 
     @GetMapping("userExistence")
     public ResponseEntity isUserExist(@RequestParam(name = "u") String username) {
