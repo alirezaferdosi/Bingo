@@ -1,14 +1,16 @@
 package org.example.newsWebsite.controller;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.example.newsWebsite.model.User;
 import org.example.newsWebsite.model.convertor.PrimitiveConvertor;
 import org.example.newsWebsite.model.dto.FavoritesDto;
 import org.example.newsWebsite.model.dto.UserDto;
 import org.example.newsWebsite.service.api.NewsService;
 import org.example.newsWebsite.service.api.UserService;
-import org.example.newsWebsite.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -22,6 +24,8 @@ import java.util.List;
 @RestController
 @RequestMapping("user")
 public class UserController {
+    private static final Logger log = LogManager.getLogger(UserController.class);
+
     @Autowired
     @Qualifier("userServiceImpl")
     private UserService userService;
@@ -39,7 +43,7 @@ public class UserController {
     private PrimitiveConvertor<Byte, FavoritesDto> favoritesConvertor;
 
 
-    @PostMapping("signup")
+    @PostMapping("signUp")
     public ResponseEntity<UserDto> addUser(@RequestBody UserDto userDto) {
         userDto.setId(null);
         if(userDto.getFavorites() == null){
@@ -63,8 +67,15 @@ public class UserController {
         }
     }
 
+//    @PostMapping("signIn")
+//    public ResponseEntity signIn(@RequestParam(name = "u") String username, @RequestParam(name = "p") String password) {
+//        Boolean status = userService.longIn();
+//    }
+
     @GetMapping("all")
     public ResponseEntity<List<UserDto>> getAllUsers() {
+        log.info("Request to get all users.");
+
         List<UserDto> userDtos = new ArrayList<>();
         for(User user : userService.getAllUsers()){
             userDtos.add(userConvertor.modelToDto(user));
@@ -158,12 +169,20 @@ public class UserController {
 
     @PostMapping("picture")
     public ResponseEntity<Boolean> uploadProfilePicture(@RequestParam("id") Long id,
-                                               @RequestPart("image") MultipartFile file) {
+                                                        @RequestPart("image") MultipartFile file) {
 
-        boolean transactionStatus = userService.uploadeImage(file, id + "." + StringUtils.extractPostfix(file.getOriginalFilename()));
+        boolean transactionStatus = userService.uploadProfileImage(file, id);
         return ResponseEntity
                        .status(transactionStatus ? HttpStatus.OK : HttpStatus.BAD_REQUEST)
                        .body(transactionStatus);
+    }
+
+    @GetMapping("picture")
+    public ResponseEntity<Resource> downloadProfilePicture(@RequestParam(name = "id") Long id) {
+        Resource resource = userService.downloadProfileImage(id);
+        return ResponseEntity
+                       .status((resource != null) ? HttpStatus.FOUND : HttpStatus.NOT_FOUND)
+                       .body(resource);
     }
 
     @GetMapping("userExistence")

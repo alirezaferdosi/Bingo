@@ -14,6 +14,9 @@ public interface UserService {
     User addUser(User user);
 
     @Transactional
+    Boolean longIn(String username, String password);
+
+    @Transactional
     User editUser(User user);
 
     @Transactional
@@ -32,10 +35,10 @@ public interface UserService {
     User getUser(Long id);
 
     @Transactional
-    Boolean uploadeImage(MultipartFile file, String fileName);
+    Boolean uploadProfileImage(MultipartFile file, Long id);
 
     @Transactional
-    Resource getProfileImage(String name);
+    Resource downloadProfileImage(Long id);
 
     @Transactional
     boolean isUserExist(String username);

@@ -34,6 +34,9 @@ public class News {
     @Column(name = "verification")
     private Boolean verification;
 
+    @Column(name = "photoPath")
+    private String photoPath;
+
     @ManyToOne(targetEntity = User.class/*, cascade = CascadeType.ALL */)
     @JoinColumn(name = "author", nullable = false)
     private User author;

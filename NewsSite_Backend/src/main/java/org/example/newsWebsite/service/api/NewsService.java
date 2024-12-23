@@ -1,8 +1,10 @@
 package org.example.newsWebsite.service.api;
 
 import org.example.newsWebsite.model.News;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -13,6 +15,12 @@ public interface NewsService {
 
     @Transactional
     News editNews(News news);
+
+    @Transactional
+    Boolean uploadNewsImage(MultipartFile file, Long id);
+
+    @Transactional
+    Resource downloadImage(Long id);
 
     @Transactional
     List<News> getAllNews();

@@ -4,6 +4,9 @@
     import org.example.newsWebsite.repository.UserRepository;
     import org.example.newsWebsite.service.api.UserService;
     import org.example.newsWebsite.service.api.uploading.StorageService;
+    import org.example.newsWebsite.service.impl.uploading.FileSystemStorageService;
+    import org.example.newsWebsite.service.impl.uploading.StorageDirectory;
+    import org.example.newsWebsite.utils.StringUtils;
     import org.springframework.beans.factory.annotation.Autowired;
     import org.springframework.core.io.Resource;
     import org.springframework.stereotype.Service;
@@ -17,18 +20,31 @@
         @Autowired
         private UserRepository userRepository;
 
-        @Autowired
         private StorageService storageService;
 
+        public UserServiceImpl() {
+            this.storageService = new FileSystemStorageService(StorageDirectory.USER);
+        }
 
-        //        public UserServiceImpl() {
-//            this.storageService = new FileSystemStorageService("src/uploadingFile/user");
-//        }
-//
+
         @Override
         public User addUser(User user) {
             userRepository.save(user);
             return user;
+        }
+
+        @Override
+        public Boolean longIn(String username, String password) {
+            for (User id : userRepository.findAll()) {
+                if(id.getUsername().equals(username)) {
+                    if(id.getPassword().equals(password)) {
+                        return true;
+                    }{
+                        return false;
+                    }
+                }
+            }
+            return null;
         }
 
         @Override
@@ -94,13 +110,40 @@
         }
 
         @Override
-        public Boolean uploadeImage(MultipartFile file, String fileName) {
-            return storageService.store(file, fileName);
+        public Boolean uploadProfileImage(MultipartFile file, Long id) {
+            if(this.isUserExist(id)) {
+
+                String fileName = id + "." + StringUtils.extractPostfix(file.getOriginalFilename());
+                boolean status =  storageService.store(file, fileName);
+
+                if(status){
+
+                    User user = this.getUser(id);
+                    user.setPhotoPath(fileName);
+                    userRepository.save(user);
+                    return true;
+                }
+            }
+            return false;
         }
 
         @Override
-        public Resource getProfileImage(String name) {
-            return storageService.loadAsResource(name);
+        public Resource downloadProfileImage(Long id) {
+            User user = this.getUser(id);
+
+            if(user != null){
+
+                String filename = user.getPhotoPath();
+                if(filename != null){
+                    try {
+                        return storageService.loadAsResource(filename);
+                    } catch (Exception e) {
+                        return null;
+                    }
+                }
+                return null;
+            }
+            return null;
         }
 
         @Override

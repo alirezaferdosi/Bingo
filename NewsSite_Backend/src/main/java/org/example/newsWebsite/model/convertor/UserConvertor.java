@@ -21,7 +21,8 @@ public class UserConvertor implements PrimitiveConvertor<User, UserDto>{
                 model.getPhone(),
                 model.getEmail(),
                 model.getPassword(),
-                model == null ? null : convertor.modelToDto(model.getFavorites())
+                convertor.modelToDto(model.getFavorites()),
+                model.getPhotoPath()
         );
     }
 
@@ -33,6 +34,7 @@ public class UserConvertor implements PrimitiveConvertor<User, UserDto>{
                 dto.getPhone(),
                 dto.getEmail(),
                 dto.getPassword(),
+                dto.getPhotoPath(),
                 convertor.dtoToModel(dto.getFavorites())
         );
     }

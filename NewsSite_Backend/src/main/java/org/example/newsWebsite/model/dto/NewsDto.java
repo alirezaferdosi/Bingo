@@ -26,12 +26,15 @@ public class NewsDto {
 
     private Long author;
 
+    private String photoPath;
+
     public NewsDto(Long id,
                    @NonNull String title,
                    @NonNull String category,
                    Integer viewNumber,
                    String date,
                    Boolean verification,
+                   String photoPath,
                    @NonNull Long author) {
         this.id = id;
         this.title = title;
@@ -40,5 +43,6 @@ public class NewsDto {
         this.date = date;
         this.verification = verification;
         this.author = author;
+        this.photoPath = photoPath;
     }
 }

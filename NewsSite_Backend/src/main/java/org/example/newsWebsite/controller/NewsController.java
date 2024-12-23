@@ -8,6 +8,7 @@ import org.example.newsWebsite.service.api.NewsService;
 import org.example.newsWebsite.service.api.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -41,7 +42,8 @@ public class NewsController {
 
 
     @PostMapping("create")
-    public ResponseEntity<NewsDto> create(@RequestBody NewsDto newsDto) {
+    public ResponseEntity<NewsDto> create(@RequestParam NewsDto newsDto,
+                                          @RequestPart(name = "image", required = false) MultipartFile file) {
         localDateTime = LocalDateTime.now();
         formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
@@ -56,6 +58,9 @@ public class NewsController {
                             convertor.dtoToModel(newsDto)
                     )
             );
+
+            newsService.uploadNewsImage(file, n.getId());
+
             return ResponseEntity
                            .status(HttpStatus.CREATED)
                            .body(n);
@@ -87,6 +92,23 @@ public class NewsController {
                            .status(HttpStatus.OK)
                            .body(newsDto1);
         }
+    }
+
+    @PostMapping("picture")
+    public ResponseEntity<Boolean> uploadPicture(@RequestParam("id") Long id,
+                                                 @RequestPart(name = "image") MultipartFile file) {
+        boolean transactionStatus = newsService.uploadNewsImage(file, id);
+        return ResponseEntity
+                       .status(transactionStatus ? HttpStatus.OK : HttpStatus.BAD_REQUEST)
+                       .body(transactionStatus);
+    }
+
+    @GetMapping("picture")
+    public ResponseEntity<Resource> downloadNewsPicture(@RequestParam("id") Long id) {
+        Resource resource = newsService.downloadImage(id);
+        return ResponseEntity
+                       .status((resource != null) ? HttpStatus.FOUND : HttpStatus.NOT_FOUND)
+                       .body(resource);
     }
 
     @GetMapping("all")

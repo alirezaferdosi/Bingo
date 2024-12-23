@@ -27,6 +27,9 @@ public class User {
     @Column(name = "password", nullable = false)
     private String password;
 
+    @Column(name = "photoPath")
+    private String photoPath;
+
 //    @Value("${app.favorites}")
     @Column(name = "favorites")
     private Byte favorites = 0;

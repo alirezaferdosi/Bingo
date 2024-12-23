@@ -6,9 +6,16 @@ import org.example.newsWebsite.repository.NewsRepository;
 import org.example.newsWebsite.repository.UserRepository;
 import org.example.newsWebsite.repository.ViewRepository;
 import org.example.newsWebsite.service.api.NewsService;
+import org.example.newsWebsite.service.api.uploading.StorageService;
+import org.example.newsWebsite.service.impl.uploading.FileSystemStorageService;
+import org.example.newsWebsite.service.impl.uploading.StorageDirectory;
+import org.example.newsWebsite.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -25,6 +32,12 @@ import java.util.Objects;
 
     @Autowired
     private UserRepository userRepository;
+
+    private StorageService storageService;
+
+    public NewsServiceImpl() {
+        this.storageService = new FileSystemStorageService(StorageDirectory.NEWS);
+    }
 
     @Override
     public News addNews(News news) {
@@ -50,6 +63,43 @@ import java.util.Objects;
             }
 
             return newsRepository.save(n);
+        }
+        return null;
+    }
+
+    @Override
+    public Boolean uploadNewsImage(MultipartFile file, Long id) {
+        if (isExistNews(id)){
+
+            String fileName = id + "." + StringUtils.extractPostfix(file.getOriginalFilename());
+            boolean status =  storageService.store(file, Paths.get("photo"), fileName);
+
+            if(status){
+
+                News news = this.getNews(id);
+                news.setPhotoPath(fileName);
+                newsRepository.save(news);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public Resource downloadImage(Long id) {
+        News news = this.getNews(id);
+
+        if(news != null){
+
+            String filename = news.getPhotoPath();
+            if(filename != null){
+                try {
+                    return storageService.loadAsResource(Paths.get("photo"), filename);
+                } catch (Exception e) {
+                    return null;
+                }
+            }
+            return null;
         }
         return null;
     }
