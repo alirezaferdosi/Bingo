@@ -5,12 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="42d619eb-600a-4b48-8eab-d6709d1e5e8d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/NewsSite_Frontend/js/ServiceCard.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/NewsSite_Frontend/style/ServiceCard.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/NewsSite.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/NewsSite.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/NewsSite_Frontend/js/Login.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/NewsSite_Frontend/structure/Login.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/NewsSite_Frontend/style/Login.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/NewsSite_Frontend/structure/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/NewsSite_Frontend/structure/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NewsSite_Frontend/style/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/NewsSite_Frontend/style/styles.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,6 +31,7 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;iwen2&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;/home/alireza/Projects/NewsSite/NewsSite_Frontend/photo&quot;,
@@ -65,7 +65,8 @@
       <updated>1734250921020</updated>
       <workItem from="1734250922103" duration="17000" />
       <workItem from="1735281225263" duration="4760000" />
-      <workItem from="1735289442910" duration="4514000" />
+      <workItem from="1735289442910" duration="5554000" />
+      <workItem from="1735299332711" duration="672000" />
     </task>
     <servers />
   </component>
