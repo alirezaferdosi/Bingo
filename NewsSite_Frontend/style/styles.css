@@ -140,9 +140,9 @@ header .nav-links a {
 /*============================================   cards section sttings  ====================================*/
 /* Services Section */
 .services {
-    padding: 2rem 0;
+    padding: 10rem 0;
     text-align: center;
-    background-image: url('../photo/back/mountain.jpg'); /* Replace with your image path */
+    background-image: url('../photo/back/pexel3.jpg'); /* Replace with your image path */
     background-size: cover; /* Ensures the image covers the entire section */
     background-position: center; /* Centers the background image */
     background-repeat: no-repeat; /* Ensures the image doesn't repeat */
@@ -222,7 +222,7 @@ header .nav-links a {
 
 /* Unique background images for each card */
 .sports::before {
-    background-image: url('../photo/back/sportback1.jpg'); 
+    background-image: url('../photo/back/sport2.jpg');
 }
 
 .Health::before {
@@ -264,12 +264,12 @@ header .nav-links a {
 }
 
 .info {
-    position: absolute;
+    /*position: absolute;*/
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    /*transform: translate(-50%, -50%);*/
     text-align: center;
-    color: #fff;
+    color: #4eb4d9;
 }
 
 .text {
@@ -278,7 +278,7 @@ header .nav-links a {
 }
 
 .title {
-    font-size: 24px;
+    font-size: 50px;
     margin-top: 10px;
     font-weight: bold;
 }
@@ -416,7 +416,7 @@ body:has(.news-card:focus-within) {
 
 .news-footer {
     display: flex;
-	flex-direction: column;/* =========================  remove to make to auther date view normall  =========================*/*/
+	flex-direction: column;/* =========================  remove to make to auther date view normall  =========================*/
     justify-content: space-between;
 	text-align: left;
     font-size: 0.9rem;
@@ -454,10 +454,10 @@ body:has(.news-card:focus-within) {
     color: #fff;
 }
 
-.text {
-    font-size: 18px;
-    font-weight: bold;
-}
+/*.text {*/
+/*    font-size: 18px;*/
+/*    font-weight: bold;*/
+/*}*/
 
 .title {
     font-size: 24px;

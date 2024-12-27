@@ -5,7 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home Page</title>
     <link rel="stylesheet" href="../style/styles.css">
-    <script>
+	<link rel="stylesheet" href="../style/ServiceCard.css">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+
+		  integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+
+		  integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+
+		  crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+	<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+
+	<script>
 		window.addEventListener('scroll', function () {
 			let heroSection = document.querySelector('.hero');
 			let scrollPosition = window.scrollY;
@@ -37,6 +53,7 @@
 		});
 	</script>
 
+<!--	<script src="../js/ServiceCard.js"></script>-->
 
 </head>
 <body>
@@ -285,72 +302,245 @@
 						</span>
 					</div>
 				</div>
-				
-				
-				
+
 			</div>
 
 		</div>
 	</section>
 
-    <section id="services" class="services">
-		<div class="container">
-			<h2>Our Services</h2>
-			<div class="service-cards">
-				<!-- Service 1 -->
-				<a href="sports.html" class="card-link">
-					<div class="card sports">
-						<div class="gradient"></div>
-						<div class="info">
-							
-							<div class="title">Sports</div>
-						</div>
-						
-					</div>
-				</a>
+<!--    <section id="services" class="services">-->
+<!--		<div class="container">-->
+<!--			<h2>Our Services</h2>-->
+<!--			<div class="service-cards">-->
+<!--				&lt;!&ndash; Service 1 &ndash;&gt;-->
+<!--				<a href="sports.html" class="card-link">-->
+<!--					<div class="card sports">-->
+<!--						<div class="gradient"></div>-->
+<!--						<div class="info">-->
+<!--							-->
+<!--							<div class="title">Sports</div>-->
+<!--						</div>-->
+<!--						-->
+<!--					</div>-->
+<!--				</a>-->
 
 
-				<!-- Service 2 -->
-				<a href="health.html" class="card-link">
-					<div class="card Health">
-						<div class="gradient"></div>
-						<div class="info">
-							<div class="title">Health</div>
-						</div>
-					</div>
-				</a>
+<!--				&lt;!&ndash; Service 2 &ndash;&gt;-->
+<!--				<a href="health.html" class="card-link">-->
+<!--					<div class="card Health">-->
+<!--						<div class="gradient"></div>-->
+<!--						<div class="info">-->
+<!--							<div class="title">Health</div>-->
+<!--						</div>-->
+<!--					</div>-->
+<!--				</a>-->
 
-				<!-- Service 3 -->
-				<a href="politics.html" class="card-link">
-					<div class="card Politics">
-						<div class="gradient"></div>
-						<div class="info">
-							<div class="title">Politics</div>
-						</div>
-					</div>
-				</a>
+<!--				&lt;!&ndash; Service 3 &ndash;&gt;-->
+<!--				<a href="politics.html" class="card-link">-->
+<!--					<div class="card Politics">-->
+<!--						<div class="gradient"></div>-->
+<!--						<div class="info">-->
+<!--							<div class="title">Politics</div>-->
+<!--						</div>-->
+<!--					</div>-->
+<!--				</a>-->
 
-				<!-- Service 4 -->
-				<a href="economics.html" class="card-link">
-					<div class="card Economics">
-						<div class="gradient"></div>
-						<div class="info">
-							<div class="title">Economics</div>
-						</div>
-					</div>
-				</a>
+<!--				&lt;!&ndash; Service 4 &ndash;&gt;-->
+<!--				<a href="economics.html" class="card-link">-->
+<!--					<div class="card Economics">-->
+<!--						<div class="gradient"></div>-->
+<!--						<div class="info">-->
+<!--							<div class="title">Economics</div>-->
+<!--						</div>-->
+<!--					</div>-->
+<!--				</a>-->
 
-				<!-- Service 5 -->
-				<a href="technology.html" class="card-link">
-					<div class="card Technology">
-						<div class="gradient"></div>
-						<div class="info">
-							<div class="title">Technology</div>
-						</div>
+<!--				&lt;!&ndash; Service 5 &ndash;&gt;-->
+<!--				<a href="technology.html" class="card-link">-->
+<!--					<div class="card Technology">-->
+<!--						<div class="gradient"></div>-->
+<!--						<div class="info">-->
+<!--							<div class="title">Technology</div>-->
+<!--						</div>-->
+<!--					</div>-->
+<!--				</a>-->
+<!--			</div>-->
+<!--		</div>-->
+<!--	</section>-->
+
+	<section id="services" class="services">
+<!--		<div class="container">-->
+<!--			<h2>Our Services</h2>-->
+<!--			<div class="service-cards">-->
+<!--				&lt;!&ndash; Service 1 &ndash;&gt;-->
+<!--				<a href="sports.html" class="card-link">-->
+<!--					<div class="card sports">-->
+<!--						<div class="gradient"></div>-->
+<!--						<div class="info">-->
+
+<!--							<div class="title">Sports</div>-->
+<!--						</div>-->
+
+<!--					</div>-->
+<!--				</a>-->
+<!--				&lt;!&ndash; Service 2 &ndash;&gt;-->
+<!--				<a href="health.html" class="card-link">-->
+<!--					<div class="card Health">-->
+<!--						<div class="gradient"></div>-->
+<!--						<div class="info">-->
+<!--							<div class="title">Health</div>-->
+<!--						</div>-->
+<!--					</div>-->
+<!--				</a>-->
+
+<!--				&lt;!&ndash; Service 3 &ndash;&gt;-->
+<!--				<a href="politics.html" class="card-link">-->
+<!--					<div class="card Politics">-->
+<!--						<div class="gradient"></div>-->
+<!--						<div class="info">-->
+<!--							<div class="title">Politics</div>-->
+<!--						</div>-->
+<!--					</div>-->
+<!--				</a>-->
+
+<!--				&lt;!&ndash; Service 4 &ndash;&gt;-->
+<!--				<a href="economics.html" class="card-link">-->
+<!--					<div class="card Economics">-->
+<!--						<div class="gradient"></div>-->
+<!--						<div class="info">-->
+<!--							<div class="title">Economics</div>-->
+<!--						</div>-->
+<!--					</div>-->
+<!--				</a>-->
+
+<!--				&lt;!&ndash; Service 5 &ndash;&gt;-->
+<!--				<a href="technology.html" class="card-link">-->
+<!--					<div class="card Technology">-->
+<!--						<div class="gradient"></div>-->
+<!--						<div class="info">-->
+<!--							<div class="title">Technology</div>-->
+<!--						</div>-->
+<!--					</div>-->
+<!--				</a>-->
+<!--			</div>-->
+<!--		</div>-->
+
+		<div class="card-container">
+			<div class="panel active" style="background-image: url('../photo/back/sport3.jpeg')" onclick="openPage('sports.html')">
+				<div class="bottom-box">
+					<div class="icon">
+
+						<i class="fa-solid fa-volleyball" style="color: #74C0FC;"></i>
+
 					</div>
-				</a>
+					<div class="text">
+						<h3>Sport</h3>
+					</div>
+				</div>
+			</div>
+			<div class="panel" style="background-image: url('../photo/back/health6.jpg')" onclick="openPage('health.html')">
+				<div class="bottom-box">
+					<div class="icon">
+
+						<i class="fa-solid fa-heart-pulse" style="color: #FFD43B;"></i>
+
+					</div>
+					<div class="text">
+						<h3>Health</h3>
+					</div>
+				</div>
+			</div>
+			<div class="panel" style="background-image: url('../photo/back/economy8.jpg')" onclick="openPage('economics.html')">
+				<div class="bottom-box">
+					<div class="icon">
+
+						<i class="fa-brands fa-bitcoin" style="color: #B197FC;"></i>
+
+					</div>
+					<div class="text">
+						<h3>Economical</h3>
+					</div>
+				</div>
+			</div>
+			<div class="panel" style="background-image: url('../photo/back/political7.jpg')" onclick="openPage('politics.html')">
+				<div class="bottom-box">
+					<div class="icon">
+
+						<i class="fa-solid fa-landmark" style="color: #191b1f;"></i>
+
+					</div>
+					<div class="text">
+						<h3>Politics</h3>
+					</div>
+				</div>
+			</div>
+			<div class="panel" style="background-image: url('../photo/back/technological5.jpg')" onclick="openPage('technology.html')">
+				<div class="bottom-box">
+					<div class="icon">
+
+						<i class="fa-sharp fa-solid fa-microchip" style="color: #1a57c1;"></i>
+
+					</div>
+					<div class="text">
+						<h3>Technology</h3>
+					</div>
+				</div>
+			</div>
+			<div class="panel" style="background-image: url('../photo/back/military1.jpg')" onclick="pageNotFound('Military')">
+				<div class="bottom-box">
+					<div class="icon">
+
+						<i class="fa-sharp fa-solid fa-jet-fighter" style="color: #f00505;"></i>
+
+					</div>
+					<div class="text">
+						<h3>Military&nbsp(Does&nbspnot&nbspexists)</h3>
+					</div>
+				</div>
+			</div>
+			<div class="panel" style="background-image: url('../photo/back/film1.jpg')" onclick="pageNotFound('Film')">
+				<div class="bottom-box">
+					<div class="icon">
+
+						<i class="fa-solid fa-video" style="color: #63E6BE;"></i>
+
+					</div>
+					<div class="text">
+						<h3>Film&nbsp(Does&nbspnot&nbspexists)</h3>
+					</div>
+				</div>
 			</div>
 		</div>
+
+		<script>
+			function pageNotFound(name){
+				alert(name + " page not created yet")
+			}
+
+			function openPage(name){
+				window.open(name)
+			}
+		</script>
+
+		<script>
+			const panels = document.querySelectorAll('.panel')
+
+			panels.forEach ((panel) => {
+				panel.addEventListener('mouseover' , () =>{
+					removeActiveClasses()
+					panel.classList.add('active')
+				})
+
+			})
+			function removeActiveClasses(){
+				panels.forEach(panel =>{
+					panel.classList.remove('active')
+				})
+
+			}
+		</script>
+
+
 	</section>
 
 

@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="42d619eb-600a-4b48-8eab-d6709d1e5e8d" name="Changes" comment="" />
+    <list default="true" id="42d619eb-600a-4b48-8eab-d6709d1e5e8d" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/NewsSite_Frontend/js/ServiceCard.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/NewsSite_Frontend/style/ServiceCard.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/NewsSite.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/NewsSite.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NewsSite_Frontend/structure/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/NewsSite_Frontend/structure/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NewsSite_Frontend/style/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/NewsSite_Frontend/style/styles.css" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -10,25 +20,33 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 5
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 5
+}</component>
   <component name="ProjectId" id="2qFGTtt9hnxwJupXvr6Uoab0Nsa" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "alireza",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/alireza/Projects/NewsSite/NewsSite_Backend",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;iwen2&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/alireza/Projects/NewsSite/NewsSite_Frontend/photo&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/NewsSite_Frontend/photo" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -46,6 +64,8 @@
       <option name="presentableId" value="Default" />
       <updated>1734250921020</updated>
       <workItem from="1734250922103" duration="17000" />
+      <workItem from="1735281225263" duration="4760000" />
+      <workItem from="1735289442910" duration="4514000" />
     </task>
     <servers />
   </component>
