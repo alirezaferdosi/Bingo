@@ -23,7 +23,7 @@ public class NewsConvertor implements PrimitiveConvertor<News, NewsDto> {
                 model.getDate(),
                 model.getVerification(),
                 model.getPhotoPath(),
-                model.getAuthor().getId()
+                model.getAuthor().getUsername()
         );
     }
 

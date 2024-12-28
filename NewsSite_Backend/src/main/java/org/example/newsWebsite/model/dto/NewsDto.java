@@ -24,7 +24,7 @@ public class NewsDto {
 
     private Boolean verification;
 
-    private Long author;
+    private String author;
 
     private String photoPath;
 
@@ -35,7 +35,7 @@ public class NewsDto {
                    String date,
                    Boolean verification,
                    String photoPath,
-                   @NonNull Long author) {
+                   @NonNull String author) {
         this.id = id;
         this.title = title;
         this.category = category;
