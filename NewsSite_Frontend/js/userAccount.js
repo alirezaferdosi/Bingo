@@ -1,3 +1,7 @@
+
+
+
+
 function toggleEdit(fieldId) {
 	
     const field = document.getElementById(fieldId);
@@ -124,20 +128,75 @@ document.querySelectorAll(".navList, .bottom-link li").forEach(function (element
 
 
 ///////////////////////////////////////////////////////////           CARD selecting
+// Fetch favorite data when the page loads
+window.addEventListener('load', () => {
+    fetch('http://172.10.120.119:8080/user/favorites?id=2')
+        .then(response => response.json())
+        .then(data => {
+            // Iterate over each card and check if it's active or inactive based on the API response
+            document.querySelectorAll('.card').forEach(card => {
+                const cardName = card.getAttribute('data-name');
+                
+                // Check if the card's data-name exists in the API response and update the filter accordingly
+                if (data[cardName] === true) {
+                    card.style.filter = 'grayscale(0%)'; // Active cards
+                } else {
+                    card.style.filter = 'grayscale(100%)'; // Inactive cards
+                }
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching favorite data:', error);
+        });
+});
+
+
+
+
 document.querySelectorAll(".card").forEach(card => {
     card.addEventListener("click", () => {
-        // Check the current status of the card
+        // Get the current status of the card
         const currentStatus = card.getAttribute("data-status");
+        const cardName = card.getAttribute("data-name"); // Get the card's data-name (e.g., "economic", "sports", etc.)
 
-        if (currentStatus === "active") {
-            // Set to deactive and apply grayscale
-            card.setAttribute("data-status", "deactive");
+        // Determine the new status
+        const newStatus = currentStatus === "active" ? "deactive" : "active";
+
+        // Update the card status locally (visually)
+        card.setAttribute("data-status", newStatus);
+
+        // Apply grayscale or remove it based on the new status
+        if (newStatus === "active") {
+            card.style.filter = "grayscale(0%)"; // Remove grayscale
         } else {
-            // Set to active and remove grayscale
-            card.setAttribute("data-status", "active");
+            card.style.filter = "grayscale(100%)"; // Apply grayscale
         }
+
+        // Send the updated status to the server using a fetch request
+        fetch(`http://172.10.120.119:8080/user/changeFavorites?id=2`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                cardName: cardName,  // Send the card name (e.g., "economic")
+                status: newStatus    // Send the new status ("active" or "deactive")
+            })
+        })
+        .then(response => response.json()) // Parse the response JSON
+        .then(data => {
+            if (data.success) {
+                console.log(`Server updated: ${cardName} is now ${newStatus}`);
+            } else {
+                console.error("Failed to update on the server");
+            }
+        })
+        .catch(error => {
+            console.error("Error while updating on the server", error);
+        });
     });
 });
+
 /////////////////////////////////////////////////////////// 
 
 

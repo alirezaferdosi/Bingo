@@ -45,6 +45,89 @@
                 heroDesc.style.fontSize = '1.5rem'; // Default size for description
             }
         });
+		// Function to fetch news data and populate the news cards
+        async function loadNews() {
+            try {
+                const response = await fetch('http://172.10.120.119:8080/news/byCategory?c=Technology');
+                const newsData = await response.json(); // Assuming the data is returned in JSON format
+
+                const newsGrid = document.querySelector('.news-grid');
+                newsGrid.innerHTML = ''; // Clear existing news cards
+
+                // Loop through the news data and create a card for each
+                newsData.forEach(news => {
+                    const newsCard = document.createElement('div');
+                    newsCard.classList.add('news-card');
+                    newsCard.setAttribute('tabindex', '0');
+
+                    newsCard.innerHTML = `
+                        <img src="${news.photoPath}" class="news-image" alt="News Image">
+                        <h3 class="news-title">${news.title}</h3>
+                        <p class="news-body">${news.content}</p>
+                        <div class="news-footer">
+                            <span>
+                                <img src="../photo/logo/userWhite.png" alt="Author Icon" style="width: 20px; height: 20px; margin-right: 8px;">
+                                ${news.author}
+                            </span>
+                            <span>
+                                <img src="../photo/logo/dateNormal.png" alt="Date Icon" style="width: 20px; height: 20px; margin-right: 8px;">
+                                ${news.date}
+                            </span>
+                            <span>
+                                <img src="../photo/logo/eyeWhite.png" alt="Views Icon" style="width: 20px; height: 20px; margin-right: 8px;">
+                                ${news.viewNumber}
+                            </span>
+                        </div>
+                    `;
+
+                    newsGrid.appendChild(newsCard);
+                });
+            } catch (error) {
+                console.error('Error fetching news:', error);
+            }
+        }
+
+        // Call the function to load the news when the page loads
+        window.onload = loadNews;
+		
+		
+		
+		
+		
+		
+		
+		// URLs for fetching data
+		const urls = {
+			posts: "http://172.10.120.119:8080/news/newsByCategory?c=Technology",
+			users: "http://172.10.120.119:8080/home/allUsers",
+			visits: "http://172.10.120.119:8080/news/viewsByCategory?c=Technology"
+		};
+
+		// Update stats dynamically
+		async function updateStats() {
+			try {
+				// Fetch and update post count
+				const postResponse = await fetch(urls.posts);
+				const postCount = await postResponse.text();
+				document.getElementById("post-count").textContent = `+${postCount}`;
+
+				// Fetch and update user count
+				const userResponse = await fetch(urls.users);
+				const userCount = await userResponse.text();
+				document.getElementById("user-count").textContent = `+${userCount}`;
+
+				// Fetch and update visit count
+				const visitResponse = await fetch(urls.visits);
+				const visitCount = await visitResponse.text();
+				document.getElementById("visit-count").textContent = `+${visitCount}`;
+			} catch (error) {
+				console.error("Error fetching stats:", error);
+			}
+		}
+
+		// Call the update function on page load
+		document.addEventListener("DOMContentLoaded", updateStats);
+		
     </script>
 </head>
 <body>
@@ -69,229 +152,33 @@
 		<div class="container">
 			<h2>Above the Wings of Whales</h2>
 			<p style="margin-bottom: 60px;">Where stories take flight, carrying you beyond the surface into the depths of truth</p>
-			
+
 			<div class="stats" style="display: flex; justify-content: center; align-items: center; gap: 150px; margin-top: 20px;">
 				<div class="stat-item" style="text-align: center;">
-					<img src="../photo/logo/postWhite.png" alt="Post logo" style="width: 80px; height: 80px; margin-bottom: 10px; filter: brightness(0) invert(1);">
-					<h3 style="margin: 0; color: white;">+160</h3>
+					<img id="post-img" src="../photo/logo/postWhite.png" alt="Post logo" style="width: 80px; height: 80px; margin-bottom: 10px; filter: brightness(0) invert(1);">
+					<h3 id="post-count" style="margin: 0; color: white;">Loading...</h3>
 				</div>
 				<div class="stat-item" style="text-align: center;">
-					<img src="../photo/logo/userBlack.png" alt="Reporter logo" style="width: 80px; height: 80px; margin-bottom: 10px; filter: brightness(0) invert(1);">
-					<h3 style="margin: 0; color: white;">+80</h3>
+					<img id="user-img" src="../photo/logo/userWhite.png" alt="Reporter logo" style="width: 80px; height: 80px; margin-bottom: 10px; filter: brightness(0) invert(1);">
+					<h3 id="user-count" style="margin: 0; color: white;">Loading...</h3>
 				</div>
 				<div class="stat-item" style="text-align: center;">
-					<img src="../photo/logo/eyaFrame.png" alt="View logo" style="width: 80px; height: 80px; margin-bottom: 10px; filter: brightness(0) invert(1);">
-					<h3 style="margin: 0; color: white;">+1500</h3>
+					<img id="visit-img" src="../photo/logo/eyeWhite.png" alt="View logo" style="width: 80px; height: 80px; margin-bottom: 10px; filter: brightness(0) invert(1);">
+					<h3 id="visit-count" style="margin: 0; color: white;">Loading...</h3>
 				</div>
 			</div>
+			
 		</div>
 	</section>
 
-    <section id="services" class="services">
-		<div class="container">
-			<h2 class="section-title">Latest Sports News</h2>
-			<div class="news-grid">
-				<div class="news-card" tabindex="0">
-					<img src="../photo/news/sports/ID1.jpeg" class="news-image" alt="News Image">
-					<h3 class="news-title">News Title</h3>
-					<p class="news-body">O’er all the hilltops<br />
-					  Is quiet now, asfafafafadg<br />
-					  In all the treetops<br />
-					  Hearest thou<br />
-					  Hardly a breath;<br />
-					  The birds are asleep in the trees:<br />
-					  Wait, soon like these<br />
-					  Is quiet now, asfafafafadg<br />
-					  In all the treetops<br />
-					  Hearest thou<br />
-					  Hardly a breath;<br />
-					  The birds are asleep in the trees:<br />
-					  Wait, soon like these<br />
-					  Is quiet now, asfafafafadg<br />
-					  In all the treetops<br />
-					  Hearest thou<br />
-					  Hardly a breath;<br />
-					  The birds are asleep in the trees:<br />
-					  Wait, soon like these<br />
-					  Is quiet now, asfafafafadg<br />
-					  In all the treetops<br />
-					  Hearest thou<br />
-					  Hardly a breath;<br />
-					  The birds are asleep in the trees:<br />
-					  Wait, soon like these<br />
-					  Is quiet now, asfafafafadg<br />
-					  In all the treetops<br />
-					  Hearest thou<br />
-					  Hardly a breath;<br />
-					  The birds are asleep in the trees:<br />
-					  Wait, soon like these<br />
-					  Thou too shalt rest.</p>
-					<div class="news-footer">
-						<span>
-							<img src="../photo/logo/userWhite.png" alt="Author Icon" style="width: 20px; height: 20px; margin-right: 8px;">
-							kasra Aghabeiky dehshati
-						</span>
-						<span>
-							<img src="../photo/logo/dateNormal.png" alt="Date Icon" style="width: 20px; height: 20px; margin-right: 8px;">
-							1403/1/12
-						</span>
-						<span>
-							<img src="../photo/logo/eyeWhite.png" alt="Views Icon" style="width: 20px; height: 20px; margin-right: 8px;">
-							1.2k
-						</span>
-					</div>
-					
-				</div>
-				<div class="news-card" tabindex="0">
-					<img src="../photo/news/sports/ID2.jpg" class="news-image" alt="News Image">
-					<h3 class="news-title">second title</h3>
-					<p class="news-body">Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-					<div class="news-footer">
-						<span>
-							<img src="../photo/logo/userWhite.png" alt="Author Icon" style="width: 20px; height: 20px; margin-right: 8px;">
-							kasra Aghabeiky dehshati
-						</span>
-						<span>
-							<img src="../photo/logo/dateNormal.png" alt="Date Icon" style="width: 20px; height: 20px; margin-right: 8px;">
-							1403/1/12
-						</span>
-						<span>
-							<img src="../photo/logo/eyeWhite.png" alt="Views Icon" style="width: 20px; height: 20px; margin-right: 8px;">
-							1.2k
-						</span>
-					</div>
-				</div>
-				
-				
-				<div class="news-card" tabindex="0">
-					<img src="../photo/news/sports/ID3.jpeg" class="news-image" alt="News Image">
-					<h3 class="news-title">third Title</h3>
-					<p class="news-body">Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-					<div class="news-footer">
-						<span>
-							<img src="../photo/logo/userWhite.png" alt="Author Icon" style="width: 20px; height: 20px; margin-right: 8px;">
-							authername
-						</span>
-						<span>
-							<img src="../photo/logo/dateNormal.png" alt="Date Icon" style="width: 20px; height: 20px; margin-right: 8px;">
-							1403/1/12
-						</span>
-						<span>
-							<img src="../photo/logo/eyeWhite.png" alt="Views Icon" style="width: 20px; height: 20px; margin-right: 8px;">
-							1.2k
-						</span>
-					</div>
-				</div>
-				
-				
-				<div class="news-card" tabindex="0">
-					<img src="../photo/news/sports/ID4.jpg" class="news-image" alt="News Image">
-					<h3 class="news-title">forth Title</h3>
-					<p class="news-body">Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-					<div class="news-footer">
-						<span>
-							<img src="../photo/logo/userWhite.png" alt="Author Icon" style="width: 20px; height: 20px; margin-right: 8px;">
-							authername
-						</span>
-						<span>
-							<img src="../photo/logo/dateNormal.png" alt="Date Icon" style="width: 20px; height: 20px; margin-right: 8px;">
-							1403/1/12
-						</span>
-						<span>
-							<img src="../photo/logo/eyeWhite.png" alt="Views Icon" style="width: 20px; height: 20px; margin-right: 8px;">
-							1.2k
-						</span>
-					</div>
-				</div>
-				
-				<div class="news-card" tabindex="0">
-					<img src="../photo/news/sports/ID5.webp" class="news-image" alt="News Image">
-					<h3 class="news-title">fifth Title</h3>
-					<p class="news-body">Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-					<div class="news-footer">
-						<span>
-							<img src="../photo/logo/userWhite.png" alt="Author Icon" style="width: 20px; height: 20px; margin-right: 8px;">
-							authername
-						</span>
-						<span>
-							<img src="../photo/logo/dateNormal.png" alt="Date Icon" style="width: 20px; height: 20px; margin-right: 8px;">
-							1403/1/12
-						</span>
-						<span>
-							<img src="../photo/logo/eyeWhite.png" alt="Views Icon" style="width: 20px; height: 20px; margin-right: 8px;">
-							1.2k
-						</span>
-					</div>
-				</div>
-				
-				<div class="news-card" tabindex="0">
-					<img src="../photo/news/sports/ID6.jpg" class="news-image" alt="News Image">
-					<h3 class="news-title">sixth Title</h3>
-					<p class="news-body">Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-					<div class="news-footer">
-						<span>
-							<img src="../photo/logo/userWhite.png" alt="Author Icon" style="width: 20px; height: 20px; margin-right: 8px;">
-							authername
-						</span>
-						<span>
-							<img src="../photo/logo/dateNormal.png" alt="Date Icon" style="width: 20px; height: 20px; margin-right: 8px;">
-							1403/1/12
-						</span>
-						<span>
-							<img src="../photo/logo/eyeWhite.png" alt="Views Icon" style="width: 20px; height: 20px; margin-right: 8px;">
-							1.2k
-						</span>
-					</div>
-				</div>
-				
-				
-				<div class="news-card" tabindex="0">
-					<img src="../photo/news/sports/ID7.webp" class="news-image" alt="News Image">
-					<h3 class="news-title">seventh Title</h3>
-					<p class="news-body">Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-					<div class="news-footer">
-						<span>
-							<img src="../photo/logo/userWhite.png" alt="Author Icon" style="width: 20px; height: 20px; margin-right: 8px;">
-							authername
-						</span>
-						<span>
-							<img src="../photo/logo/dateNormal.png" alt="Date Icon" style="width: 20px; height: 20px; margin-right: 8px;">
-							1403/1/12
-						</span>
-						<span>
-							<img src="../photo/logo/eyeWhite.png" alt="Views Icon" style="width: 20px; height: 20px; margin-right: 8px;">
-							1.2k
-						</span>
-					</div>
-				</div>
-				
-				
-				<div class="news-card" tabindex="0">
-					<img src="../photo/news/sports/ID8.jpg" class="news-image" alt="News Image">
-					<h3 class="news-title">final Title</h3>
-					<p class="news-body">Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-					<div class="news-footer">
-						<span>
-							<img src="../photo/logo/userWhite.png" alt="Author Icon" style="width: 20px; height: 20px; margin-right: 8px;">
-							authername
-						</span>
-						<span>
-							<img src="../photo/logo/dateNormal.png" alt="Date Icon" style="width: 20px; height: 20px; margin-right: 8px;">
-							1403/1/12
-						</span>
-						<span>
-							<img src="../photo/logo/eyeWhite.png" alt="Views Icon" style="width: 20px; height: 20px; margin-right: 8px;">
-							1.2k
-						</span>
-					</div>
-				</div>
-				
-				
-				
-			</div>
-
-		</div>
-	</section>
+    <section id="Favservices" class="Favservices">
+        <div class="container">
+            <h2 class="section-title">Handpicked for you</h2>
+            <div class="news-grid">
+                <!-- News cards will be dynamically generated here -->
+            </div>
+        </div>
+    </section>
 
 
 
