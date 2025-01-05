@@ -33,7 +33,7 @@ public class NewsDto {
     public NewsDto(Long id,
                    @NonNull String title,
                    @NonNull String category,
-                   String content,
+                   @NonNull String content,
                    Integer viewNumber,
                    String date,
                    Boolean verification,

@@ -36,7 +36,7 @@ public class UserDto {
                    @NonNull String phone,
                    @NonNull String email,
                    @NonNull String password,
-                   FavoritesDto favorites,
+                   @NonNull FavoritesDto favorites,
                    String photoPath) {
         this.id = id;
         this.username = username;
