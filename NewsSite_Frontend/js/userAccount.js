@@ -130,7 +130,7 @@ document.querySelectorAll(".navList, .bottom-link li").forEach(function (element
 ///////////////////////////////////////////////////////////           CARD selecting
 // Fetch favorite data when the page loads
 window.addEventListener('load', () => {
-    fetch('http://172.10.120.119:8080/user/favorites?id=2')
+    fetch('http://192.168.25.93:8080/user/favorites?id=2')
         .then(response => response.json())
         .then(data => {
             // Iterate over each card and check if it's active or inactive based on the API response
@@ -172,15 +172,17 @@ document.querySelectorAll(".card").forEach(card => {
             card.style.filter = "grayscale(100%)"; // Apply grayscale
         }
 
+        // Define the URL, including the cardName as the Content-Type (category)
+        const url = `http://192.168.25.93:8080/user/changeOnceFavorites?id=2&c=${encodeURIComponent(cardName)}`;
+
         // Send the updated status to the server using a fetch request
-        fetch(`http://172.10.120.119:8080/user/changeFavorites?id=2`, {
+        fetch(url, {
             method: 'PUT',
             headers: {
-                'Content-Type': 'application/json',
+                'Content-Type': cardName // Set Content-Type to the cardName (category)
             },
             body: JSON.stringify({
-                cardName: cardName,  // Send the card name (e.g., "economic")
-                status: newStatus    // Send the new status ("active" or "deactive")
+                status: newStatus // Send the new status ("active" or "deactive")
             })
         })
         .then(response => response.json()) // Parse the response JSON
@@ -196,6 +198,7 @@ document.querySelectorAll(".card").forEach(card => {
         });
     });
 });
+
 
 /////////////////////////////////////////////////////////// 
 

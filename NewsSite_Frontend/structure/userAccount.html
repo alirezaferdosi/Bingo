@@ -63,6 +63,33 @@
         </div>
     </nav>
 
+	<script>
+	
+		const urls = {
+
+        visits: "http://192.168.25.93:8080/home/allVisits"
+    };
+        async function fetchTotalViews() {
+            try {
+                const response = await fetch('http://192.168.25.93:8080/home/allVisits');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                const visitResponse = await fetch(urls.visits);
+            const visitCount = await visitResponse.text();
+            document.getElementById("visit-count").textContent = `+${visitCount}`;
+
+            } catch (error) {
+                console.error('Error fetching total views:', error);
+                document.getElementById('totalViews').textContent = 'Error';
+            }
+        }
+
+        // Fetch total views on page load
+        fetchTotalViews();
+    </script>
+
+
     <section class="dashboard">
         <div class="container">
             <div class="overview">
@@ -74,7 +101,7 @@
                     <div class="box box1">
                         <ion-icon name="eye-outline"></ion-icon>
                         <span class="text">Total Views</span>
-                        <span class="number">18345</span>
+                        <span class="number" id="totalViews">Loading...</span>
                     </div>
                     <div class="box box2">
                         <ion-icon name="people-outline"></ion-icon>
@@ -91,7 +118,6 @@
                         <span class="text">Coming soon</span>
                         <span class="number">:)</span>
                     </div>
-					
                 </div> 
             </div>
             

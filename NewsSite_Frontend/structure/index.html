@@ -21,7 +21,7 @@
         // Function to fetch news data and populate the news cards
         async function loadNews() {
             try {
-                const response = await fetch('http://172.10.120.119:8080/news/number?n=22');
+                const response = await fetch('https://46.143.11.176:8080/news/number?n=22');
                 const newsData = await response.json(); // Assuming the data is returned in JSON format
 
                 const newsGrid = document.querySelector('.news-grid');
@@ -68,9 +68,9 @@
 		
 		// URLs for fetching data
     const urls = {
-        posts: "http://172.10.120.119:8080/home/allNews",
-        users: "http://172.10.120.119:8080/home/allUsers",
-        visits: "http://172.10.120.119:8080/home/allVisits"
+        posts: "https://46.143.11.176:8080/home/allNews",
+        users: "https://46.143.11.176:8080/home/allUsers",
+        visits: "https://46.143.11.176:8080/home/allVisits"
     };
 
     // Update stats dynamically
