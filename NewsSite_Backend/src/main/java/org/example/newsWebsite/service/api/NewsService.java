@@ -53,6 +53,9 @@ public interface NewsService {
     boolean isExistNews(Long id);
 
     @Transactional
+    List<News> getNumberOfNews(int number);
+
+    @Transactional
     List<News> getLastNews(Long time);
 
     @Transactional

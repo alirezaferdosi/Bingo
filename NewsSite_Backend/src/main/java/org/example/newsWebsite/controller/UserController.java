@@ -67,10 +67,14 @@ public class UserController {
         }
     }
 
-//    @PostMapping("signIn")
-//    public ResponseEntity signIn(@RequestParam(name = "u") String username, @RequestParam(name = "p") String password) {
-//        Boolean status = userService.longIn();
-//    }
+    @PostMapping("signIn")
+    public ResponseEntity<Long> signIn(@RequestParam(name = "u") String username, @RequestParam(name = "p") String password) {
+        Long id = userService.longIn(username, password);
+
+        return ResponseEntity
+                       .status(id == null ? HttpStatus.BAD_REQUEST : HttpStatus.OK)
+                       .body(id);
+    }
 
     @GetMapping("all")
     public ResponseEntity<List<UserDto>> getAllUsers() {
@@ -248,15 +252,25 @@ public class UserController {
                        .body(status);
     }
 
+    @PutMapping("changeOnceFavorites")
+    public ResponseEntity<Boolean> changeFavoritesByName(@RequestParam(name = "id") Long id,
+                                                        @RequestParam(name = "c") String category,
+                                                        @RequestParam(name = "f") boolean flag) {
+        boolean status = this.userService.changeFavoritesCategory(id, category, flag);
+
+        return ResponseEntity
+                       .status(status ? HttpStatus.OK : HttpStatus.NOT_FOUND)
+                       .body(status);
+    }
+
     @GetMapping("favorites")
     public ResponseEntity<FavoritesDto> getFavorites(@RequestParam(name = "id") Long id) {
         Byte f = userService.getFavorites(id);
-        if(f == null){
+        if (f == null) {
             return ResponseEntity
                            .status(HttpStatus.NOT_FOUND)
                            .build();
-        }
-        else {
+        } else {
             FavoritesDto favoritesDto = favoritesConvertor.modelToDto(f);
             return ResponseEntity
                            .status(HttpStatus.FOUND)

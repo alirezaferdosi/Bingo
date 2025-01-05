@@ -14,7 +14,7 @@ public interface UserService {
     User addUser(User user);
 
     @Transactional
-    Boolean longIn(String username, String password);
+    Long longIn(String username, String password);
 
     @Transactional
     User editUser(User user);
@@ -60,4 +60,7 @@ public interface UserService {
 
     @Transactional
     Byte getFavorites(Long id);
+
+    @Transactional
+    boolean changeFavoritesCategory(Long userid, String category, boolean flag);
 }

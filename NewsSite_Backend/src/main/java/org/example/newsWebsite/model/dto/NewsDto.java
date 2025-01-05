@@ -18,6 +18,8 @@ public class NewsDto {
     @Pattern(regexp = "^[a-zA-Z]+", message = "Category must be contain letter")
     private String category;
 
+    private String content;
+
     private Integer viewNumber;
 
     private String date;
@@ -31,6 +33,7 @@ public class NewsDto {
     public NewsDto(Long id,
                    @NonNull String title,
                    @NonNull String category,
+                   String content,
                    Integer viewNumber,
                    String date,
                    Boolean verification,
@@ -39,6 +42,7 @@ public class NewsDto {
         this.id = id;
         this.title = title;
         this.category = category;
+        this.content = content;
         this.viewNumber = viewNumber;
         this.date = date;
         this.verification = verification;

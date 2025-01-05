@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
  class NewsServiceImpl implements NewsService {
@@ -60,6 +61,12 @@ import java.util.Objects;
             }
             if(Objects.nonNull(news.getDate())) {
                 n.setDate(news.getDate());
+            }
+            if(Objects.nonNull(news.getPhotoPath()) && !news.getPhotoPath().isEmpty()) {
+                n.setPhotoPath(news.getPhotoPath());
+            }
+            if(Objects.nonNull(news.getContent()) && !news.getContent().isEmpty()) {
+                n.setContent(news.getContent());
             }
 
             return newsRepository.save(n);
@@ -198,6 +205,23 @@ import java.util.Objects;
     @Override
     public boolean isExistNews(Long id) {
         return newsRepository.existsById(id);
+    }
+
+    @Override
+    public List<News> getNumberOfNews(int number) {
+        List<News> news = new ArrayList<>();
+
+        int i=0;
+        for (News n : newsRepository.findAll().stream().sorted().toList()) {
+            if (i == number) {
+                return news;
+            }
+            else {
+                news.add(n);
+                i++;
+            }
+        }
+        return news;
     }
 
     @Override

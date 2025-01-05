@@ -150,6 +150,26 @@ public class NewsController {
                        .body(newsDtos);
     }
 
+    @GetMapping("number")
+    public ResponseEntity<List<NewsDto>> getNumberNews(@RequestParam(name = "n") Integer number) {
+        List<NewsDto> newsDtos = new ArrayList<>();
+
+        for(News news : newsService.getNumberOfNews(number)) {
+            newsDtos.add(convertor.modelToDto(news));
+        }
+
+        if (newsDtos.isEmpty()) {
+            return ResponseEntity
+                           .status(HttpStatus.NO_CONTENT)
+                           .build();
+        }
+        else {
+            return ResponseEntity
+                           .status(HttpStatus.OK)
+                           .body(newsDtos);
+        }
+    }
+
     @GetMapping("byCategory")
     public ResponseEntity<List<NewsDto>> getNewsByCategory(@RequestParam(name = "c") String category) {
         List<NewsDto> newsDtos = new ArrayList<>();
@@ -162,6 +182,8 @@ public class NewsController {
                        .status(HttpStatus.OK)
                        .body(newsDtos);
     }
+
+    @GetMapping("")
 
     @PutMapping("incrementViewer")
     public ResponseEntity<Integer> incrementNewsViewer(@RequestParam(name = "n") Long newsId,
@@ -228,11 +250,12 @@ public class NewsController {
     }
 
     @GetMapping("mostViews")
-    public ResponseEntity<List<NewsDto>> getMostViews(@RequestParam(name = "t", defaultValue = "256200000") Long time,
+    public ResponseEntity<List<NewsDto>> getMostViews(@RequestParam(name = "t", defaultValue = "2562000000") Long time,
                                                       @RequestParam(name = "n", defaultValue = "10") Integer viewNumber,
                                                       @RequestParam(name = "c", defaultValue = "") String category) {
 
         List<News> news;
+
         if(category.isEmpty()){
             news = this.newsService.getMostViews(time, viewNumber);
         }

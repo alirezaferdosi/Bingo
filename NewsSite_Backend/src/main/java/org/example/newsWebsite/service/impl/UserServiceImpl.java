@@ -34,13 +34,13 @@
         }
 
         @Override
-        public Boolean longIn(String username, String password) {
+        public Long longIn(String username, String password) {
             for (User id : userRepository.findAll()) {
                 if(id.getUsername().equals(username)) {
                     if(id.getPassword().equals(password)) {
-                        return true;
+                        return id.getId();
                     }{
-                        return false;
+                        return null;
                     }
                 }
             }
@@ -203,5 +203,51 @@
                 return userRepository.findById(id).get().getFavorites();
             }
             return null;
+        }
+
+        @Override
+        public boolean changeFavoritesCategory(Long id, String category, boolean flag) {
+            if(this.isUserExist(id)){
+                User user = userRepository.findById(id).get();
+                byte f = user.getFavorites();
+
+                switch (category.toLowerCase()){
+                    case "sports":
+                        user.setFavorites(flag ?
+                                                  (byte) (f | 0b00010000)
+                                                  :
+                                                  (byte) (f & 0b00001111));
+                        break;
+                    case "health":
+                        user.setFavorites(flag ?
+                                                  (byte) (f | 0b00001000)
+                                                  :
+                                                  (byte) (f & 0b00010111));
+                        break;
+                    case "politics":
+                        user.setFavorites(flag ?
+                                                  (byte) (f | 0b00000100)
+                                                  :
+                                                  (byte) (f & 0b00011011));
+                        break;
+                    case "economic":
+                        user.setFavorites(flag ?
+                                                  (byte) (f | 0b00000010)
+                                                  :
+                                                  (byte) (f & 0b00011101));
+                        break;
+                    case "technology":
+                        user.setFavorites(flag ?
+                                                  (byte) (f | 0b00000001)
+                                                  :
+                                                  (byte) (f & 0b00011110));
+                        break;
+                    default:
+                        return false;
+                }
+                this.userRepository.save(user);
+                return true;
+            }
+            return false;
         }
     }
