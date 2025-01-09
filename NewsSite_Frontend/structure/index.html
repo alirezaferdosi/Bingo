@@ -8,20 +8,84 @@
     <link rel="stylesheet" href="../style/ServiceCard.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+    <link rel="stylesheet" href="http://use.fontawesome.com/releases/v5.5.0/css/all.css"
         integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
         integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+    <link rel='stylesheet' href='http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
 
     <script>
+	
+		// Fetch current user
+		fetch('/user/currentUser')
+			.then(response => {
+				if (!response.ok) {
+					// If no user is logged in, gracefully handle the state
+					return null;
+				}
+				return response.json();
+			})
+			.then(user => {
+				if (user) {
+					document.getElementById('username').innerText = user.username;
+				} else {
+					// No user is logged in, display a guest view
+					document.getElementById('username').innerText = "Guest";
+				}
+			})
+			.catch(err => {
+				console.error("Error fetching current user:", err);
+				document.getElementById('username').innerText = "Guest";
+			});
+
+		function logout() {
+			fetch('/user/logout', { method: 'POST' })
+				.then(() => {
+					window.location.href = "/Login.html";
+				});
+		}
+	
+	
+	
+	
+	
+	
+	
+	
+		window.addEventListener('scroll', function () {
+            let heroSection = document.querySelector('.hero');
+            let scrollPosition = window.scrollY;
+
+            // Calculate the new height of the hero section based on scroll
+            let newHeight = Math.max(50, 100 - scrollPosition / 5); // Shrinks from 100vh to 50vh
+            heroSection.style.height = newHeight + "vh"; // Apply the new height
+
+            // Optionally, adjust the font size based on scroll as well
+            let heroText = document.querySelector('.hero h2');
+            let heroDesc = document.querySelector('.hero p');
+
+            if (newHeight < 70) {
+                heroText.style.fontSize = '2rem'; // Shrink title size when hero is small
+                heroDesc.style.fontSize = '1rem'; // Shrink description size when hero is small
+            } else {
+                heroText.style.fontSize = '3rem'; // Default size when hero is large
+                heroDesc.style.fontSize = '1.5rem'; // Default size for description
+            }
+        });
+	
+	
+	
+	
+	
+	
+	
         // Function to fetch news data and populate the news cards
         async function loadNews() {
             try {
-                const response = await fetch('https://46.143.11.176:8080/news/number?n=22');
+                const response = await fetch('http://localhost:8080/news/number?n=7');
                 const newsData = await response.json(); // Assuming the data is returned in JSON format
 
                 const newsGrid = document.querySelector('.news-grid');
@@ -68,9 +132,9 @@
 		
 		// URLs for fetching data
     const urls = {
-        posts: "https://46.143.11.176:8080/home/allNews",
-        users: "https://46.143.11.176:8080/home/allUsers",
-        visits: "https://46.143.11.176:8080/home/allVisits"
+        posts: "http://localhost:8080/home/allNews",
+        users: "http://localhost:8080/home/allUsers",
+        visits: "http://localhost:8080/home/allVisits"
     };
 
     // Update stats dynamically

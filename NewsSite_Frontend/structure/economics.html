@@ -3,9 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page</title>
-    <link rel="stylesheet" href="../style/styles.css">
+    <title>economics Page</title>
+    <link rel="stylesheet" href="../style/economics.css">
     <script>
+        // Array of background images
+        const heroImages = [
+            '../photo/back/economy2.jpg',
+            '../photo/back/economy3.jpg'  // Add more images as needed
+        ];
+
+        // Function to randomly change background image
+        function changeHeroImage() {
+            let randomIndex = Math.floor(Math.random() * heroImages.length);
+            let heroSection = document.querySelector('.hero');
+            heroSection.style.backgroundImage = `url('${heroImages[randomIndex]}')`;
+        }
+
+        // Change background image every 10 seconds
+        setInterval(changeHeroImage, 10000);
+
+        // Initial background image change
+        window.addEventListener('load', changeHeroImage);
+
         window.addEventListener('scroll', function () {
             let heroSection = document.querySelector('.hero');
             let scrollPosition = window.scrollY;
@@ -26,106 +45,149 @@
                 heroDesc.style.fontSize = '1.5rem'; // Default size for description
             }
         });
+		// Function to fetch news data and populate the news cards
+        async function loadNews() {
+            try {
+                const response = await fetch('http://localhost:8080/news/byCategory?c=Economics');
+                const newsData = await response.json(); // Assuming the data is returned in JSON format
+
+                const newsGrid = document.querySelector('.news-grid');
+                newsGrid.innerHTML = ''; // Clear existing news cards
+
+                // Loop through the news data and create a card for each
+                newsData.forEach(news => {
+                    const newsCard = document.createElement('div');
+                    newsCard.classList.add('news-card');
+                    newsCard.setAttribute('tabindex', '0');
+
+                    newsCard.innerHTML = `
+                        <img src="${news.photoPath}" class="news-image" alt="News Image">
+                        <h3 class="news-title">${news.title}</h3>
+                        <p class="news-body">${news.content}</p>
+                        <div class="news-footer">
+                            <span>
+                                <img src="../photo/logo/userWhite.png" alt="Author Icon" style="width: 20px; height: 20px; margin-right: 8px;">
+                                ${news.author}
+                            </span>
+                            <span>
+                                <img src="../photo/logo/dateNormal.png" alt="Date Icon" style="width: 20px; height: 20px; margin-right: 8px;">
+                                ${news.date}
+                            </span>
+                            <span>
+                                <img src="../photo/logo/eyeWhite.png" alt="Views Icon" style="width: 20px; height: 20px; margin-right: 8px;">
+                                ${news.viewNumber}
+                            </span>
+                        </div>
+                    `;
+
+                    newsGrid.appendChild(newsCard);
+                });
+            } catch (error) {
+                console.error('Error fetching news:', error);
+            }
+        }
+
+        // Call the function to load the news when the page loads
+        window.onload = loadNews;
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		// URLs for fetching data
+		const urls = {
+			posts: "http://localhost:8080/news/newsByCategory?c=Economics",
+			users: "http://localhost:8080/home/allUsers",
+			visits: "http://localhost:8080/news/viewsByCategory?c=Economics"
+		};
+
+		// Update stats dynamically
+		async function updateStats() {
+			try {
+				// Fetch and update post count
+				const postResponse = await fetch(urls.posts);
+				const postCount = await postResponse.text();
+				document.getElementById("post-count").textContent = `+${postCount}`;
+
+				// Fetch and update user count
+				const userResponse = await fetch(urls.users);
+				const userCount = await userResponse.text();
+				document.getElementById("user-count").textContent = `+${userCount}`;
+
+				// Fetch and update visit count
+				const visitResponse = await fetch(urls.visits);
+				const visitCount = await visitResponse.text();
+				document.getElementById("visit-count").textContent = `+${visitCount}`;
+			} catch (error) {
+				console.error("Error fetching stats:", error);
+			}
+		}
+
+		// Call the update function on page load
+		document.addEventListener("DOMContentLoaded", updateStats);
+		
+		
     </script>
 </head>
 <body>
     <header>
-		<div class="container">
-			<!-- Replace this with an image of your logo -->
-			<a href="#" class="logo">
-				<span class="logo-text">Bingo</span>
-			</a>
-
-			<nav>
-				<ul class="nav-links">
-					<li><a href="#home">Home</a></li>
-					<li><a href="#about">About</a></li>
-					<li><a href="#services">Services</a></li>
-					<li><a href="authstyles.html">User Account</a></li>
-				</ul>
-			</nav>
-		</div>
-	</header>
-
-
-    <section id="home" class="hero">
         <div class="container">
-            <h2>Above the Wings of Whales</h2>
-            <p>Where stories take flight, carrying you beyond the surface into the depths of truth</p>
+            <a href="#" class="logo">
+                <span class="logo-text">Bingo</span>
+            </a>
+
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#footer">About</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="authstyles.html">User Account</a></li>
+                </ul>
+            </nav>
         </div>
-    </section>
+    </header>
 
-    <section id="services" class="services">
+	<section id="home" class="hero">
 		<div class="container">
-			<h2>Our Services</h2>
-			<div class="service-cards">
-				<!-- Service 1 -->
-				<a href="sports.html" class="card-link">
-					<div class="card">
-						<div class="gradient"></div>
-						<div class="info">
-							<div class="text">/Service 1/</div>
-							<div class="title">Sports</div>
-						</div>
-						<div class="time">Last update <span>09:28 pm</span></div>
-					</div>
-				</a>
+			<h2>Above the Wings of Whales</h2>
+			<p style="margin-bottom: 60px;">Where stories take flight, carrying you beyond the surface into the depths of truth</p>
 
-				<!-- Service 2 -->
-				<a href="health.html" class="card-link">
-					<div class="card">
-						<div class="gradient" style="background-image: linear-gradient(0deg, #0703fa, transparent);"></div>
-						<div class="info">
-							<div class="text">/Service 2/</div>
-							<div class="title">Health</div>
-						</div>
-						<div class="time">Last update <span>09:28 pm</span></div>
-					</div>
-				</a>
-
-				<!-- Service 3 -->
-				<a href="politics.html" class="card-link">
-					<div class="card">
-						<div class="gradient" style="background-image: linear-gradient(0deg, #009ece, transparent);"></div>
-						<div class="info">
-							<div class="text">/Service 3/</div>
-							<div class="title">Politics</div>
-						</div>
-						<div class="time">Last update <span>09:28 pm</span></div>
-					</div>
-				</a>
-
-				<!-- Service 4 -->
-				<a href="economics.html" class="card-link">
-					<div class="card">
-						<div class="gradient" style="background-image: linear-gradient(0deg, #2c0079, transparent);"></div>
-						<div class="info">
-							<div class="text">/Service 4/</div>
-							<div class="title">Economics</div>
-						</div>
-						<div class="time">Last update <span>09:28 pm</span></div>
-					</div>
-				</a>
-
-				<!-- Service 5 -->
-				<a href="technology.html" class="card-link">
-					<div class="card">
-						<div class="gradient" style="background-image: linear-gradient(0deg, #fffb00, transparent);"></div>
-						<div class="info">
-							<div class="text">/Service 5/</div>
-							<div class="title">Technology</div>
-						</div>
-						<div class="time">Last update <span>09:28 pm</span></div>
-					</div>
-				</a>
+			<div class="stats" style="display: flex; justify-content: center; align-items: center; gap: 150px; margin-top: 20px;">
+				<div class="stat-item" style="text-align: center;">
+					<img id="post-img" src="../photo/logo/postWhite.png" alt="Post logo" style="width: 80px; height: 80px; margin-bottom: 10px; filter: brightness(0) invert(1);">
+					<h3 id="post-count" style="margin: 0; color: white;">Loading...</h3>
+				</div>
+				<div class="stat-item" style="text-align: center;">
+					<img id="user-img" src="../photo/logo/userWhite.png" alt="Reporter logo" style="width: 80px; height: 80px; margin-bottom: 10px; filter: brightness(0) invert(1);">
+					<h3 id="user-count" style="margin: 0; color: white;">Loading...</h3>
+				</div>
+				<div class="stat-item" style="text-align: center;">
+					<img id="visit-img" src="../photo/logo/eyeWhite.png" alt="View logo" style="width: 80px; height: 80px; margin-bottom: 10px; filter: brightness(0) invert(1);">
+					<h3 id="visit-count" style="margin: 0; color: white;">Loading...</h3>
+				</div>
 			</div>
+			
 		</div>
 	</section>
 
-
-    <footer>
+    <section id="Favservices" class="Favservices">
         <div class="container">
-            <p>&copy; 🐳</p>
+            <h2 class="section-title">Handpicked for you</h2>
+            <div class="news-grid">
+                <!-- News cards will be dynamically generated here -->
+            </div>
+        </div>
+    </section>
+
+
+
+    <footer id="footer">
+        <div class="container">
+            <p> Made by Kasra and Alireza 🐳</p>
         </div>
     </footer>
 </body>

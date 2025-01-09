@@ -94,7 +94,7 @@ function changePhoto() {
     }
 }
 
-// Navigation click logic (same as your existing code)
+// Navigation click logic 
 document.querySelectorAll(".navList, .bottom-link li").forEach(function (element) {
     element.addEventListener("click", function () {
         document.querySelectorAll(".navList, .bottom-link li").forEach(function (e) {

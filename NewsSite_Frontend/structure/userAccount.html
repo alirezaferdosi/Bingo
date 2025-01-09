@@ -88,7 +88,7 @@
                     <div class="box box3">
                         <ion-icon name="chatbubbles-outline"></ion-icon>
                         <span class="text">Total Posts</span>
-                        <span class="number">22</span>
+                        <span class="number" id="totalPost">Loading...</span>
                     </div>
                     <div class="box box4">
                         <ion-icon name="future-outline"></ion-icon>
@@ -281,6 +281,32 @@
                 totalViewsElement.textContent = 'Error';
             });
     }
+	
+	
+	function fetchTotalPost() {
+        const totalPostElement = document.getElementById('totalPost');
+
+        fetch('http://localhost:8080/home/allNews')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to fetch total views');
+                }
+                return response.text(); // Get the raw text response
+            })
+            .then(data => {
+                console.log('Server response:', data); // Log the raw response for debugging
+                const totalPost = isNaN(data) ? JSON.parse(data).totalPost : data; // Handle both plain numbers and JSON
+                totalPostElement.textContent = totalPost || '0';
+            })
+            .catch(error => {
+                console.error('Error fetching total views:', error);
+                totalPostElement.textContent = 'Error';
+            });
+    }
+	
+	
+	
 
     fetchTotalViews();
+	fetchTotalPost();
 </script>
