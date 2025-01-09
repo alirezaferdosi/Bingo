@@ -85,7 +85,7 @@
         // Function to fetch news data and populate the news cards
         async function loadNews() {
             try {
-                const response = await fetch('http://localhost:8080/news/number?n=7');
+                const response = await fetch('http://localhost:8080/news/number?n=9');
                 const newsData = await response.json(); // Assuming the data is returned in JSON format
 
                 const newsGrid = document.querySelector('.news-grid');
