@@ -29,17 +29,21 @@ public class UserDto {
 
     private FavoritesDto favorites;
 
+    private String photoPath;
+
     public UserDto(Long id,
                    @NonNull String username,
                    @NonNull String phone,
                    @NonNull String email,
                    @NonNull String password,
-                   FavoritesDto favorites) {
+                   @NonNull FavoritesDto favorites,
+                   String photoPath) {
         this.id = id;
         this.username = username;
         this.phone = phone;
         this.email = email;
         this.password = password;
         this.favorites = favorites;
+        this.photoPath = photoPath;
     }
 }

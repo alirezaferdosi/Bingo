@@ -12,7 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 @Table(name = "news")
-public class News {
+public class News implements Comparable<News> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -24,7 +24,10 @@ public class News {
     @Column(name = "category", nullable = false)
     private String category;
 
-    @Column(name = "viewNumber", nullable = false)
+    @Column(name = "content", length = 100000)
+    private String content;
+
+    @Column(name = "view_number", nullable = false)
     private Integer viewNumber;
 
     @Temporal(TemporalType.DATE)
@@ -37,6 +40,15 @@ public class News {
     @ManyToOne(targetEntity = User.class/*, cascade = CascadeType.ALL */)
     @JoinColumn(name = "author", nullable = false)
     private User author;
+
+    @Column(name = "photoPath", nullable = false)
+    private String photoPath;
+
+
+    @Override
+    public int compareTo(News o) {
+        return 0;
+    }
 }
 
 

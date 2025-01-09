@@ -46,18 +46,18 @@ public class UserController {
 
         if(userService.isUserExist(userDto.getUsername())){
             return ResponseEntity
-                           .status(HttpStatus.CONFLICT)
-                           .body(null);
+                    .status(HttpStatus.CONFLICT)
+                    .body(null);
         }
         else {
             UserDto userCreate = userConvertor.modelToDto(
-                                    userService.addUser(
-                                            userConvertor.dtoToModel(userDto)
-                                    )
-                        );
+                    userService.addUser(
+                            userConvertor.dtoToModel(userDto)
+                    )
+            );
             return ResponseEntity
-                           .status(HttpStatus.CREATED)
-                           .body(userCreate);
+                    .status(HttpStatus.CREATED)
+                    .body(userCreate);
         }
     }
 
@@ -68,8 +68,8 @@ public class UserController {
             userDtos.add(userConvertor.modelToDto(user));
         }
         return ResponseEntity
-                       .status(HttpStatus.FOUND)
-                       .body(userDtos);
+                .status(HttpStatus.FOUND)
+                .body(userDtos);
     }
 
     @GetMapping("byId")
@@ -77,14 +77,14 @@ public class UserController {
         User user = userService.getUser(id);
         if(user == null){
             return ResponseEntity
-                           .status(HttpStatus.NOT_FOUND)
-                           .body(null);
+                    .status(HttpStatus.NOT_FOUND)
+                    .body(null);
         }
         else {
             UserDto userDto = userConvertor.modelToDto(user);
             return ResponseEntity
-                           .status(HttpStatus.FOUND)
-                           .body(userDto);
+                    .status(HttpStatus.FOUND)
+                    .body(userDto);
         }
     }
 
@@ -93,14 +93,14 @@ public class UserController {
         User user = userService.getUser(username);
         if(user == null){
             return ResponseEntity
-                           .status(HttpStatus.NOT_FOUND)
-                           .body(null);
+                    .status(HttpStatus.NOT_FOUND)
+                    .body(null);
         }
         else {
             UserDto userDto = userConvertor.modelToDto(user);
             return ResponseEntity
-                           .status(HttpStatus.FOUND)
-                           .body(userDto);
+                    .status(HttpStatus.FOUND)
+                    .body(userDto);
         }
     }
 
@@ -110,19 +110,19 @@ public class UserController {
 
         if(userService.isUserExist(userDto.getUsername()) && !userService.getUser(userDto.getId()).getUsername().equals(userDto.getUsername())){
             return ResponseEntity
-                           .status(HttpStatus.CONFLICT)
-                           .body(null);
+                    .status(HttpStatus.CONFLICT)
+                    .body(null);
         }
         if(user == null){
             return ResponseEntity
-                           .status(HttpStatus.CONFLICT)
-                           .body(null);
+                    .status(HttpStatus.CONFLICT)
+                    .body(null);
         }
         else {
             userDto = userConvertor.modelToDto(user);
             return ResponseEntity
-                           .status(HttpStatus.OK)
-                           .body(userDto);
+                    .status(HttpStatus.OK)
+                    .body(userDto);
         }
     }
 
@@ -130,13 +130,13 @@ public class UserController {
     public ResponseEntity deleteUser(@RequestParam(name = "id") Long id) {
         if (userService.deleteUser(id)){
             return ResponseEntity
-                           .status(HttpStatus.NO_CONTENT)
-                           .build();
+                    .status(HttpStatus.NO_CONTENT)
+                    .build();
         }
         else {
             return ResponseEntity
-                           .status(HttpStatus.NOT_FOUND)
-                           .build();
+                    .status(HttpStatus.NOT_FOUND)
+                    .build();
         }
     }
 
@@ -144,13 +144,13 @@ public class UserController {
     public ResponseEntity deleteUser(@RequestParam(name = "username") String username) {
         if (userService.deleteUser(username)){
             return ResponseEntity
-                           .status(HttpStatus.NO_CONTENT)
-                           .build();
+                    .status(HttpStatus.NO_CONTENT)
+                    .build();
         }
         else {
             return ResponseEntity
-                           .status(HttpStatus.NOT_FOUND)
-                           .build();
+                    .status(HttpStatus.NOT_FOUND)
+                    .build();
         }
     }
 
@@ -168,8 +168,8 @@ public class UserController {
         Boolean exist = userService.isUserExist(username);
 
         return ResponseEntity
-                       .status(exist ? HttpStatus.FOUND : HttpStatus.NOT_FOUND)
-                       .build();
+                .status(exist ? HttpStatus.FOUND : HttpStatus.NOT_FOUND)
+                .build();
     }
 
     @GetMapping("emailExistence")
@@ -177,8 +177,8 @@ public class UserController {
         Boolean exist = userService.isEmailExist(email);
 
         return ResponseEntity
-                       .status(exist ? HttpStatus.FOUND : HttpStatus.NOT_FOUND)
-                       .build();
+                .status(exist ? HttpStatus.FOUND : HttpStatus.NOT_FOUND)
+                .build();
     }
 
     /*@GetMapping("phoneExistence")
@@ -193,37 +193,37 @@ public class UserController {
     @GetMapping("allVisitsI")
     public ResponseEntity<Integer> getAllVisits(@RequestParam(name = "i") Long userId) {
         return ResponseEntity
-                       .status(HttpStatus.OK)
-                       .body(newsService.getAllVisits(userId));
+                .status(HttpStatus.OK)
+                .body(newsService.getAllVisits(userId));
     }
 
     @GetMapping("allVisitsU")
     public ResponseEntity<Integer> getAllVisits(@RequestParam(name = "u") String username) {
         return ResponseEntity
-                       .status(HttpStatus.OK)
-                       .body(newsService.getAllVisits(username));
+                .status(HttpStatus.OK)
+                .body(newsService.getAllVisits(username));
     }
 
     @GetMapping("allNewsI")
     public ResponseEntity<Integer> getAllNews(@RequestParam(name = "i") Long userId) {
         return ResponseEntity
-                       .status(HttpStatus.OK)
-                       .body(newsService.getNumberOfAllNews(userId));
+                .status(HttpStatus.OK)
+                .body(newsService.getNumberOfAllNews(userId));
     }
 
     @GetMapping("allNewsU")
     public ResponseEntity<Integer> getAllNews(@RequestParam(name = "u") String username) {
         return ResponseEntity
-                       .status(HttpStatus.OK)
-                       .body(newsService.getNumberOfAllNews(username));
+                .status(HttpStatus.OK)
+                .body(newsService.getNumberOfAllNews(username));
     }
 
     @PutMapping("changeFavorites")
     public ResponseEntity<Boolean> changeFavorites(@RequestParam(name = "id") Long id,@RequestBody FavoritesDto favoritesDto) {
         boolean status = userService.changeFavorites(id, favoritesConvertor.dtoToModel(favoritesDto));
         return ResponseEntity
-                       .status(status ? HttpStatus.OK : HttpStatus.NOT_FOUND)
-                       .body(status);
+                .status(status ? HttpStatus.OK : HttpStatus.NOT_FOUND)
+                .body(status);
     }
 
     @GetMapping("favorites")
@@ -231,14 +231,14 @@ public class UserController {
         Byte f = userService.getFavorites(id);
         if(f == null){
             return ResponseEntity
-                           .status(HttpStatus.NOT_FOUND)
-                           .build();
+                    .status(HttpStatus.NOT_FOUND)
+                    .build();
         }
         else {
             FavoritesDto favoritesDto = favoritesConvertor.modelToDto(f);
             return ResponseEntity
-                           .status(HttpStatus.FOUND)
-                           .body(favoritesDto);
+                    .status(HttpStatus.FOUND)
+                    .body(favoritesDto);
         }
     }
 }

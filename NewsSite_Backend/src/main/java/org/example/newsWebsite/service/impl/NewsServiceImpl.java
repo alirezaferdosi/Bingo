@@ -6,14 +6,22 @@ import org.example.newsWebsite.repository.NewsRepository;
 import org.example.newsWebsite.repository.UserRepository;
 import org.example.newsWebsite.repository.ViewRepository;
 import org.example.newsWebsite.service.api.NewsService;
+import org.example.newsWebsite.service.api.uploading.StorageService;
+import org.example.newsWebsite.service.impl.uploading.FileSystemStorageService;
+import org.example.newsWebsite.service.impl.uploading.StorageDirectory;
+import org.example.newsWebsite.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
  class NewsServiceImpl implements NewsService {
@@ -25,6 +33,12 @@ import java.util.Objects;
 
     @Autowired
     private UserRepository userRepository;
+
+    private final StorageService storageService;
+
+    public NewsServiceImpl() {
+        this.storageService = new FileSystemStorageService(StorageDirectory.NEWS);
+    }
 
     @Override
     public News addNews(News news) {
@@ -48,8 +62,51 @@ import java.util.Objects;
             if(Objects.nonNull(news.getDate())) {
                 n.setDate(news.getDate());
             }
+            if(Objects.nonNull(news.getPhotoPath()) && !news.getPhotoPath().isEmpty()) {
+                n.setPhotoPath(news.getPhotoPath());
+            }
+            if(Objects.nonNull(news.getContent()) && !news.getContent().isEmpty()) {
+                n.setContent(news.getContent());
+            }
 
             return newsRepository.save(n);
+        }
+        return null;
+    }
+
+    @Override
+    public Boolean uploadNewsImage(MultipartFile file, Long id) {
+        if (isExistNews(id)){
+
+            String fileName = id + "." + StringUtils.extractPostfix(file.getOriginalFilename());
+            boolean status =  storageService.store(file, Paths.get("photo"), fileName);
+
+            if(status){
+
+                News news = this.getNews(id);
+//                news.setPhotoPath(fileName);
+                newsRepository.save(news);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public Resource downloadImage(Long id) {
+        News news = this.getNews(id);
+
+        if(news != null){
+
+            String filename = "";/*news.getPhotoPath();*/
+            if(filename != null){
+                try {
+                    return storageService.loadAsResource(Paths.get("photo"), filename);
+                } catch (Exception e) {
+                    return null;
+                }
+            }
+            return null;
         }
         return null;
     }
@@ -69,6 +126,16 @@ import java.util.Objects;
         }
         return news;
     }
+
+    @Override
+    public List<News> getAllNewsNotConfirmed() {
+        List<News> news = new ArrayList<>();
+
+        for(News n : newsRepository.findAll()) {
+            if(!n.getVerification())
+                news.add(n);
+        }
+        return news;    }
 
     @Override
     public List<News> getNewsByCategory(String category) {
@@ -138,6 +205,23 @@ import java.util.Objects;
     @Override
     public boolean isExistNews(Long id) {
         return newsRepository.existsById(id);
+    }
+
+    @Override
+    public List<News> getNumberOfNews(int number) {
+        List<News> news = new ArrayList<>();
+
+        int i=0;
+        for (News n : newsRepository.findAll().stream().sorted().toList()) {
+            if (i == number) {
+                return news;
+            }
+            else {
+                news.add(n);
+                i++;
+            }
+        }
+        return news;
     }
 
     @Override
@@ -255,8 +339,10 @@ import java.util.Objects;
         Integer visits = 0;
         for(News n : newsRepository.findAll()) {
             if(n.getVerification())
+
                 visits += n.getViewNumber();
         }
+
         return visits;
     }
 
@@ -306,7 +392,7 @@ import java.util.Objects;
     public Integer getNumberOfAllNewsbyCategory(String category) {
         Integer couter = 0;
         for(News n : newsRepository.findAll()) {
-            if(n.getCategory().equals(category) &&
+            if(n.getCategory().equalsIgnoreCase(category) &&
                n.getVerification()){
                 couter++;
             }

@@ -42,5 +42,4 @@ public class HomeController {
                        .status(HttpStatus.OK)
                        .body(userService.getNumberOfUsers());
     }
-
 }

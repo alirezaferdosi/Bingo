@@ -11,13 +11,21 @@ import java.util.stream.Stream;
 public interface StorageService {
     void init();
 
-    boolean store(MultipartFile file, String newName);
+    Boolean store(MultipartFile file, Path subDirectory, String fileName);
+
+    Boolean store(MultipartFile file, String fileName);
 
     Stream<Path> loadAll();
 
     Path load(String filename);
 
+    Path load(Path subDirectory, String filename);
+
     Resource loadAsResource(String filename);
 
+    Resource loadAsResource(Path subDirectory, String filename);
+
     void deleteAll();
+
+    Path getPath();
 }

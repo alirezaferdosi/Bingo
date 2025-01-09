@@ -1,5 +1,6 @@
 package org.example.newsWebsite.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.example.newsWebsite.model.News;
 import org.example.newsWebsite.model.convertor.PrimitiveConvertor;
 import org.example.newsWebsite.model.dto.NewsDto;
@@ -7,10 +8,12 @@ import org.example.newsWebsite.service.api.NewsService;
 import org.example.newsWebsite.service.api.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -19,6 +22,7 @@ import java.util.List;
 
 @Component
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("news")
 public class NewsController {
     @Autowired
@@ -38,7 +42,8 @@ public class NewsController {
 
 
     @PostMapping("create")
-    public ResponseEntity<NewsDto> create(@RequestBody NewsDto newsDto) {
+    public ResponseEntity<NewsDto> create(@RequestBody NewsDto newsDto/*,
+                                          @RequestPart(name = "image", required = false) MultipartFile file*/) {
         localDateTime = LocalDateTime.now();
         formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
@@ -53,6 +58,9 @@ public class NewsController {
                             convertor.dtoToModel(newsDto)
                     )
             );
+
+//            newsService.uploadNewsImage(file, n.getId());
+
             return ResponseEntity
                            .status(HttpStatus.CREATED)
                            .body(n);
@@ -65,7 +73,7 @@ public class NewsController {
     }
 
     @PutMapping("edit")
-    public ResponseEntity<NewsDto> edit(@RequestBody NewsDto newsDto) {
+    public ResponseEntity edit(@RequestBody NewsDto newsDto) {
         localDateTime = LocalDateTime.now();
         formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
@@ -84,6 +92,48 @@ public class NewsController {
                            .status(HttpStatus.OK)
                            .body(newsDto1);
         }
+    }
+
+//    @PutMapping("editAll")
+//    public ResponseEntity editAll(@RequestBody List<NewsDto> newsDto) {
+//        for (NewsDto newsDto1 : newsDto) {
+//            localDateTime = LocalDateTime.now();
+//            formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+//
+//            newsDto1.setDate(localDateTime.format(formatter));
+//
+//            News n = newsService.editNews(convertor.dtoToModel(newsDto1));
+//
+////            if (n == null) {
+////                return ResponseEntity
+////                               .status(HttpStatus.NO_CONTENT)
+////                               .body(null);
+////            }
+////            else {
+////                NewsDto newsDto2 = convertor.modelToDto(n);
+////            }
+//        }
+//        return ResponseEntity
+//                       .status(HttpStatus.OK)
+//                       .body(newsDto);
+//    }
+
+
+    @PostMapping("picture")
+    public ResponseEntity<Boolean> uploadPicture(@RequestParam("id") Long id,
+                                                 @RequestPart(name = "image") MultipartFile file) {
+        boolean transactionStatus = newsService.uploadNewsImage(file, id);
+        return ResponseEntity
+                       .status(transactionStatus ? HttpStatus.OK : HttpStatus.BAD_REQUEST)
+                       .body(transactionStatus);
+    }
+
+    @GetMapping("picture")
+    public ResponseEntity<Resource> downloadNewsPicture(@RequestParam("id") Long id) {
+        Resource resource = newsService.downloadImage(id);
+        return ResponseEntity
+                       .status((resource != null) ? HttpStatus.FOUND : HttpStatus.NOT_FOUND)
+                       .body(resource);
     }
 
     @GetMapping("all")
@@ -110,6 +160,39 @@ public class NewsController {
         return ResponseEntity
                        .status(HttpStatus.OK)
                        .body(newsDtos);
+    }
+
+    @GetMapping("notConfirmed")
+    public ResponseEntity<List<NewsDto>> getNotConfirmedNews() {
+        List<NewsDto> newsDtos = new ArrayList<>();
+
+        for(News news : newsService.getAllNewsNotConfirmed()) {
+            newsDtos.add(convertor.modelToDto(news));
+        }
+
+        return ResponseEntity
+                       .status(HttpStatus.OK)
+                       .body(newsDtos);
+    }
+
+    @GetMapping("number")
+    public ResponseEntity<List<NewsDto>> getNumberNews(@RequestParam(name = "n") Integer number) {
+        List<NewsDto> newsDtos = new ArrayList<>();
+
+        for(News news : newsService.getNumberOfNews(number)) {
+            newsDtos.add(convertor.modelToDto(news));
+        }
+
+        if (newsDtos.isEmpty()) {
+            return ResponseEntity
+                           .status(HttpStatus.NO_CONTENT)
+                           .build();
+        }
+        else {
+            return ResponseEntity
+                           .status(HttpStatus.OK)
+                           .body(newsDtos);
+        }
     }
 
     @GetMapping("byCategory")
@@ -190,11 +273,12 @@ public class NewsController {
     }
 
     @GetMapping("mostViews")
-    public ResponseEntity<List<NewsDto>> getMostViews(@RequestParam(name = "t", defaultValue = "256200000") Long time,
+    public ResponseEntity<List<NewsDto>> getMostViews(@RequestParam(name = "t", defaultValue = "2562000000") Long time,
                                                       @RequestParam(name = "n", defaultValue = "10") Integer viewNumber,
                                                       @RequestParam(name = "c", defaultValue = "") String category) {
 
         List<News> news;
+
         if(category.isEmpty()){
             news = this.newsService.getMostViews(time, viewNumber);
         }
@@ -230,6 +314,11 @@ public class NewsController {
         return ResponseEntity
                        .status(HttpStatus.OK)
                        .body(newsService.getNumberOfAllNewsbyCategory(category));
+    }
+
+    @PostMapping(value = "photo"/*, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE}*/)
+    public String getNewsPicture(@RequestPart("image") MultipartFile file) {
+        return file.getOriginalFilename();
     }
 }
 

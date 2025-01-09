@@ -19,10 +19,12 @@ public class NewsConvertor implements PrimitiveConvertor<News, NewsDto> {
                 model.getId(),
                 model.getTitle(),
                 model.getCategory(),
+                model.getContent(),
+                model.getPhotoPath(),
                 model.getViewNumber(),
                 model.getDate(),
                 model.getVerification(),
-                model.getAuthor().getId()
+                model.getAuthor().getUsername()
         );
     }
 
@@ -32,10 +34,11 @@ public class NewsConvertor implements PrimitiveConvertor<News, NewsDto> {
                 dto.getId(),
                 dto.getTitle(),
                 dto.getCategory(),
+                dto.getContent(),
                 dto.getViewNumber(),
                 dto.getDate(),
                 dto.getVerification(),
-                userService.getUser(dto.getAuthor())
-        );
+                userService.getUser(dto.getAuthor()),
+                dto.getPhotoPath());
     }
 }
