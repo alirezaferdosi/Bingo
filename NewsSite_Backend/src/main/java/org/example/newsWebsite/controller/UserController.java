@@ -1,5 +1,7 @@
 package org.example.newsWebsite.controller;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.example.newsWebsite.model.User;
 import org.example.newsWebsite.model.convertor.PrimitiveConvertor;
 import org.example.newsWebsite.model.dto.FavoritesDto;
@@ -8,10 +10,12 @@ import org.example.newsWebsite.service.api.NewsService;
 import org.example.newsWebsite.service.api.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +24,8 @@ import java.util.List;
 @RestController
 @RequestMapping("user")
 public class UserController {
+    private static final Logger log = LogManager.getLogger(UserController.class);
+
     @Autowired
     @Qualifier("userServiceImpl")
     private UserService userService;
@@ -37,7 +43,7 @@ public class UserController {
     private PrimitiveConvertor<Byte, FavoritesDto> favoritesConvertor;
 
 
-    @PostMapping("signup")
+    @PostMapping("signUp")
     public ResponseEntity<UserDto> addUser(@RequestBody UserDto userDto) {
         userDto.setId(null);
         if(userDto.getFavorites() == null){
@@ -46,30 +52,41 @@ public class UserController {
 
         if(userService.isUserExist(userDto.getUsername())){
             return ResponseEntity
-                    .status(HttpStatus.CONFLICT)
-                    .body(null);
+                           .status(HttpStatus.CONFLICT)
+                           .body(null);
         }
         else {
             UserDto userCreate = userConvertor.modelToDto(
-                    userService.addUser(
-                            userConvertor.dtoToModel(userDto)
-                    )
-            );
+                                    userService.addUser(
+                                            userConvertor.dtoToModel(userDto)
+                                    )
+                        );
             return ResponseEntity
-                    .status(HttpStatus.CREATED)
-                    .body(userCreate);
+                           .status(HttpStatus.CREATED)
+                           .body(userCreate);
         }
+    }
+
+    @PostMapping("signIn")
+    public ResponseEntity<Long> signIn(@RequestParam(name = "u") String username, @RequestParam(name = "p") String password) {
+        Long id = userService.longIn(username, password);
+
+        return ResponseEntity
+                       .status(id == null ? HttpStatus.BAD_REQUEST : HttpStatus.OK)
+                       .body(id);
     }
 
     @GetMapping("all")
     public ResponseEntity<List<UserDto>> getAllUsers() {
+        log.info("Request to get all users.");
+
         List<UserDto> userDtos = new ArrayList<>();
         for(User user : userService.getAllUsers()){
             userDtos.add(userConvertor.modelToDto(user));
         }
         return ResponseEntity
-                .status(HttpStatus.FOUND)
-                .body(userDtos);
+                       .status(HttpStatus.FOUND)
+                       .body(userDtos);
     }
 
     @GetMapping("byId")
@@ -77,14 +94,14 @@ public class UserController {
         User user = userService.getUser(id);
         if(user == null){
             return ResponseEntity
-                    .status(HttpStatus.NOT_FOUND)
-                    .body(null);
+                           .status(HttpStatus.NOT_FOUND)
+                           .body(null);
         }
         else {
             UserDto userDto = userConvertor.modelToDto(user);
             return ResponseEntity
-                    .status(HttpStatus.FOUND)
-                    .body(userDto);
+                           .status(HttpStatus.FOUND)
+                           .body(userDto);
         }
     }
 
@@ -93,14 +110,14 @@ public class UserController {
         User user = userService.getUser(username);
         if(user == null){
             return ResponseEntity
-                    .status(HttpStatus.NOT_FOUND)
-                    .body(null);
+                           .status(HttpStatus.NOT_FOUND)
+                           .body(null);
         }
         else {
             UserDto userDto = userConvertor.modelToDto(user);
             return ResponseEntity
-                    .status(HttpStatus.FOUND)
-                    .body(userDto);
+                           .status(HttpStatus.FOUND)
+                           .body(userDto);
         }
     }
 
@@ -110,19 +127,19 @@ public class UserController {
 
         if(userService.isUserExist(userDto.getUsername()) && !userService.getUser(userDto.getId()).getUsername().equals(userDto.getUsername())){
             return ResponseEntity
-                    .status(HttpStatus.CONFLICT)
-                    .body(null);
+                           .status(HttpStatus.CONFLICT)
+                           .body(null);
         }
         if(user == null){
             return ResponseEntity
-                    .status(HttpStatus.CONFLICT)
-                    .body(null);
+                           .status(HttpStatus.CONFLICT)
+                           .body(null);
         }
         else {
             userDto = userConvertor.modelToDto(user);
             return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body(userDto);
+                           .status(HttpStatus.OK)
+                           .body(userDto);
         }
     }
 
@@ -130,13 +147,13 @@ public class UserController {
     public ResponseEntity deleteUser(@RequestParam(name = "id") Long id) {
         if (userService.deleteUser(id)){
             return ResponseEntity
-                    .status(HttpStatus.NO_CONTENT)
-                    .build();
+                           .status(HttpStatus.NO_CONTENT)
+                           .build();
         }
         else {
             return ResponseEntity
-                    .status(HttpStatus.NOT_FOUND)
-                    .build();
+                           .status(HttpStatus.NOT_FOUND)
+                           .build();
         }
     }
 
@@ -144,32 +161,41 @@ public class UserController {
     public ResponseEntity deleteUser(@RequestParam(name = "username") String username) {
         if (userService.deleteUser(username)){
             return ResponseEntity
-                    .status(HttpStatus.NO_CONTENT)
-                    .build();
+                           .status(HttpStatus.NO_CONTENT)
+                           .build();
         }
         else {
             return ResponseEntity
-                    .status(HttpStatus.NOT_FOUND)
-                    .build();
+                           .status(HttpStatus.NOT_FOUND)
+                           .build();
         }
     }
 
-    /*@PostMapping("picture")
-    public ResponseEntity uploadProfilePicture(*//*@PathVariable Long id,*//*@RequestParam("file") MultipartFile file) {
-        System.out.println("----------------------------");
-        boolean transactionStatus = userService.uploadeImage(file, String.valueOf(1));
+    @PostMapping("picture")
+    public ResponseEntity<Boolean> uploadProfilePicture(@RequestParam("id") Long id,
+                                                        @RequestPart("image") MultipartFile file) {
+
+        boolean transactionStatus = userService.uploadProfileImage(file, id);
         return ResponseEntity
                        .status(transactionStatus ? HttpStatus.OK : HttpStatus.BAD_REQUEST)
-                       .build();
-    }*/
+                       .body(transactionStatus);
+    }
+
+    @GetMapping("picture")
+    public ResponseEntity<Resource> downloadProfilePicture(@RequestParam(name = "id") Long id) {
+        Resource resource = userService.downloadProfileImage(id);
+        return ResponseEntity
+                       .status((resource != null) ? HttpStatus.FOUND : HttpStatus.NOT_FOUND)
+                       .body(resource);
+    }
 
     @GetMapping("userExistence")
     public ResponseEntity isUserExist(@RequestParam(name = "u") String username) {
         Boolean exist = userService.isUserExist(username);
 
         return ResponseEntity
-                .status(exist ? HttpStatus.FOUND : HttpStatus.NOT_FOUND)
-                .build();
+                       .status(exist ? HttpStatus.FOUND : HttpStatus.NOT_FOUND)
+                       .build();
     }
 
     @GetMapping("emailExistence")
@@ -177,8 +203,8 @@ public class UserController {
         Boolean exist = userService.isEmailExist(email);
 
         return ResponseEntity
-                .status(exist ? HttpStatus.FOUND : HttpStatus.NOT_FOUND)
-                .build();
+                       .status(exist ? HttpStatus.FOUND : HttpStatus.NOT_FOUND)
+                       .build();
     }
 
     /*@GetMapping("phoneExistence")
@@ -193,52 +219,62 @@ public class UserController {
     @GetMapping("allVisitsI")
     public ResponseEntity<Integer> getAllVisits(@RequestParam(name = "i") Long userId) {
         return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(newsService.getAllVisits(userId));
+                       .status(HttpStatus.OK)
+                       .body(newsService.getAllVisits(userId));
     }
 
     @GetMapping("allVisitsU")
     public ResponseEntity<Integer> getAllVisits(@RequestParam(name = "u") String username) {
         return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(newsService.getAllVisits(username));
+                       .status(HttpStatus.OK)
+                       .body(newsService.getAllVisits(username));
     }
 
     @GetMapping("allNewsI")
     public ResponseEntity<Integer> getAllNews(@RequestParam(name = "i") Long userId) {
         return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(newsService.getNumberOfAllNews(userId));
+                       .status(HttpStatus.OK)
+                       .body(newsService.getNumberOfAllNews(userId));
     }
 
     @GetMapping("allNewsU")
     public ResponseEntity<Integer> getAllNews(@RequestParam(name = "u") String username) {
         return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(newsService.getNumberOfAllNews(username));
+                       .status(HttpStatus.OK)
+                       .body(newsService.getNumberOfAllNews(username));
     }
 
     @PutMapping("changeFavorites")
     public ResponseEntity<Boolean> changeFavorites(@RequestParam(name = "id") Long id,@RequestBody FavoritesDto favoritesDto) {
         boolean status = userService.changeFavorites(id, favoritesConvertor.dtoToModel(favoritesDto));
         return ResponseEntity
-                .status(status ? HttpStatus.OK : HttpStatus.NOT_FOUND)
-                .body(status);
+                       .status(status ? HttpStatus.OK : HttpStatus.NOT_FOUND)
+                       .body(status);
+    }
+
+    @PutMapping("changeOnceFavorites")
+    public ResponseEntity<Boolean> changeFavoritesByName(@RequestParam(name = "id") Long id,
+                                                        @RequestParam(name = "c") String category,
+                                                        @RequestParam(name = "f") boolean flag) {
+        boolean status = this.userService.changeFavoritesCategory(id, category, flag);
+
+        return ResponseEntity
+                       .status(status ? HttpStatus.OK : HttpStatus.NOT_FOUND)
+                       .body(status);
     }
 
     @GetMapping("favorites")
     public ResponseEntity<FavoritesDto> getFavorites(@RequestParam(name = "id") Long id) {
         Byte f = userService.getFavorites(id);
-        if(f == null){
+        if (f == null) {
             return ResponseEntity
-                    .status(HttpStatus.NOT_FOUND)
-                    .build();
-        }
-        else {
+                           .status(HttpStatus.NOT_FOUND)
+                           .build();
+        } else {
             FavoritesDto favoritesDto = favoritesConvertor.modelToDto(f);
             return ResponseEntity
-                    .status(HttpStatus.FOUND)
-                    .body(favoritesDto);
+                           .status(HttpStatus.FOUND)
+                           .body(favoritesDto);
         }
     }
 }
